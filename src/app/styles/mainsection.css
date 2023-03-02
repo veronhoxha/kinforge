@@ -1,0 +1,91 @@
+.main-section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+}
+
+video {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+}
+
+.main-section > h1 {
+    display: inline;
+    color: #fff;
+    font-size: 130px;
+    margin-top: -100px;
+    justify-content: center;
+}
+
+.main-section > p {
+    color: #fff;
+    font-size: 32px;
+    margin-top: 8px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    justify-content: center;
+}
+
+.create-tree-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.create-tree-btn a {
+    text-decoration: none;
+}
+
+.create-tree-btn button {
+    background-color: #7D4032;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 40px;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+  
+.create-tree-btn button:hover {
+    background-color: #7D4032;
+    color: #fff;
+}
+  
+@media screen and (max-width: 960px) {
+    .main-section > h1 {
+        font-size: 70px;
+        margin-top: -150px;
+    }   
+
+    .main-section > p {
+        font-size: 20px;
+        text-align: center;
+        }
+}
+
+@media screen and (max-width: 768px) {
+    .main-section > h1 {
+        font-size: 45px;
+        margin-top: -100px;
+    }
+
+    .main-section > p {
+        font-size: 17px;
+        text-align: center;
+    }
+
+    .create-tree-btn button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8rem;
+    }
+}

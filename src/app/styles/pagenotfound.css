@@ -1,0 +1,84 @@
+:root {
+    --textColor: #7D4032;
+    --buttonColor: #7D4032;
+    --buttonTextColor: #fff;
+  }
+  
+.pagenotfound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F8F8F8;
+}
+
+.pagenotfound h1 {
+    font-size: 8rem;
+    font-weight: bold;
+    color: var(--textColor);
+    margin: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.pagenotfound h2 {
+    font-size: 2.2rem;
+    color: var(--textColor);
+    margin: 0;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.pagenotfound h2 span {
+    display: block;
+}
+
+.go-back-home-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.go-back-home-btn a {
+    text-decoration: none;
+}
+
+.go-back-home-btn button {
+    background-color: var(--buttonColor);
+    color: var(--buttonTextColor);
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 40px;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.go-back-home-btn button:hover {
+    background-color: var(--textColor);
+    color: var(--buttonTextColor);
+}
+  
+@media screen and (max-width: 768px) {
+    .pagenotfound h1 {
+        font-size: 4rem;
+    }
+
+    .pagenotfound h2 {
+        font-size: 1.5rem;
+    }
+
+    .pagenotfound h2 span {
+        display: inline-block;
+        margin-top: 1rem;
+    }
+
+    .go-back-home-btn button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8rem;
+    }
+}
+  

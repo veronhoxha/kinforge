@@ -8,7 +8,7 @@
 }
 
 :root{
-    --mainColor: #FBF8F8;
+    --mainColor: #fff;
     --textColor: #7D4032;
 }
 
@@ -20,12 +20,16 @@ header {
     padding: 0 2rem;
     background-color: var(--mainColor);
     color: var(--textColor);
-  }
-  
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 .nav-wrapper {
-display: flex;
-align-items: center;
-margin-left: auto;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
 }
 
 img {
@@ -95,5 +99,4 @@ header .nav-btn {
     nav a{
         font-size: 1.5rem;
     }
-
 }
