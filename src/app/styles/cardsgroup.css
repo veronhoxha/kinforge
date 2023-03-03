@@ -1,0 +1,136 @@
+.card_main {
+    justify-content: center;
+    background: #fafafa;
+    position: relative;
+    padding: 70px 0 160px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-holder-item {
+    width: 280px;
+    height: 400px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1;
+    background: linear-gradient(45deg, #7D4032 0%, #7D4032 100%);
+    box-shadow: 15px 15px 15px rgba(173, 181, 199, 0.2);
+}
+
+.card-holder-item:nth-child(2) {
+    margin: 0 24px;
+}
+
+.card-holder-item:nth-child(2) {
+    transform: scale(1.05);
+    background: #242424;
+}
+
+.card-holder-item:hover {
+    transform: scale(1.06);
+    transition: all 0.3s ease-out;
+    color: #242424;;
+}
+
+.card_cover {
+    flex-direction: column;
+    align-items: flex-start;
+    display: flex;
+    margin: 0 auto;
+}
+
+.card_holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card_head {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #242424;
+    margin-bottom: 40px;
+    font-size: 35px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.card_info {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    padding: 24px;
+    align-items: center;
+    color: #fff;
+}
+
+.card_info h3 {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+}
+
+.card_info p {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 17px;
+    margin-top: 35px;
+}
+
+.icon {
+    margin: 24px 0;
+}
+
+.icon svg {
+    width: 64px;
+    height: 64px;
+}
+
+@media screen and (max-width: 960px) {
+    .card_holder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 70%;
+    }
+
+    .card_cover {
+        margin: 0 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-holder-item {
+        width: 90%;
+    }
+
+    .card-holder-item:nth-child(2) {
+        transform: scale(1);
+        background: #242424;
+        margin: 24px;
+    }
+
+    .card-holder-item:hover {
+        transform: none;
+    }
+
+    .card_head {
+        font-size: 25px;
+    }
+
+    .icon svg {
+        width: 44px;
+        height: 44px;
+    }
+
+    .card_info p {
+        margin-top: 65px;
+        font-size: 16px;
+    }
+}

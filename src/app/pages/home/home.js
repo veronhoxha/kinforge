@@ -1,10 +1,12 @@
-import Mainsection from "../../components/mainsection";
-import React from 'react'
+import Mainsection from '../../components/mainsection';
+import React from 'react';
+import Cards from '../../components/cardsgroup';
 
 function home() {
   return (
     <> 
-    <Mainsection />
+    <Mainsection/>
+    <Cards/>
     </>
   )
 }
