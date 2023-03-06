@@ -85,9 +85,10 @@ input[type="email"] {
     border: 1.5px solid #ccc;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
     .login-form {
-        padding: 30px;
+        padding: 50px;
+        margin-top: 70px;
     }
 
     button[type="login-button"] {
@@ -102,9 +103,44 @@ input[type="email"] {
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
+    .login-form {
+        padding: 50px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 15px;
+    }
+  
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 15px;
+    }
+}
+
+@media screen and (max-width: 480px)  {
     .login-form {
         padding: 20px;
+    }
+
+    button[type="login-button"] {
+        font-size: 13px;
+        padding: 6px;
+        margin-bottom: 10px;
+    }
+  
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 280px) {
+    .login-form {
+      max-width: 220px;
+      padding: 20px;
     }
 
     button[type="login-button"] {

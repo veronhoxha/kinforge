@@ -45,7 +45,7 @@ const Login = () => {
     return (
         <div className="login">
         <form onSubmit={login} className="login-form">
-            <h1 className='title'>Login Page</h1>
+            <h1 className='title'>Login</h1>
             {errors && <p className="errors">{errors}</p>}
             <label>Email:
                 <input type="email" value={email} onChange={emailChanging}></input>
