@@ -1,13 +1,17 @@
 import React from 'react';
+import { auth } from '../../../firebase';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../styles/login.css'; 
+import {signInWithEmailAndPassword} from 'firebase/auth';
 
 const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState(null);
+    const history = useHistory();
 
     const isValidEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,8 +27,8 @@ const Login = () => {
     };
 
     const login = (e) => {
-
         e.preventDefault();
+    
         if (!email && !password ) {
             setErrors('Enter your email address and password, please.');
         } else if (!password) {
@@ -32,13 +36,26 @@ const Login = () => {
         } else if (!email) {
             setErrors('Enter your email address, please.');
         } else if (!isValidEmail(email)) {
-            setErrors('Enter a valid email, please.');
+            setErrors('Enter a valid email address, please.');
         } else {
             setErrors('');
-            // need to do :
-            // coonect to database and check if user exists in database and if the password and email are correct 
-            // if login is successful redirect to new page
-            // if login unsuccessful display the appropriate error message
+            signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                setErrors(null);
+                console.log('User logged in successfully:', user);
+                history.push('../../');
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                if (errorCode === 'auth/user-not-found' || errorCode === 'auth/wrong-password') {
+                    setErrors('Invalid email or password. Please try again.');
+                } else {
+                    setErrors(errorMessage);
+                }
+                console.error('Error signing in:', error);
+            });
         }
     };
 
