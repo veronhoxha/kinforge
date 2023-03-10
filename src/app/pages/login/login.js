@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../../styles/login.css'; 
-import {signInWithEmailAndPassword} from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 
 const Login = () => {
 
@@ -59,6 +59,28 @@ const Login = () => {
         }
     };
 
+    const handleForgotPassword = (e) => {
+        e.preventDefault();
+        if (!email) {
+            setErrors("Please enter your email address and click 'Forgot your password?' again to receive a password reset link. Make sure to check your spam folder.");
+
+        } else {
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    setErrors(`Password reset email sent to ${email}.`);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    if (errorCode === 'auth/user-not-found') {
+                        setErrors('This user does not exist. Cannot send a reset password email.');
+                    } else {
+                        setErrors(errorMessage);
+                    }
+                });
+        }
+    };
+
     return (
         <div className="login">
         <form onSubmit={login} className="login-form">
@@ -71,12 +93,13 @@ const Login = () => {
                 <input type="password" value={password} onChange={passwordChanging}></input>
             </label>
             <button type="login-button">Login</button>
+            <a href="/#" onClick={handleForgotPassword}>Forgot your password?</a>
             <Link to="/signup" className="dont-have-an-account-already"> You don't have an account already? </Link>
             <Link to="/" className="go-back-to-the-homepage"> Go back to the homepage </Link>
         </form>
         </div>
-    );
+
+  );
 };
-  
 
 export default Login;
