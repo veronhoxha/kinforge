@@ -44,7 +44,7 @@ const Login = () => {
                 const user = userCredential.user;
                 setErrors(null);
                 console.log('User logged in successfully:', user);
-                history.push('../../');
+                history.push('../../familyTree');
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -74,6 +74,8 @@ const Login = () => {
                     const errorMessage = error.message;
                     if (errorCode === 'auth/user-not-found') {
                         setErrors('This user does not exist. Cannot send a reset password email.');
+                    } if (errorCode === 'auth/invalid-email') {
+                        setErrors('Enter a valid email address, please.');
                     } else {
                         setErrors(errorMessage);
                     }

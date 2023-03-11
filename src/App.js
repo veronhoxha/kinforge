@@ -5,16 +5,26 @@ import Home from './app/pages/home/home';
 import Login from './app/pages/login/login';
 import Signup from './app/pages/signup/signup';
 import PageNotFound from './app/pages/pagenotfound/pagenotfound';
+import FamilyTree from './app/pages/familyTree/familyTree';
 
 function App() {
   return (
     <Router>
       <React.Fragment>
-        <Navbar/>
         <Switch>
-          <Route path="/" exact component={Home}></Route>
-          <Route path="/login" exact component={Login}></Route>
-          <Route path="/signup" exact component={Signup}></Route>
+          <Route path="/familyTree" render={() => <FamilyTree />} />
+          <Route path="/" exact>
+            <Navbar/>
+            <Home/>
+          </Route>
+          <Route path="/login" exact>
+            <Navbar/>
+            <Login/>
+          </Route>
+          <Route path="/signup" exact>
+            <Navbar/>
+            <Signup/>
+          </Route>
           <Route component={PageNotFound}></Route>
         </Switch>
       </React.Fragment>
