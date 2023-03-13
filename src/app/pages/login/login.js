@@ -8,6 +8,8 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/aut
 
 const Login = () => {
 
+    document.cookie = 'cookieName=cookieValue; SameSite=Lax;';
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState(null);
