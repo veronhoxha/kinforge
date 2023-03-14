@@ -1,9 +1,9 @@
 import React from 'react';
-import { auth } from '../../../firebase';
+import { auth, db } from '../../../firebase';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
-
+import { collection, addDoc } from 'firebase/firestore';
 import '../../styles/signup.css';
 import { createUserWithEmailAndPassword} from 'firebase/auth';
 
@@ -16,6 +16,7 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState('');
     const history = useHistory();
+    const usersCollection = collection(db, "users");
 
     const isValidEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -63,7 +64,17 @@ const Signup = () => {
         } else {
             setErrors('');
             createUserWithEmailAndPassword(auth, email, password)
-                .then(() => {
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    const uid = user.uid;
+                    addDoc(usersCollection, {
+                        name: firstName,
+                        surname: lastName,
+                        emailaddress: email,
+                        userpassword: password,
+                        confpassword: confirmPassword,
+                        uid: uid,
+                    });
                     history.push('../../login');
                 })
                 .catch((error) => {
@@ -92,7 +103,7 @@ const Signup = () => {
                 <input type="password" name="password" value={password} onChange={n} />
                 <label htmlFor="confirmPassword">Confirm Password:</label>
                 <input type="password" name="confirmPassword" value={confirmPassword} onChange={n} />
-                <button type="signup-button">Sign Up</button>
+                <button type="signup-button" onClick={signup}>Sign Up</button>
                 <Link to="/login" className="already-have-an-account">You already have an account?</Link>
                 <Link to="/" className="go-back-to-the-homepage">Go back to the homepage</Link>
             </form>
