@@ -34,6 +34,7 @@ function FamilyTree() {
     return () => unsubscribe();
   }, []);
 
+
   return (
     <div className="menu">
       <div className="menu-wrapper" ref={menu}>
@@ -51,7 +52,10 @@ function FamilyTree() {
             <DropdownItem text="Edit Profile" icon={<EditIcon />} />
             <DropdownItem text="Settings" icon={<SettingsIcon />} />
             <DropdownItem text="Help" icon={<HelpIcon />} />
-            <DropdownItem text="Logout" icon={<LogoutIcon />} />
+            <DropdownItem text="Logout" icon={<LogoutIcon />} onClick={() => {
+              auth.signOut();
+              console.log(`${currentUser.email} has been logged out`);
+            }} />
           </ul>
         </div>
       </div>
@@ -63,7 +67,7 @@ function DropdownItem(props) {
   return (
     <li className="dropdown-items">
       {props.icon}
-      <a href="/#" className="items">
+      <a href="/" className="items" onClick={props.onClick}>
         {props.text}
       </a>
     </li>
