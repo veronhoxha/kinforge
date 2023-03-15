@@ -10,14 +10,14 @@ const Authentication = (Component) => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
         if (!user) {
           history.push('/login');
-        }
+        } 
       });
 
       return () => {
         unsubscribe();
       };
     }, [history]);
-    
+
     return <Component {...props} />;
   };
 

@@ -6,6 +6,7 @@ import Login from './app/pages/login/login';
 import Signup from './app/pages/signup/signup';
 import PageNotFound from './app/pages/pagenotfound/pagenotfound';
 import FamilyTree from './app/pages/familyTree/familyTree';
+import ManageAccount from './app/pages/manageAccount/manageAccount';
 
 function App() {
   return (
@@ -13,6 +14,11 @@ function App() {
       <React.Fragment>
         <Switch>
           <Route path="/familyTree" render={() => <FamilyTree />} />
+          <Route path="/" exact>
+            <Navbar/>
+            <Home/>
+          </Route>
+          <Route path="/manageAccount" render={() => <ManageAccount />} />
           <Route path="/" exact>
             <Navbar/>
             <Home/>

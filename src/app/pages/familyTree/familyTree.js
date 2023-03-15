@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
@@ -49,11 +48,10 @@ function FamilyTree() {
             <span>{currentUser ? currentUser.email : ''}</span>
           </h3>
           <ul>
-            <DropdownItem text="My Profile" icon={<PersonIcon />} />
-            <DropdownItem text="Edit Profile" icon={<EditIcon />} />
-            <DropdownItem text="Settings" icon={<SettingsIcon />} />
-            <DropdownItem text="Help" icon={<HelpIcon />} />
-            <DropdownItem text="Logout" icon={<LogoutIcon />} onClick={() => {
+            <DropdownItem href="./manageAccount" text="Edit Profile" icon={<EditIcon />} />
+            <DropdownItem href="./manageAccount" text="Settings" icon={<SettingsIcon />} />
+            <DropdownItem href="./manageAccount" text="Help" icon={<HelpIcon />} />
+            <DropdownItem href="/" text="Logout" icon={<LogoutIcon />} onClick={() => {
               auth.signOut();
               console.log(`${currentUser.email} has been logged out`);
             }} />
@@ -68,9 +66,7 @@ function DropdownItem(props) {
   return (
     <li className="dropdown-items">
       {props.icon}
-      <a href="/" className="items" onClick={props.onClick}>
-        {props.text}
-      </a>
+      <a href={props.href} className="items" onClick={props.onClick}> {props.text}</a>
     </li>
   );
 }
