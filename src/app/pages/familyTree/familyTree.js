@@ -7,6 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import '../../styles/familyTree.css';
 import profile_pic from '../../pages/familyTree/veron.jpg';
 import { auth } from '../../../firebase';
+import Authentication from '../../../Authentication';
 
 function FamilyTree() {
 
@@ -74,4 +75,4 @@ function DropdownItem(props) {
   );
 }
 
-export default FamilyTree;
+export default Authentication(FamilyTree);
