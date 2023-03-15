@@ -15,7 +15,7 @@ function cardsgroup() {
                     <div className='icon'>
                       <SearchIcon/>
                     </div>
-                    <h3>Searching</h3>
+                    <h3 className="h3-title">Searching</h3>
                     <p>Search for other users or family members by name, location, or other parameters.</p>
                   </div>
                 </div>
@@ -24,7 +24,7 @@ function cardsgroup() {
                     <div className='icon'>
                       <StarIcon/>
                     </div>
-                    <h3>User experience</h3>
+                    <h3 className="h3-title">User experience</h3>
                     <p>User-friendly tools intended for optimal user satisfaction.</p>
                   </div>
                 </div>
@@ -33,7 +33,7 @@ function cardsgroup() {
                     <div className='icon'>
                       <ThumbUpIcon/>
                     </div>
-                    <h3>Quick Edits</h3>
+                    <h3 className="h3-title">Quick Edits</h3>
                     <p>The most easiest ways to add and edit your family tree data.</p>
                   </div>
                 </div>
