@@ -71,8 +71,6 @@ const Signup = () => {
                         name: firstName,
                         surname: lastName,
                         emailaddress: email,
-                        userpassword: password,
-                        confpassword: confirmPassword,
                         uid: uid,
                     });
                     history.push('../../login');
