@@ -7,6 +7,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import '../../styles/signup.css';
 import { createUserWithEmailAndPassword} from 'firebase/auth';
 import { getAuth, updateProfile } from 'firebase/auth';
+import { query, where, getDocs } from "firebase/firestore";
 
 const Signup = () => {
 
@@ -64,13 +65,20 @@ const Signup = () => {
             setErrors('Passwords do not match.');
         } else {
             setErrors('');
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    const uid = user.uid;
-                    const displayName = `${firstName} ${lastName}`;
-                    const authInstance = getAuth();
-                
+            const usersRef = collection(db, "users");
+            const queryRef = query(usersRef, where("emailaddress", "==", email));
+            getDocs(queryRef)
+            .then((querySnapshot) => {
+                if (querySnapshot.size > 0) {
+                setErrors('This email address is already in use.');
+                } else {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        const uid = user.uid;
+                        const displayName = `${firstName} ${lastName}`;
+                        const authInstance = getAuth();
+
                 updateProfile(authInstance.currentUser, {
                     displayName: displayName,
                 });
@@ -81,7 +89,7 @@ const Signup = () => {
                     uid: uid,
                 });
                     history.push('../../login');
-                })
+                    })
                 .catch((error) => {
                     console.log(error);
                     if (error.code === 'auth/email-already-in-use') {
@@ -89,7 +97,13 @@ const Signup = () => {
                     } else {
                         setErrors('An error occurred. Please try again later.');
                     }
-                });
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setErrors('An error occurred. Please try again later.');
+            });
         }
     };
 
