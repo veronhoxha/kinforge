@@ -44,7 +44,7 @@ function FamilyTree() {
 
         <div className={`dropdown ${open ? 'active' : 'inactive'}`}>
           <h3>
-          {currentUser ? `${currentUser.displayName} ${currentUser.lastName}` : ''} <br/>
+          {currentUser ? `${currentUser.displayName}` : ''} <br/>
             <span>{currentUser ? currentUser.email : ''}</span>
           </h3>
           <ul>

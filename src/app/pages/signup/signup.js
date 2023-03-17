@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import '../../styles/signup.css';
 import { createUserWithEmailAndPassword} from 'firebase/auth';
+import { getAuth, updateProfile } from 'firebase/auth';
 
 const Signup = () => {
 
@@ -67,12 +68,18 @@ const Signup = () => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     const uid = user.uid;
-                    addDoc(usersCollection, {
-                        name: firstName,
-                        surname: lastName,
-                        emailaddress: email,
-                        uid: uid,
-                    });
+                    const displayName = `${firstName} ${lastName}`;
+                    const authInstance = getAuth();
+                
+                updateProfile(authInstance.currentUser, {
+                    displayName: displayName,
+                });
+                addDoc(usersCollection, {
+                    name: firstName,
+                    surname: lastName,
+                    emailaddress: email,
+                    uid: uid,
+                });
                     history.push('../../login');
                 })
                 .catch((error) => {
