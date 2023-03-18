@@ -1,150 +1,151 @@
-    .signup-form {
-        border: 3px solid #7D4032;
-        border-radius: 10px;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 40px;
-        max-width: 500px;
-        margin: 0 auto;
-    }
-    
-    .signup {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #f2f2f2;
-    }
-    
-    .title {
-        margin-bottom: 10px;
-        font-size: 24px;
-    }
-    
-    .errors {
-        margin-bottom: 12px;
-        color: red;
-        font-size: 14px;
-    }
-    
-    label {
-        font-weight: bold;
-        text-align: left;
-        margin-bottom: 5px;
-        width: 100%;
-        font-size: 13px;
-        display: block;
-    }
-    
-    .go-back-to-the-homepage {
-        text-align: center;
-        color: black;
-        font-weight: bold;
-        margin-top: 10px;
-        font-size: 14px;
-        text-decoration: none;
-    }
-    
-    .signup .go-back-to-the-homepage:hover {
-        text-decoration: underline;
-    }
-    
-    .already-have-an-account {
-        text-align: center;
-        color: black;
-        font-weight: bold;
-        margin-top: 10px;
-        font-size: 14px;
-        text-decoration: none;
-    }
-    
-    .signup .already-have-an-account:hover {
-        text-decoration: underline;
-    }
-    
-    button[type="signup-button"] {
-        font-size: 16px;
-        background-color: #7D4032;
-        margin-top: 5px;
-        padding: 10px;
-        cursor: pointer;
-        color: #fff;
-        border: none;
-        width: 100%;
-        border-radius: 5px;
-    }
-    
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
-        margin-bottom: 10px;
-        border: 1.5px solid #ccc;
-        font-size: 13px;
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-    }
+.signup-form {
+    border: 3px solid #7D4032;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    max-width: 500px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
 
-    @media (max-width: 1300px) {
-        .signup-form {
-        max-width: 1000px;
-        padding: 40px;
-        margin-top: 90px;
-        }
+.signup {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+    overflow-x: auto;
+}
+
+.title {
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.errors {
+    margin-bottom: 12px;
+    color: red;
+    font-size: 14px;
+}
+
+label {
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 5px;
+    width: 100%;
+    font-size: 13px;
+    display: block;
+}
+
+.go-back-to-the-homepage {
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.signup .go-back-to-the-homepage:hover {
+    text-decoration: underline;
+}
+
+.already-have-an-account {
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.signup .already-have-an-account:hover {
+    text-decoration: underline;
+}
+
+button[type="signup-button"] {
+    font-size: 16px;
+    background-color: #7D4032;
+    margin-top: 5px;
+    padding: 10px;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    margin-bottom: 10px;
+    border: 1.5px solid #ccc;
+    font-size: 13px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+@media (max-width: 1300px) {
+    .signup-form {
+    max-width: 1000px;
+    padding: 40px;
+    margin-top: 90px;
     }
-    
-    @media (max-width: 1024px) {
-        .signup-form {
-        max-width: 800px;
-        max-height: 700px;
-        padding: 20px;
-        margin-top: 90px;
-        }
+}
+
+@media (max-width: 1024px) {
+    .signup-form {
+    max-width: 800px;
+    max-height: 700px;
+    padding: 20px;
+    margin-top: 90px;
     }
-    
-    @media (max-width: 912px) {
-        .signup-form {
-        max-width: 350px;
-        padding: 40px;
-        }
+}
+
+@media (max-width: 912px) {
+    .signup-form {
+    max-width: 350px;
+    padding: 40px;
     }
-    
-    @media (max-width: 600px) {
-        .signup-form {
-        max-width: 300px;
-        padding: 15px;
-        margin-top: 60px;
-        }
+}
+
+@media (max-width: 600px) {
+    .signup-form {
+    max-width: 300px;
+    padding: 15px;
+    margin-top: 60px;
     }
-    
-    @media (max-width: 480px) {
-        .signup-form {
-        max-width: 280px;
-        padding: 10px;
-        margin-top: 80px;
-        }
+}
+
+@media (max-width: 480px) {
+    .signup-form {
+    max-width: 280px;
+    padding: 10px;
+    margin-top: 80px;
     }
-    
-    @media (max-width: 360px) {
-        .signup-form {
-        max-width: 250px;
-        padding: 25px;
-        }
+}
+
+@media (max-width: 360px) {
+    .signup-form {
+    max-width: 250px;
+    padding: 25px;
     }
-    
-    @media (max-width: 320px) {
-        .signup-form {
-        max-width: 220px;
-        padding: 10px;
-        }
+}
+
+@media (max-width: 320px) {
+    .signup-form {
+    max-width: 220px;
+    padding: 10px;
     }
-    
-    @media (max-width: 280px) {
-        .signup-form {
-        max-width: 220px;
-        padding: 5px;
-        }
+}
+
+@media (max-width: 280px) {
+    .signup-form {
+    max-width: 220px;
+    padding: 5px;
     }
+}
     

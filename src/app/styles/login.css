@@ -6,7 +6,8 @@
     background-color: #fff;
     display: flex;
     padding: 40px;
-    max-width: 500px;
+    overflow-x: auto;
+    min-width: 50px;
 }
 
 .login {
@@ -81,6 +82,7 @@ button[type="login-button"] {
     border: none;
     width: 100%;
     border-radius: 5px;
+    min-width: 40px;
 }
 
 
