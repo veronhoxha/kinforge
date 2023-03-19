@@ -48,9 +48,9 @@ function FamilyTree() {
             <span>{currentUser ? currentUser.email : ''}</span>
           </h3>
           <ul>
-            <DropdownItem href="./manageAccount" text="Edit Profile" icon={<EditIcon />} />
-            <DropdownItem href="./manageAccount" text="Settings" icon={<SettingsIcon />} />
-            <DropdownItem href="./manageAccount" text="Help" icon={<HelpIcon />} />
+            <DropdownItem href="./editprofile" text="Edit Profile" icon={<EditIcon />} />
+            <DropdownItem href="./settings" text="Settings" icon={<SettingsIcon />} />
+            <DropdownItem href="./help" text="Help" icon={<HelpIcon />} />
             <DropdownItem href="/" text="Logout" icon={<LogoutIcon />} onClick={() => {
               auth.signOut();
               console.log(`${currentUser.email} has been logged out`);

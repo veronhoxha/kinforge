@@ -7,6 +7,9 @@ import Signup from './app/pages/signup/signup';
 import PageNotFound from './app/pages/pagenotfound/pagenotfound';
 import FamilyTree from './app/pages/familyTree/familyTree';
 import ManageAccount from './app/pages/manageAccount/manageAccount';
+import EditProfile from './app/pages/manageAccount/editprofile/editprofile';
+import Settings from './app/pages/manageAccount/settings/settings';
+import Help from './app/pages/manageAccount/help/help';
 
 function App() {
   return (
@@ -22,6 +25,18 @@ function App() {
           <Route path="/" exact>
             <Navbar/>
             <Home/>
+          </Route>
+          <Route path="/editprofile" exact>
+            <EditProfile/>
+            <ManageAccount/>
+          </Route>
+          <Route path="/settings" exact>
+            <Settings/>
+            <ManageAccount/>
+          </Route>
+          <Route path="/help" exact>
+            <Help/>
+            <ManageAccount/>
           </Route>
           <Route path="/login" exact>
             <Navbar/>

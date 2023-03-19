@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import '../../../styles/editprofile.css';
 
-function editprofile() {
+const EditProfile = () => {
   return (
-    <div>editprofile</div>
-  )
-}
+    <div className="edit-profile">
+      <h2>Edit Profile</h2>
+      <p>Hello profile</p>
+    </div>
+  );
+};
 
-export default editprofile
+export default EditProfile;

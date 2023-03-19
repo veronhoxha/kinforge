@@ -1,0 +1,42 @@
+.help {
+    position: fixed;
+    top: 0;
+    left: 15%;
+    width: 85%;
+    height: 100%;
+    background-color: #f2f2f2;
+    color: black;
+    z-index: 9998;
+    padding: 20px;
+}
+
+.help h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+
+    .help {
+        left: auto !important;
+        top: auto;
+        width: 100%;
+        height: 100%;
+        background-color: #f2f2f2;
+        color: black;
+    }
+}
+  
+@media (max-width: 768px) {
+    
+    .help {
+        left: auto !important;
+        top: auto;
+        width: 100%;
+        height: 100%;
+        background-color: #f2f2f2;
+        color: black;
+    }
+}
+  
+  
