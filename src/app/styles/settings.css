@@ -11,10 +11,69 @@
 }
   
 .settings h2 {
+    font-size: 30px;
     text-align: center;
     margin-top: 0;
 }
-  
+
+.error-message {
+  color: red;
+}
+
+.settings .change-password {
+  padding-top: 80px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.settings .change-password:hover {
+  color: #7D4032;
+}
+
+.settings .change-password svg {
+  margin-right: 5px;
+}
+
+.settings button[type="submit"] {
+  background-color: #7D4032;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.settings button[type="submit"]:hover {
+  background-color: #A0695C;
+}
+
+.settings .error-message {
+  color: red;
+}
+
+.settings input.error {
+  border-color: red;
+}
+
+.settings .success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+.settings label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.settings input[type="radio"] {
+  margin-right: 5px;
+}
+
 @media (max-width: 1024px) {
 
     .settings {
@@ -27,7 +86,7 @@
     }
 }
   
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
 
     .settings {
       left: auto !important;
