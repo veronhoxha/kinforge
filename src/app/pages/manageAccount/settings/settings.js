@@ -8,7 +8,7 @@ function Settings() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
   const [errors, setErrors] = useState({});
 
   const handleCurrentPasswordChange = (event) => {
@@ -76,6 +76,12 @@ function Settings() {
     setShowPasswordForm(!showPasswordForm);
   };
 
+  const handleCancel = () => {
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+  };
+
   return (
     <div className="settings">
       <h2>Settings</h2>
@@ -84,7 +90,8 @@ function Settings() {
         Change Password
       </div>
       {showPasswordForm && (
-        <form onSubmit={handleSubmit}>
+      <div class="settings-form-wrapper">
+        <form onSubmit={handleSubmit} className="settings-from">
           <div>
             {errors.currentPassword && <p className="error-message">{errors.currentPassword}</p>}
             <label htmlFor="current-password">Current Password:</label>
@@ -101,8 +108,10 @@ function Settings() {
             {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
           </div>
           <button type="submit">Save Changes</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
           {errors.submit && <p className="error-message">{errors.submit}</p>}
         </form>
+      </div>
       )}
       {successMessage && <p className="success-message">{successMessage}</p>}
     </div>
