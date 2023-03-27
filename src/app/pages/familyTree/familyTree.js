@@ -4,7 +4,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import '../../styles/familyTree.css';
-import profile_pic from '../../pages/familyTree/veron.jpg';
+import profile_pic from '../../media/no-photo.png';
 import { auth } from '../../../firebase';
 import Authentication from '../../../Authentication';
 
@@ -37,9 +37,11 @@ function FamilyTree() {
 
   return (
     <div className="menu">
+    {currentUser ? (
+      <>
       <div className="menu-wrapper" ref={menu}>
         <div className="menu-main" onClick={() => setOpen(!open)}>
-          <img src={profile_pic} alt="profile pic"></img>
+          <img src={currentUser.photoURL || profile_pic} alt="profile pic"></img>
         </div>
 
         <div className={`dropdown ${open ? 'active' : 'inactive'}`}>
@@ -58,6 +60,10 @@ function FamilyTree() {
           </ul>
         </div>
       </div>
+      </>
+    ) : (
+      <></>
+    )}
     </div>
   );
 }
