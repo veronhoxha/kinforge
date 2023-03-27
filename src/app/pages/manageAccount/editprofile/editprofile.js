@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, updateProfile, updateEmail, EmailAuthProvider, reauthenticateWithCredential  } from "firebase/auth";
+import { getAuth, updateProfile, updateEmail, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import { db } from '../../../../firebase';
 import { getFirestore, updateDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
 import '../../../styles/editprofile.css';
-import profile_pic from '../../../pages/familyTree/veron.jpg';
-import { MdEdit } from 'react-icons/md';
+import profile_pic from '../../../media/no-photo.png';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
 
 const EditProfile = () => {
   const [name, setFirstName] = useState('');
@@ -13,13 +17,27 @@ const EditProfile = () => {
   const [currentUser, setCurrentUser] = useState();
   const [userId, setUserId] = useState(null); 
   const [errors, setErrors] = useState('');
+  const [profilePicture, setProfilePicture] = useState(profile_pic);
+  const [openModal, setOpenModal] = useState(false);
   const auth = getAuth();
 
+  const hiddenFileInputStyle = {
+    display: 'none',
+  };
+  
   const isValidEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
-};
+  };
 
+  const handleModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  // const handleEditProfilePicture = () => {
+  //   setOpenModal(false);
+  //   document.getElementById('profile-picture').click();
+  // };
         
   const reauthenticateUser = async (currentUser, originalEmail, password) => {
     const credentials = EmailAuthProvider.credential(originalEmail, password);
@@ -67,8 +85,7 @@ const EditProfile = () => {
         return;
        }
     }
-  
-  
+
     const db = getFirestore();
     const usersCollection = collection(db, 'users');
     const q = query(usersCollection, where('uid', '==', currentUser.auth.lastNotifiedUid));
@@ -112,7 +129,7 @@ const EditProfile = () => {
     }
   };
 
-  // console.log(currentUser);
+  console.log(currentUser);
 
   const handleCancel = () => {
     if (currentUser) {
@@ -129,22 +146,156 @@ const EditProfile = () => {
         setLastName(user.displayName.split(' ')[1]);
         setEmail(user.email);
         setCurrentUser(user);
-        setUserId(user.uid); 
+        setUserId(user.uid);
+        setProfilePicture(user.photoURL || profile_pic); 
       }
     });
     return () => unsubscribe();
   }, [auth]);
+  
+
+  const handleProfilePictureChange = (e) => {
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePicture(reader.result);
+      };
+      reader.readAsDataURL(file);
+      uploadProfilePicture(file);
+    }
+  };
+  
+  const deleteProfilePicture = async (e) => {
+    const storage = getStorage();
+    const imageRef = ref(storage, `profile_pictures/${currentUser.auth.lastNotifiedUid}`);
+    try {
+      await deleteObject(imageRef);
+      setProfilePicture(profile_pic);
+      setCurrentUser({
+        ...currentUser,
+        photoURL: null,
+      });
+
+      const db = getFirestore();
+      const usersCollection = collection(db, 'users');
+      const q = query(usersCollection, where('uid', '==', currentUser.auth.lastNotifiedUid));
+  
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        console.error("No matching documents found!");
+        return;
+      }
+  
+      querySnapshot.forEach(async (doc) => {
+        const userRef = doc.ref;
+        await updateDoc(userRef, {
+          photoURL: null,
+        });
+      });
+  
+    } catch (error) {
+      console.error('Error deleting the profile picture:', error);
+    }
+  };
+  
+  const uploadProfilePicture = (file) => {
+    const storage = getStorage();
+    const imageRef = ref(storage, `profile_pictures/${currentUser.auth.lastNotifiedUid}`);
+  
+    const uploadTask = uploadBytesResumable(imageRef, file);
+  
+    // setIsUploading(true);
+  
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      },
+      (error) => {
+        console.error('Error uploading the profile picture:', error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          // setIsUploading(false);
+          setProfilePicture(downloadURL);
+  
+          try {
+            await updateProfile(auth.currentUser, {
+              photoURL: downloadURL,
+            });
+          } catch (error) {
+            console.error('Error updating the user profile:', error);
+          }
+  
+          setCurrentUser({
+            ...currentUser,
+            photoURL: downloadURL,
+          });
+  
+          const db = getFirestore();
+          const usersCollection = collection(db, 'users');
+          const q = query(usersCollection, where('uid', '==', currentUser.auth.lastNotifiedUid));
+  
+          const querySnapshot = await getDocs(q);
+          if (querySnapshot.empty) {
+            console.error("No matching documents found!");
+            return;
+          }
+  
+          querySnapshot.forEach(async (doc) => {
+            const userRef = doc.ref;
+            await updateDoc(userRef, {
+              photoURL: downloadURL,
+            });
+          });
+        });
+      }
+    );
+  };
 
   return (
     <div className="edit-profile">
       <h2>Edit Profile</h2>
       {currentUser ? (
         <>
-          <div className="profile-picture-container">
-            <img src={profile_pic} alt="User's Profile" className="profile-picture" />
-            <div className="edit-icon">
-              <MdEdit size={24} />
-            </div>
+         <div className="profile-picture-container">
+          <img src={profilePicture} alt="User's Profile" style={{ borderRadius: '50%', objectFit: 'cover', width: '150px', height: '150px', border: '3px solid #ccc' }} />
+          <div className="edit-icon" onClick={handleModal}>
+            <EditIcon size={24} />
+            <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}/>
+          </div>
+          <Modal open={openModal} onClose={handleModal}>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 400,
+                bgcolor: 'background.paper',
+                boxShadow: 24,
+                p: 4,
+                borderRadius: '8px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <h3>Profile Picture Options</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                <button type="button" onClick={() => document.getElementById("profile-picture").click()} style={{ marginRight: '8px' }}>
+                  Edit Photo
+                </button>
+                <button type="button" onClick={deleteProfilePicture} style={{ marginRight: '8px' }}>
+                  Delete Photo
+                </button>
+                <button type="button" onClick={handleModal}>
+                  Cancel
+                </button>
+              </div>
+            </Box>
+            </Modal>
           </div>
           <form onSubmit={validEmail} className="profile-form">
             <label htmlFor="first-name">First Name:</label>
@@ -162,7 +313,7 @@ const EditProfile = () => {
           {errors && <p className="error-message">{errors}</p>}
         </>
       ) : (
-        <p>Something went wrong...</p>
+        <></>
       )}
     </div>
   );
