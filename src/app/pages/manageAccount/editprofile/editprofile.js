@@ -257,6 +257,7 @@ const EditProfile = () => {
   return (
     <div className="edit-profile">
       <h2>Edit Profile</h2>
+
       {currentUser ? (
         <>
          <div className="profile-picture-container">
@@ -297,6 +298,7 @@ const EditProfile = () => {
             </Box>
             </Modal>
           </div>
+          <div className="edit-profile-wrapper">
           <form onSubmit={validEmail} className="profile-form">
             <label htmlFor="first-name">First Name:</label>
             <input type="text" id="first-name" value={name || ''} required onChange={(e) => setFirstName(e.target.value)} />
@@ -310,12 +312,13 @@ const EditProfile = () => {
             <button type="submit">Save Changes</button>
             <button type="button" onClick={handleCancel}>Cancel</button>
           </form>
+          </div>
           {errors && <p className="error-message">{errors}</p>}
         </>
       ) : (
         <></>
       )}
-    </div>
+        </div>
   );
 };
 

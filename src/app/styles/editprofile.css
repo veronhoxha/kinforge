@@ -10,9 +10,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: scroll;
+}
+
+.edit-profile-wrapper {
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .edit-profile h2 {
+    font-size: 30px;
     text-align: center;
     margin-top: 0;
     margin-bottom: 20px;
@@ -51,10 +67,8 @@
     align-items: center;
     width: 100%;
     max-width: 400px;
-    background-color: #ffffff;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .profile-form label {
@@ -68,9 +82,8 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-  }
+}
   
-
 .profile-form input {
     width: 100%;
     padding: 8px 12px;
@@ -111,38 +124,11 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 14px;
-  }
+}
   
   button:hover {
     background-color: #A0695C;
-  }
-
-  .uploading-progress-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .uploading-progress {
-    width: 100%;
-    max-width: 150px;
-    background-color: #A0695C;
-    height: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 200px;
-  }
-  
-  .uploading-progress-inner {
-    height: 100%;
-    background-color: #7D4032;
-  }
-  
-  .uploading-progress-text {
-    color: #7D4032;
-    margin-top: 5px;
-  }
-  
+}
 
 @media (max-width: 1024px) {
 
@@ -167,3 +153,30 @@ button {
         color: black;
     }
 }
+
+@media (max-width: 480px) {
+
+    .edit-profile {
+        left: auto !important;
+        top: auto;
+        width: 100%;
+        height: 100%;
+        background-color: #f2f2f2;
+        color: black;
+    }
+
+    .profile-picture {
+        margin-top: 20px;
+        width: 100px;
+        height: 100px;
+    }
+    
+    .profile-form {
+        max-width: 90%;
+    }
+}
+
+
+
+
+
