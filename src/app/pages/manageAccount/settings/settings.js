@@ -84,13 +84,14 @@ function Settings() {
 
   return (
     <div className="settings">
+      <div className="settings-content">
       <h2>Settings</h2>
       <div onClick={handleTogglePasswordForm} className="change-password">
         <PasswordIcon />
         Change Password
       </div>
       {showPasswordForm && (
-      <div class="settings-form-wrapper">
+      <div className="settings-form-wrapper">
         <form onSubmit={handleSubmit} className="settings-from">
           <div>
             {errors.currentPassword && <p className="error-message">{errors.currentPassword}</p>}
@@ -107,13 +108,16 @@ function Settings() {
             <input type="password" id="confirm-password" value={confirmPassword} onChange={handleConfirmPasswordChange} className={errors.confirmPassword && 'error'} />
             {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
           </div>
+          <div className="button-container">
           <button type="submit">Save Changes</button>
           <button type="button" onClick={handleCancel}>Cancel</button>
+          </div>
           {errors.submit && <p className="error-message">{errors.submit}</p>}
         </form>
       </div>
       )}
       {successMessage && <p className="success-message">{successMessage}</p>}
+      </div>
     </div>
   );
   }
