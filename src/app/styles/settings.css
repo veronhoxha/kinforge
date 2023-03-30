@@ -1,3 +1,14 @@
+.settings-content {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto; 
+  max-height: calc(100% - 40px); 
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
 .settings {
   position: fixed;
   top: 0;
@@ -7,7 +18,7 @@
   background-color: #f2f2f2;
   color: black;
   z-index: 9998;
-  padding: 20px;
+  overflow-y: auto;
 }
 
 .settings h2 {
@@ -50,10 +61,9 @@
   transition: background-color 0.3s;
 }
 
-.settings button[type=button]{
+.settings button[type=button] {
   width: 100%;
-  max-width: 120px; 
-  margin-left: 10px;
+  max-width: 120px;
   padding: 10px;
   background-color: #7D4032;
   color: white;
@@ -62,6 +72,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-left: 10px;
 }
 
 .settings button:hover {
@@ -90,15 +101,32 @@
   margin-right: 5px;
 }
 
+.settings .button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.settings button[type=submit],
+.settings button[type=button] {
+  flex: 1;
+  max-width: 120px;
+}
+
+.settings-form-wrapper {
+  margin-bottom: 20px;
+}
+
 @media (max-width: 1024px) {
 
   .settings {
     left: auto !important;
     top: auto;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 40px);
     background-color: #f2f2f2;
     color: black;
+    overflow-y: auto;
   }
 }
 
@@ -108,8 +136,26 @@
     left: auto !important;
     top: auto;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 40px);
     background-color: #f2f2f2;
     color: black;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings .button-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .settings button[type=submit],
+  .settings button[type=button] {
+    width: 100%;
+    max-width: 120px;
+  }
+
+  .settings button[type=button] {
+    margin-left: 0;
   }
 }
