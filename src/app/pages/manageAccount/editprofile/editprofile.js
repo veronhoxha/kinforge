@@ -19,6 +19,7 @@ const EditProfile = () => {
   const [errors, setErrors] = useState('');
   const [profilePicture, setProfilePicture] = useState(profile_pic);
   const [openModal, setOpenModal] = useState(false);
+  const [noPhoto, setNoPhoto] = useState(false);
   const auth = getAuth();
 
   const hiddenFileInputStyle = {
@@ -140,14 +141,24 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setFirstName(user.displayName.split(' ')[0]);
         setLastName(user.displayName.split(' ')[1]);
         setEmail(user.email);
         setCurrentUser(user);
         setUserId(user.uid);
-        setProfilePicture(user.photoURL || profile_pic); 
+        
+        if (user.photoURL) {
+          setProfilePicture(user.photoURL);
+          setNoPhoto(false);
+        } else {
+          setProfilePicture(profile_pic);
+          setNoPhoto(true);
+        }
+      } else {
+        setProfilePicture(profile_pic);
+        setNoPhoto(true);
       }
     });
     return () => unsubscribe();
@@ -172,6 +183,7 @@ const EditProfile = () => {
     try {
       await deleteObject(imageRef);
       setProfilePicture(profile_pic);
+      setNoPhoto(true);
       setCurrentUser({
         ...currentUser,
         photoURL: null,
@@ -186,13 +198,16 @@ const EditProfile = () => {
         console.error("No matching documents found!");
         return;
       }
-  
+    
       querySnapshot.forEach(async (doc) => {
         const userRef = doc.ref;
         await updateDoc(userRef, {
           photoURL: null,
         });
       });
+    
+      setProfilePicture(profile_pic);
+      setNoPhoto(true);
   
     } catch (error) {
       console.error('Error deleting the profile picture:', error);
@@ -219,6 +234,7 @@ const EditProfile = () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           // setIsUploading(false);
           setProfilePicture(downloadURL);
+          setNoPhoto(false);
   
           try {
             await updateProfile(auth.currentUser, {
@@ -230,7 +246,7 @@ const EditProfile = () => {
   
           setCurrentUser({
             ...currentUser,
-            photoURL: downloadURL,
+            photoURL: downloadURL || profile_pic,
           });
   
           const db = getFirestore();
@@ -261,7 +277,11 @@ const EditProfile = () => {
       {currentUser ? (
         <>
          <div className="profile-picture-container">
+         {noPhoto ? (
+          <img src={profile_pic} alt="User's Profile" style={{ borderRadius: '50%', objectFit: 'cover', width: '150px', height: '150px', border: '3px solid #ccc' }} />
+        ) : (
           <img src={profilePicture} alt="User's Profile" style={{ borderRadius: '50%', objectFit: 'cover', width: '150px', height: '150px', border: '3px solid #ccc' }} />
+        )}
           <div className="edit-icon" onClick={handleModal}>
             <EditIcon size={24} />
             <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}/>
