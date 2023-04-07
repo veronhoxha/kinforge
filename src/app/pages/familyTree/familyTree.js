@@ -11,6 +11,7 @@ import FamilyModal from '../../components/FamilyModal';
 import { Link, useLocation } from 'react-router-dom';
 import ManIcon from '@mui/icons-material/Man';
 import WomanIcon from '@mui/icons-material/Woman';
+import DownloadIcon from '@mui/icons-material/Download';
 
 function FamilyTree() {
   const [currentUser, setCurrentUser] = useState();
@@ -83,6 +84,7 @@ function FamilyTree() {
                 <DropdownItem href="./editprofile" text="Edit Profile" icon={<EditIcon />} />
                 <DropdownItem href="./settings" text="Settings" icon={<SettingsIcon />} />
                 <DropdownItem href="./help" text="Help" icon={<HelpIcon />} />
+                <DropdownItem text="Export as PDF" icon={<DownloadIcon />} />
                 <DropdownItem
                   href="/"
                   text="Logout"
