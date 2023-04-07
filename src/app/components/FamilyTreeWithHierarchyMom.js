@@ -1,12 +1,12 @@
 import React from 'react';
 import FamilyTree from '../pages/familyTree/familyTree'
-import Hierarchy from '../pages/hierarchy/hierarchy'
+import HierarchyMomSide from '../pages/hierarchy/HierarchyMomSide'
 
 const FamilyTreeWithHierarchy = () => {
     return (
         <>
             <FamilyTree/>
-            <Hierarchy/>
+            <HierarchyMomSide/>
         </>
     );
 };

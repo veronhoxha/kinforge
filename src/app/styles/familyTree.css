@@ -22,7 +22,7 @@
     cursor: pointer;
     background-color: #fff;
     top: 10px;
-    right: 20px; 
+    right: 20px;
     height: 60px;
     width: 60px;
 }
@@ -39,7 +39,7 @@ h3 {
 }
 
 h3 span {
-    color:#cecece;
+    color: #cecece;
     font-weight: 400;
     font-size: 14px;
 }
@@ -81,7 +81,7 @@ h3 span {
 
 .dropdown ul li {
     border-top: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 10px  0;
+    padding: 10px 0;
 }
 
 .dropdown ul li:hover img {
@@ -99,7 +99,7 @@ h3 span {
     margin: 0px auto;
     display: flex;
 }
-  
+
 .dropdown-items img {
     opacity: 0.5;
     transition: 500ms;
@@ -121,5 +121,78 @@ h3 span {
     text-decoration: none;
     color: inherit;
 }
+
+.go-to-man, .go-to-woman {
+    position: absolute;
+    font-size: 24px;
+    color: white;
+}
+
+.icon {
+    margin: 24px 0;
+}
+
+.icon svg {
+    width: 54px;
+    height: 54px;
+}
+
+.go-to-man {
+    top: 5px;
+    left: 20px;
+}
+
+.go-to-woman {
+    top: 5px;
+    left: 50px;
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #7D4032;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    top: 70px;
+    white-space: nowrap;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -40px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #7D4032 transparent;
+}
+
+.go-to-man:hover .tooltip,
+.go-to-woman:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.no-click {
+    pointer-events: none;
+}
+  
+.no-click .dropdown,
+.no-click .menu-main {
+    pointer-events: all;
+}
+
+.no-click .tooltip {
+    display: none;
+}
   
 
+
+  

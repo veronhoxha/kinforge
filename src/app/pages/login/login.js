@@ -53,6 +53,8 @@ const Login = () => {
                 const errorMessage = error.message;
                 if (errorCode === 'auth/user-not-found' || errorCode === 'auth/wrong-password') {
                     setErrors('Invalid email or password. Please try again.');
+                } else if (errorCode === 'auth/too-many-requests') {
+                    setErrors('To many failed login attempts. You can immediately restore it by resetting your password or you can try again later.');
                 } else {
                     setErrors(errorMessage);
                 }
@@ -102,7 +104,6 @@ const Login = () => {
             <Link to="/" className="go-back-to-the-homepage"> Go back to the homepage </Link>
         </form>
         </div>
-
   );
 };
 

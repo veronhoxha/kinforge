@@ -9,8 +9,8 @@ import ManageAccount from './app/pages/manageAccount/manageAccount';
 import EditProfile from './app/pages/manageAccount/editprofile/editprofile';
 import Settings from './app/pages/manageAccount/settings/settings';
 import Help from './app/pages/manageAccount/help/help';
-import Test from './app/pages/test/testBackend'
 import FamilyTreeWithHierarchy from './app/components/FamilyTreeWithHierarchy'
+import FamilyTreeWithHierarchyMom from './app/components/FamilyTreeWithHierarchyMom'
 
 function App() {
   return (
@@ -18,6 +18,11 @@ function App() {
       <React.Fragment>
         <Switch>
           <Route path="/familyTree" render={() => <FamilyTreeWithHierarchy />} />
+          <Route path="/" exact>
+            <Navbar/>
+            <Home/>
+          </Route>
+          <Route path="/familyTreeMom" render={() => <FamilyTreeWithHierarchyMom />} />
           <Route path="/" exact>
             <Navbar/>
             <Home/>
@@ -42,10 +47,6 @@ function App() {
           <Route path="/login" exact>
             <Navbar/>
             <Login/>
-          </Route>
-          <Route path="/test" exact>
-            <Navbar/>
-            <Test/>
           </Route>
           <Route path="/signup" exact>
             <Navbar/>

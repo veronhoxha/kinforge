@@ -34,11 +34,6 @@ const EditProfile = () => {
   const handleModal = () => {
     setOpenModal(!openModal);
   };
-
-  // const handleEditProfilePicture = () => {
-  //   setOpenModal(false);
-  //   document.getElementById('profile-picture').click();
-  // };
         
   const reauthenticateUser = async (currentUser, originalEmail, password) => {
     const credentials = EmailAuthProvider.credential(originalEmail, password);
@@ -164,7 +159,6 @@ const EditProfile = () => {
     return () => unsubscribe();
   }, [auth]);
   
-
   const handleProfilePictureChange = (e) => {
     if (e.target.files.length > 0) {
       const file = e.target.files[0];
@@ -220,19 +214,15 @@ const EditProfile = () => {
   
     const uploadTask = uploadBytesResumable(imageRef, file);
   
-    // setIsUploading(true);
-  
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
-        // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      (snapshot) => {;
       },
       (error) => {
         console.error('Error uploading the profile picture:', error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          // setIsUploading(false);
           setProfilePicture(downloadURL);
           setNoPhoto(false);
   
@@ -327,13 +317,14 @@ const EditProfile = () => {
             <input type="text" id="last-name" value={surname || ''} required onChange={(e) => setLastName(e.target.value)} />
   
             <label htmlFor="email">Email Address:</label>
+            {errors && <p className="error-message">{errors}</p>}
             <input type="email" id="email" value={emailaddress || ''} required onChange={(e) => setEmail(e.target.value)} />
   
             <button type="submit">Save Changes</button>
             <button type="button" onClick={handleCancel}>Cancel</button>
           </form>
           </div>
-          {errors && <p className="error-message">{errors}</p>}
+          
         </>
       ) : (
         <></>
