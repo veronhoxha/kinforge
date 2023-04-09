@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -19,7 +20,9 @@
     "dhx": "^1.0.3",
     "firebase": "^9.17.2",
     "gapi-script": "^1.2.0",
+    "html2canvas": "^1.4.1",
     "jshint-stylish": "^2.2.1",
+    "jspdf": "^2.5.1",
     "mdb-react-ui-kit": "^5.1.0",
     "primeflex": "^3.3.0",
     "primereact": "^9.2.2",

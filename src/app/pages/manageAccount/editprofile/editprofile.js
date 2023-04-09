@@ -8,7 +8,8 @@ import profile_pic from '../../../media/no-photo.png';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const EditProfile = () => {
   const [name, setFirstName] = useState('');
@@ -21,6 +22,13 @@ const EditProfile = () => {
   const [openModal, setOpenModal] = useState(false);
   const [noPhoto, setNoPhoto] = useState(false);
   const auth = getAuth();
+  const [snackbarMessage, setSnackbarMessage] = useState(null);
+  const [snackbarSeverity, setSnackbarSeverity] = useState('error');
+
+  const showSnackbar = (message, severity) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+  };
 
   const hiddenFileInputStyle = {
     display: 'none',
@@ -44,7 +52,7 @@ const EditProfile = () => {
     event.preventDefault();
   
     if (!userId) {
-      alert("User not found");
+      showSnackbar("User not found", "error");
       return;
     }
   
@@ -54,7 +62,7 @@ const EditProfile = () => {
         displayName,
       });
     } catch (error) {
-      alert("Error updating the display name: " + error.message);
+      showSnackbar("Error updating the display name: ", "error");
       return;
     }
   
@@ -65,7 +73,7 @@ const EditProfile = () => {
         const currentPassword = prompt("Please enter your current password to confirm the email change:");
   
         if (!currentPassword) {
-          alert("Password is required to update your email.");
+          showSnackbar("Password is required to update your email.", "error");
           return;
         }
   
@@ -73,11 +81,11 @@ const EditProfile = () => {
           await reauthenticateUser(auth.currentUser, currentUser.email, currentPassword);
           await updateEmail(auth.currentUser, emailaddress);
         } catch (reauthError) {
-          alert("Error re-authenticating: " + reauthError.message);
+          showSnackbar("Error re-authenticating: ", "error");
           return;
         }
       } else {
-        alert("Error updating the email: " + error.message);
+        showSnackbar("Error updating the email: ", "error");
         return;
        }
     }
@@ -88,7 +96,7 @@ const EditProfile = () => {
   
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) {
-      alert("No matching documents found!");
+      showSnackbar("No matching documents found!", "error");
       return;
     }
   
@@ -101,7 +109,7 @@ const EditProfile = () => {
       });
     });
   
-    alert("Your changes were saved successfully!");
+    showSnackbar("Your changes were saved successfully!", "success");
   };
 
   const validEmail = (e) => {
@@ -329,7 +337,17 @@ const EditProfile = () => {
       ) : (
         <></>
       )}
-        </div>
+          <Snackbar
+            open={!!snackbarMessage}
+            autoHideDuration={6000}
+            onClose={() => setSnackbarMessage(null)}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          >
+            <Alert onClose={() => setSnackbarMessage(null)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+              {snackbarMessage}
+            </Alert>
+          </Snackbar>
+      </div>
   );
 };
 

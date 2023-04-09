@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import PasswordIcon from '@mui/icons-material/Password';
 import { getAuth, updatePassword, signInWithEmailAndPassword } from "firebase/auth";
 import '../../../styles/settings.css';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function Settings() {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };  
 
   const handleCurrentPasswordChange = (event) => {
     setCurrentPassword(event.target.value);
   };
+
 
   const handleNewPasswordChange = (event) => {
     setNewPassword(event.target.value);
@@ -55,11 +65,11 @@ function Settings() {
       if (!errors.currentPassword) {
         try {
           await updatePassword(auth.currentUser, newPassword);
-          setCurrentPassword("");
-          setNewPassword("");
-          setConfirmPassword("");
+          setCurrentPassword('');
+          setNewPassword('');
+          setConfirmPassword('');
           setErrors({});
-          setSuccessMessage("Password changed successfully!");
+          setSnackbarOpen(true); 
           setShowPasswordForm(false);
         } catch (error) {
           setErrors({ submit: error.message });
@@ -116,7 +126,16 @@ function Settings() {
         </form>
       </div>
       )}
-      {successMessage && <p className="success-message">{successMessage}</p>}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success">
+          Password changed successfully!
+        </Alert>
+      </Snackbar>
       </div>
     </div>
   );
