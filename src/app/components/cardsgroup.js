@@ -12,7 +12,7 @@ function cardsgroup() {
               <div className='card_holder'>
                 <div className='card-holder-item'>
                   <div className='card_info'>
-                    <div className='icon'>
+                    <div className='icon-cards'>
                       <SearchIcon/>
                     </div>
                     <h3 className="h3-title">Searching</h3>
@@ -21,7 +21,7 @@ function cardsgroup() {
                 </div>
                 <div  className='card-holder-item'>
                   <div className='card_info'>
-                    <div className='icon'>
+                    <div className='icon-cards'>
                       <StarIcon/>
                     </div>
                     <h3 className="h3-title">User experience</h3>
@@ -30,7 +30,7 @@ function cardsgroup() {
                 </div>
                 <div className='card-holder-item'>
                   <div className='card_info'>
-                    <div className='icon'>
+                    <div className='icon-cards'>
                       <ThumbUpIcon/>
                     </div>
                     <h3 className="h3-title">Quick Edits</h3>
