@@ -42,7 +42,7 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
     padding: 3,
   };
 
-  const HierarchyMomSide = () => {
+  const HierarchyDadSide = () => {
     const reactFlowWrapper = useRef(null);
     const connectingNodeId = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -56,7 +56,7 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
     const [dialogOpen, setDialogOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState();
     const db = getFirestore();
-    const usersCollection = collection(db, "family-members-mom-side");
+    const usersCollection = collection(db, "family-members-dad-side");
     const auth = getAuth();
 
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
@@ -265,10 +265,10 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
     );
   };
 
-  const HierarchyMomSideWrapper = () => (
+  const HierarchyDadSideWrapper = () => (
     <ReactFlowProvider>
-      <HierarchyMomSide />
+      <HierarchyDadSide />
     </ReactFlowProvider>
   );
 
-  export default HierarchyMomSideWrapper;
+  export default HierarchyDadSideWrapper;

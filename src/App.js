@@ -9,7 +9,7 @@ import ManageAccount from './app/pages/manageAccount/manageAccount';
 import EditProfile from './app/pages/manageAccount/editprofile/editprofile';
 import Settings from './app/pages/manageAccount/settings/settings';
 import Help from './app/pages/manageAccount/help/help';
-import FamilyTreeWithHierarchy from './app/components/FamilyTreeWithHierarchy'
+import FamilyTreeWithHierarchyDad from './app/components/FamilyTreeWithHierarchyDad'
 import FamilyTreeWithHierarchyMom from './app/components/FamilyTreeWithHierarchyMom'
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
     <Router>
       <React.Fragment>
         <Switch>
-          <Route path="/familyTree" render={() => <FamilyTreeWithHierarchy />} />
+          <Route path="/familyTree" render={() => <FamilyTreeWithHierarchyDad />} />
           <Route path="/" exact>
             <Navbar/>
             <Home/>
