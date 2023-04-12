@@ -183,6 +183,11 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
     };
 
     const deleteMember = async (id, uid) => {
+
+      if (id === '0') { 
+        return;
+      }
+
       try {
         const memberSnapshot = await getDocs(
           query(
@@ -191,7 +196,7 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
             where("addedBy", "==", uid)
           )
         );
-        if (!memberSnapshot.empty) {
+        if (!memberSnapshot.empty && id !== 0) {
           memberSnapshot.forEach(async (doc) => {
             await deleteDoc(doc.ref);
           });
