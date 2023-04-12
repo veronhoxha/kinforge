@@ -21,6 +21,7 @@ import { brown } from '@mui/material/colors';
 import {collection, addDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestore";
+import { FormHelperText } from '@mui/material';
 
   const initialNodes = [
     {
@@ -52,12 +53,13 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
     const [selectedNode, setSelectedNode] = useState(null);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const { project } = useReactFlow();
-    const [selectedValue, setSelectedValue] = React.useState('');
+    const [selectedValue, setSelectedValue] = React.useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState();
     const db = getFirestore();
     const usersCollection = collection(db, "family-members-mom-side");
     const auth = getAuth();
+    const [formErrors, setFormErrors] = useState({});
 
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
     const onConnectStart = useCallback((_, { nodeId }) => {
@@ -92,6 +94,7 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
     const onNodeClick = (_, node) => {
       console.log('click node', node);
       setSelectedNode(node);
+      setSelectedValue('');
       setDialogOpen(true);
     };
 
@@ -102,6 +105,11 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
       dod: "",
       gender: "",
     });
+
+    const handleClose = () => {
+      setSelectedValue('');
+      setDialogOpen(false);
+    };
     
     const handleInputChange = (e) => {
       const { name, value } = e.target;
@@ -145,42 +153,44 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
     };
 
     const handleSave = () => {
-      if (selectedNode) {
-        const updatedNode = {
-          ...selectedNode,
-          data: {
-            label: (
-              <>
-                {formValues.name} {formValues.surname}
-                <br />
-                  {formValues.dob}
-              </>
-            ),
-          },
-        };
-  
-        setNodes((nds) =>
-          nds.map((node) => (node.id === selectedNode.id ? updatedNode : node))
-        );
-        setSelectedNode(updatedNode);
-
-        if (currentUser) {
-          const memberData = {
-            id: selectedNode.id,
-            name: formValues.name,
-            surname: formValues.surname,
-            date_of_birth: formValues.dob,
-            date_of_death: formValues.dod,
-            gender: selectedValue,
-            addedBy: currentUser.uid,
+      if (validateForm()) {
+        if (selectedNode) {
+          const updatedNode = {
+            ...selectedNode,
+            data: {
+              label: (
+                <>
+                  {formValues.name} {formValues.surname}
+                  <br />
+                    {formValues.dob}
+                </>
+              ),
+            },
           };
-          saveMember(memberData);
-        } else {
-          console.error('No current user');
+    
+          setNodes((nds) =>
+            nds.map((node) => (node.id === selectedNode.id ? updatedNode : node))
+          );
+          setSelectedNode(updatedNode);
+    
+          if (currentUser) {
+            const memberData = {
+              id: selectedNode.id,
+              name: formValues.name,
+              surname: formValues.surname,
+              date_of_birth: formValues.dob,
+              date_of_death: formValues.dod,
+              gender: selectedValue,
+              addedBy: currentUser.uid,
+            };
+            saveMember(memberData);
+          } else {
+            console.error('No current user');
+          }
         }
+        setDialogOpen(false);
       }
-      setDialogOpen(false);
-    };
+    };    
 
     const deleteMember = async (id, uid) => {
 
@@ -206,6 +216,27 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
       }
       };
 
+      const validateForm = () => {
+        let errors = {};
+      
+        if (!formValues.name) {
+          errors.name = 'Name is required';
+        }
+        if (!formValues.surname) {
+          errors.surname = 'Surname is required';
+        }
+        if (!formValues.dob) {
+          errors.dob = 'Date of Birth is required';
+        }
+        if (!selectedValue) {
+          errors.gender = 'Gender is required';
+        }
+      
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0;
+      };
+      
+
   return (
       <div className="wrapper" ref={reactFlowWrapper}>
         <div style={{ height: 817 }}>
@@ -230,33 +261,39 @@ import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestor
                 {errorMessage}
               </Alert>
             </Snackbar>
-            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth >
+            <Dialog open={dialogOpen} onClose={handleClose} maxWidth="sm" fullWidth >
               <DialogTitle>Edit / Add data</DialogTitle>
               <DialogContent>
                 <form>
-                <InputLabel htmlFor="component-simple">Name</InputLabel>
-                <Input name="name" id="component-simple" defaultValue="" fullWidth className='form-field' onChange={handleInputChange} />
+                <FormHelperText error>{formErrors.name}</FormHelperText>
+                <InputLabel required htmlFor="component-simple">Name</InputLabel>
+                <Input name="name" id="component-simple" defaultValue="" fullWidth className='form-field' onChange={handleInputChange} required />
 
-                <InputLabel htmlFor="component-simple">Surname</InputLabel>
-                <Input name="surname" id="component-simple" defaultValue="" fullWidth className='form-field' onChange={handleInputChange}/>
+                <FormHelperText error>{formErrors.surname}</FormHelperText>
+                <InputLabel required htmlFor="component-simple">Surname</InputLabel>
+                <Input name="surname" id="component-simple" defaultValue="" fullWidth className='form-field' onChange={handleInputChange} required  />
 
-                <InputLabel htmlFor="component-simple">Date of Birth</InputLabel>
-                <Input name="dob" id="component-simple" type="date" defaultValue="" fullWidth className='form-field' onChange={handleInputChange} />
+                <FormHelperText error>{formErrors.dob}</FormHelperText>
+                <InputLabel required htmlFor="component-simple">Date of Birth</InputLabel>
+                <Input name="dob" id="component-simple" type="date" defaultValue="" fullWidth className='form-field' onChange={handleInputChange} required />
 
-                <InputLabel htmlFor="component-simple">Date of Death</InputLabel>
+
+                <InputLabel  htmlFor="component-simple">Date of Death</InputLabel>
                 <Input name="dod" id="component-simple" type="date" defaultValue="" fullWidth className='form-field' onChange={handleInputChange}/>
 
-                <FormControl>
+                <FormHelperText error>{formErrors.gender}</FormHelperText>
+                <FormControl required >
                   <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
                   <RadioGroup aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
-                    <FormControlLabel value="female" control={<Radio  {...controlProps('male')}
-                      sx={{ color: brown[800], '&.Mui-checked': {color: brown[600],},}}/>} label="Male" />
-                    <FormControlLabel value="male" control={<Radio  {...controlProps('female')}
-                      sx={{ color: brown[800], '&.Mui-checked': {color: brown[600],},}}/>} label="Female" />
-                    <FormControlLabel value="other" control={<Radio  {...controlProps('other')}
-                      sx={{ color: brown[800], '&.Mui-checked': {color: brown[600],},}}/>} label="Other" />
+                  <FormControlLabel value="male" control={<Radio  {...controlProps('male')}
+                    sx={{ color: brown[800], '&.Mui-checked': {color: brown[600],},}}/>} label="Male" />
+                  <FormControlLabel value="female" control={<Radio  {...controlProps('female')}
+                    sx={{ color: brown[800], '&.Mui-checked': {color: brown[600],},}}/>} label="Female" />
+                  <FormControlLabel value="other" control={<Radio  {...controlProps('other')}
+                    sx={{ color: brown[800], '&.Mui-checked': {color: brown[600],},}}/>} label="Other" />
                   </RadioGroup>
                 </FormControl>
+
                 </form>
               </DialogContent>
               <DialogActions>
