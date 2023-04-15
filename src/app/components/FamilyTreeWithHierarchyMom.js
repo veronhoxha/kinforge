@@ -2,7 +2,7 @@ import React from 'react';
 import FamilyTree from '../pages/familyTree/familyTree'
 import HierarchyMomSide from '../pages/hierarchy/HierarchyMomSide'
 
-const FamilyTreeWithHierarchy = () => {
+const FamilyTreeWithHierarchyMom = () => {
     return (
         <>
             <FamilyTree/>
@@ -11,4 +11,4 @@ const FamilyTreeWithHierarchy = () => {
     );
 };
 
-export default FamilyTreeWithHierarchy;
+export default FamilyTreeWithHierarchyMom;

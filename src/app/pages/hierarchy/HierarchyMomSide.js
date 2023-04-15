@@ -56,7 +56,7 @@ import Places from './Places';
     const { project } = useReactFlow();
     const [selectedValue, setSelectedValue] = React.useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [startingNodeEdited, setStartingNodeEdited] = useState(false);
+    const [startingNodeEdited] = useState(false);
     const [currentUser, setCurrentUser] = useState();
     const db = getFirestore();
     const usersCollection = collection(db, "family-members-mom-side");

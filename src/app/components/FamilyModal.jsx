@@ -16,9 +16,8 @@ const FamilyModal = ({ open, onClose }) => {
         <img src={family_pic} alt='/' className='modalImg'/>
         <div className='modalRight'>
           <div className='content'>
-            <p className='modalText'>Do you want to do </p>
-            <h1 className='modalTitle'>Dad's family side or Mom's family side</h1>
-            <p className='modalText'>first?</p>
+            <p className='modalText'>Do you want to continue with </p>
+            <h1 className='modalTitle'>Dad's family side or Mom's family side ?</h1>
         </div>
         <div className='btnContainer'>
           <Link to='/familyTree' className='linkbtnPrimary'>
