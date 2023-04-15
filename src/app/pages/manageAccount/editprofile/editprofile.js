@@ -324,9 +324,11 @@ const EditProfile = () => {
             <label htmlFor="last-name">Last Name:</label>
             <input type="text" id="last-name" value={surname || ''} required onChange={(e) => setLastName(e.target.value)} />
   
-            <label htmlFor="email">Email Address:</label>
-            {errors && <p className="error-message">{errors}</p>}
-            <input type="email" id="email" value={emailaddress || ''} required onChange={(e) => setEmail(e.target.value)} />
+            <div className="input-wrapper">
+              <label htmlFor="email">Email Address:</label>
+              {errors && <p className="error-message">{errors}</p>}
+              <input type="email" id="email" value={emailaddress || ''} required onChange={(e) => setEmail(e.target.value)} />
+            </div>
   
             <button type="submit">Save Changes</button>
             <button type="button" onClick={handleCancel}>Cancel</button>

@@ -114,6 +114,11 @@
     color: red;
 }
 
+.input-wrapper {
+    width: 100%;
+    align-items: center;
+  }
+
 button {
     background-color: #7D4032;
     color: white;
