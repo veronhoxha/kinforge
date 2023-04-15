@@ -155,11 +155,13 @@ import Places from './Places';
     const deleteNodeById = (id) => {
       if (id === '0') {
         setErrorMessage('The starting node cannot be deleted.');
+        setFormErrors({});
         return;
       }
       console.log("Deleting node with id:", id);
       setNodes((nds) => nds.filter((node) => node.id !== id));
       setEdges((eds) => eds.filter((edge) => edge.source !== id && edge.target !== id));
+    
       setSelectedNode(null);
     };
 
@@ -251,6 +253,8 @@ import Places from './Places';
       } catch (error) {
         console.error("Error deleting member data:", error);
       }
+
+      setFormErrors({});
       };
 
       const validateForm = () => {
@@ -340,7 +344,7 @@ import Places from './Places';
                 </form>
               </DialogContent>
               <DialogActions>
-                <StyledButton sx={{ color: brown[600] }} onClick={() => setDialogOpen(false)}>Cancel</StyledButton>
+                <StyledButton sx={{ color: brown[600] }} onClick={handleClose}>Cancel</StyledButton>
                 <StyledButton sx={{ color: brown[600] }} onClick={() => { deleteNodeById(selectedNode.id);  deleteMember(selectedNode.id, currentUser.uid); setDialogOpen(false);}}> Delete Member</StyledButton>
                 <StyledButton sx={{ color: brown[600] }} onClick={handleSave}>Save</StyledButton>
               </DialogActions>
