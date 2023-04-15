@@ -1,0 +1,15 @@
+.places-container {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .map-container {
+    z-index: 1;
+    margin-bottom: 15px;
+  }
+
+  .react-google-maps-combobox-popover {
+    z-index: 3000 !important;
+  }
+  

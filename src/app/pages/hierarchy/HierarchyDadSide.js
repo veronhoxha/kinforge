@@ -22,6 +22,7 @@ import {collection, addDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestore";
 import { FormHelperText } from '@mui/material';
+import Places from './Places';
 
   const initialNodes = [
     {
@@ -55,9 +56,10 @@ import { FormHelperText } from '@mui/material';
     const { project } = useReactFlow();
     const [selectedValue, setSelectedValue] = React.useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [startingNodeEdited, setStartingNodeEdited] = useState(false);
     const [currentUser, setCurrentUser] = useState();
     const db = getFirestore();
-    const usersCollection = collection(db, "family-members-mom-side");
+    const usersCollection = collection(db, "family-members-dad-side");
     const auth = getAuth();
     const [formErrors, setFormErrors] = useState({});
 
@@ -69,7 +71,7 @@ import { FormHelperText } from '@mui/material';
       (event) => {
         const targetIsPane = event.target && event.target.classList.contains('react-flow__pane');
     
-        if (targetIsPane) {
+        if (targetIsPane && !startingNodeEdited) {
           const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
           const id = getId();
           const newNode = {
@@ -81,11 +83,22 @@ import { FormHelperText } from '@mui/material';
           setNodes((nds) => nds.concat(newNode));
           setEdges((eds) => eds.concat({ id, source: connectingNodeId.current, target: id }));
           setSelectedNode(newNode);
-          console.log(connectingNodeId.current)
+    
+          setFormValues({
+            name: "",
+            surname: "",
+            dob: "",
+            place_of_birth: "",
+            dod: "",
+            gender: "",
+          });
+          setSelectedValue(null);
+          setFormErrors({});
+          // console.log(connectingNodeId.current);
         }
       },
-      [project, setEdges, setNodes]
-    );  
+      [project, setEdges, setNodes, startingNodeEdited]
+    );
 
     const handleChange = (event) => {
       setSelectedValue(event.target.value);
@@ -93,8 +106,29 @@ import { FormHelperText } from '@mui/material';
 
     const onNodeClick = (_, node) => {
       console.log('click node', node);
+    
+      const nodeLabel = node.data.label;
+      const nodeData = nodeLabel.props ? {
+        name: nodeLabel.props.children[0],
+        surname: nodeLabel.props.children[2],
+        dob: nodeLabel.props.children[4]
+      } : {
+        name: "",
+        surname: "",
+        dob: ""
+      };
+    
+      setFormValues({
+        name: nodeData.name,
+        surname: nodeData.surname,
+        dob: nodeData.dob,
+        place_of_birth: nodeData.place_of_birth,
+        dod: "",
+        gender: "",
+      });
+      setSelectedValue(null);
+    
       setSelectedNode(node);
-      setSelectedValue('');
       setDialogOpen(true);
     };
 
@@ -102,12 +136,14 @@ import { FormHelperText } from '@mui/material';
       name: "",
       surname: "",
       dob: "",
+      place_of_birth: "",
       dod: "",
       gender: "",
     });
 
     const handleClose = () => {
       setSelectedValue('');
+      setFormErrors({});
       setDialogOpen(false);
     };
     
@@ -179,6 +215,7 @@ import { FormHelperText } from '@mui/material';
               name: formValues.name,
               surname: formValues.surname,
               date_of_birth: formValues.dob,
+              place_of_birth: formValues.place_of_birth,
               date_of_death: formValues.dod,
               gender: selectedValue,
               addedBy: currentUser.uid,
@@ -227,6 +264,9 @@ import { FormHelperText } from '@mui/material';
         }
         if (!formValues.dob) {
           errors.dob = 'Date of Birth is required';
+        }
+        if (!formValues.place_of_birth) {
+          errors.place_of_birth = 'Place of Birth is required';
         }
         if (!selectedValue) {
           errors.gender = 'Gender is required';
@@ -277,8 +317,11 @@ import { FormHelperText } from '@mui/material';
                 <InputLabel required htmlFor="component-simple">Date of Birth</InputLabel>
                 <Input name="dob" id="component-simple" type="date" defaultValue="" fullWidth className='form-field' onChange={handleInputChange} required />
 
+                <FormHelperText error>{formErrors.place_of_birth}</FormHelperText>
+                <InputLabel required htmlFor="component-simple">Place of Birth</InputLabel>
+                <Places name="place_of_birth" id="component-simple" className='form-field' onChange={handleInputChange} />
 
-                <InputLabel  htmlFor="component-simple">Date of Death</InputLabel>
+                <InputLabel htmlFor="component-simple">Date of Death</InputLabel>
                 <Input name="dod" id="component-simple" type="date" defaultValue="" fullWidth className='form-field' onChange={handleInputChange}/>
 
                 <FormHelperText error>{formErrors.gender}</FormHelperText>
