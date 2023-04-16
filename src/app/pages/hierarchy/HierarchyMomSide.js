@@ -1,7 +1,6 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import ReactFlow, { useNodesState, useEdgesState, addEdge, useReactFlow, ReactFlowProvider, Controls} from 'reactflow';
 import 'reactflow/dist/style.css';
-import '../../styles/hierarchy.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { collection, addDoc } from 'firebase/firestore';
@@ -43,6 +42,7 @@ const HierarchyMomSide = () => {
   const usersCollection = collection(db, "family-members-mom-side");
   const auth = getAuth();
   const [formErrors, setFormErrors] = useState({});
+  const [activeSwitch, setActiveSwitch] = useState(1);
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
   const onConnectStart = useCallback((_, { nodeId }) => {
@@ -247,10 +247,50 @@ const HierarchyMomSide = () => {
       setFormErrors(errors);
       return Object.keys(errors).length === 0;
     };
+
+    const loadActiveSwitchFromLocalStorage = () => {
+      const savedActiveSwitch = localStorage.getItem('activeSwitch');
+      if (savedActiveSwitch) {
+        setActiveSwitch(parseInt(savedActiveSwitch, 10));
+      }
+    };
+
+    useEffect(() => {
+      loadActiveSwitchFromLocalStorage();
+    }, []);
+  
+    useEffect(() => {
+      switch (activeSwitch) {
+        case 1:
+          require('../../styles/hierarchy.css');
+          break;
+        case 2:
+          require('../../styles/hierarchy01.css');
+          break;
+        case 3:
+          require('../../styles/hierarchy02.css');
+          break;
+        default:
+          require('../../styles/hierarchy.css');
+      }
+    }, [activeSwitch]);
+
+    const getThemeClassName = () => {
+      switch (activeSwitch) {
+        case 1:
+          return 'hierarchy-theme';
+        case 2:
+          return 'hierarchy-theme01';
+        case 3:
+          return 'hierarchy-theme02';
+        default:
+          return 'hierarchy-theme';
+      }
+    };
     
 
 return (
-    <div className="wrapper" ref={reactFlowWrapper}>
+    <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
       <div style={{ height: 817 }}>
       <ReactFlow
         nodes={nodes}

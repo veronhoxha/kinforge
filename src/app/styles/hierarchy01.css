@@ -1,0 +1,59 @@
+.hierarchy-theme01 .react-flow .react-flow__handle {
+    width: 30px;
+    height: 7px;
+    border-radius: 2px;
+    background-color: #373233;
+    border: 1px solid white;
+}
+
+.hierarchy-theme01 .react-flow .react-flow__handle-top {
+    top: -6px;
+}
+
+.hierarchy-theme01 .react-flow .react-flow__pane {
+    overflow: scroll;
+}
+
+.hierarchy-theme01 .react-flow .react-flow__handle-bottom {
+    bottom: -6px;
+}
+
+.hierarchy-theme01 .react-flow .react-flow__node {
+    font-size: 8px;
+    height: 30px;
+    width: 120px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border: 2px solid #373233;
+    /* background-color: #EFEFEF; */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 50% / 30%;
+}
+
+.hierarchy-theme01 .react-flow .react-flow__edge path,
+.hierarchy-theme01 .react-flow__connectionline path {
+    stroke-width: 1;
+}
+
+.hierarchy-theme01 .wrapper {
+    flex-grow: 1;
+    height: 100%;
+}
+
+.hierarchy-theme01 .react-flow-container {
+    height: 500px;
+    width: 100%;
+}
+
+.icon {
+    color: black;
+}
+
+.form-field {
+    margin-bottom: 16px;
+}
+
+.form-button {
+    margin-left: 8px;
+}

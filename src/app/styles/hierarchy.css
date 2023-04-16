@@ -1,23 +1,23 @@
-.react-flow .react-flow__handle {
+.hierarchy-theme .react-flow .react-flow__handle {
     width: 30px;
     height: 8px;
     border-radius: 3px;
     background-color: #7D4032;
 }
 
-.react-flow .react-flow__handle-top {
+.hierarchy-theme .react-flow .react-flow__handle-top {
     top: -5px;
 }
 
-.react-flow .react-flow__pane {
+.hierarchy-theme .react-flow .react-flow__pane {
     overflow: scroll;
 }
 
-.react-flow .react-flow__handle-bottom {
+.hierarchy-theme .react-flow .react-flow__handle-bottom {
     bottom: -5px;
 }
 
-.react-flow .react-flow__node {
+.hierarchy-theme .react-flow .react-flow__node {
     font-size: 8px;
     height: 25px;
     width: 100px;
@@ -27,17 +27,17 @@
     border-width: 0.5px;
 }
 
-.react-flow .react-flow__edge path,
-.react-flow__connectionline path {
+.hierarchy-theme .react-flow .react-flow__edge path,
+.hierarchy-theme .react-flow__connectionline path {
     stroke-width: 1;
 }
 
-.wrapper {
+.hierarchy-theme .wrapper {
     flex-grow: 1;
     height: 100%;
 }
 
-.react-flow-container {
+.hierarchy-theme .react-flow-container {
     height: 500px;
     width: 100%;
   }

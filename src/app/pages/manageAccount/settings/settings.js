@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PasswordIcon from '@mui/icons-material/Password';
 import { getAuth, updatePassword, signInWithEmailAndPassword } from "firebase/auth";
 import '../../../styles/settings.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { brown } from '@mui/material/colors';
+import { alpha, styled } from '@mui/material/styles';
+import "../../../styles/hierarchy.css";
 
 function Settings() {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -12,6 +18,39 @@ function Settings() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [showHierarchyForm, setShowHierarchyForm] = useState(false);
+  const [activeSwitch, setActiveSwitch] = useState(1);
+
+  const handleSwitchToggle = (event) => {
+    const switchIndex = parseInt(event.target.name.replace("switch", ""), 10);
+    setActiveSwitch(switchIndex);
+    localStorage.setItem("activeSwitch", switchIndex);
+  };
+  
+  const loadActiveSwitchFromLocalStorage = () => {
+    const savedActiveSwitch = localStorage.getItem("activeSwitch");
+    if (savedActiveSwitch) {
+      setActiveSwitch(parseInt(savedActiveSwitch, 10));
+    } else {
+      setActiveSwitch(1);
+    }
+  };  
+
+  const handleToggleHierarchyForm = () => {
+    setShowHierarchyForm(!showHierarchyForm);
+  };
+
+  const BrownSwitch = styled(Switch)(({ theme }) => ({
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: brown[600],
+      '&:hover': {
+        backgroundColor: alpha(brown[600], theme.palette.action.hoverOpacity),
+      },
+    },
+    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: brown[600],
+    },
+  }));
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -90,8 +129,13 @@ function Settings() {
     setCurrentPassword('');
     setNewPassword('');
     setConfirmPassword('');
+    setErrors({});
   };
 
+  useEffect(() => {
+    loadActiveSwitchFromLocalStorage();
+  }, []);
+  
   return (
     <div className="settings">
       <div className="settings-content">
@@ -136,6 +180,26 @@ function Settings() {
           Password changed successfully!
         </Alert>
       </Snackbar>
+      <div onClick={handleToggleHierarchyForm} className="hierarchy">
+          <AccountTreeIcon />
+          Hierarchy design
+        </div>
+        {showHierarchyForm && (
+          <div className="hierarchy-form-wrapper">
+           <FormControlLabel
+            control={<BrownSwitch checked={activeSwitch === 1} onChange={handleSwitchToggle} name="switch1"/>}
+            label="Rectangle Nodes"
+          />
+          <FormControlLabel
+            control={<BrownSwitch checked={activeSwitch === 2} onChange={handleSwitchToggle} name="switch2"/>}
+            label="Ellipse Nodes"
+          />
+          <FormControlLabel
+            control={<BrownSwitch checked={activeSwitch === 3} onChange={handleSwitchToggle} name="switch3"/>}
+            label="Oval Nodes"
+          />
+          </div>
+        )}
       </div>
     </div>
   );

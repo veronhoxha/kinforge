@@ -40,6 +40,23 @@
   font-size: 20px;
 }
 
+.settings .hierarchy:hover {
+  color: #7D4032;
+}
+
+.settings .hierarchy svg {
+  margin-right: 5px;
+}
+
+.settings .hierarchy {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .settings .change-password:hover {
   color: #7D4032;
 }
