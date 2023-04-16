@@ -92,7 +92,7 @@ const HierarchyDadSideDialog = ({
             />
 
             <FormHelperText error>{formErrors.place_of_birth}</FormHelperText>
-            <InputLabel required htmlFor="component-simple">Place of Birth</InputLabel>
+            <InputLabel required htmlFor="component-simple">Place of Birth OR Current Location</InputLabel>
             <Places
               name="place_of_birth"
               id="component-simple"
