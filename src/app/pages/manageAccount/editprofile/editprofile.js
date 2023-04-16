@@ -140,6 +140,7 @@ const EditProfile = () => {
       setFirstName(currentUser.displayName.split(' ')[0]);
       setLastName(currentUser.displayName.split(' ')[1]);
       setEmail(currentUser.email);
+      setErrors()
     }
   };
 
