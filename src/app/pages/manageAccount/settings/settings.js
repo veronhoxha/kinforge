@@ -10,6 +10,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { brown } from '@mui/material/colors';
 import { alpha, styled } from '@mui/material/styles';
 import "../../../styles/hierarchy.css";
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore } from "firebase/firestore";
+
 
 function Settings() {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -20,21 +23,37 @@ function Settings() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [showHierarchyForm, setShowHierarchyForm] = useState(false);
   const [activeSwitch, setActiveSwitch] = useState(1);
+  const db = getFirestore();
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
 
-  const handleSwitchToggle = (event) => {
+
+  const handleSwitchToggle = async (event) => {
     const switchIndex = parseInt(event.target.name.replace("switch", ""), 10);
     setActiveSwitch(switchIndex);
-    localStorage.setItem("activeSwitch", switchIndex);
+    await saveDesignChoice(auth.currentUser.uid, switchIndex);
+  };  
+  
+  const loadActiveSwitchFromFirestore = async () => {
+    if (auth.currentUser) {
+      const userId = auth.currentUser.uid;
+      const designDocRef = doc(db, 'users_designs', userId);
+      const designDocSnap = await getDoc(designDocRef);
+  
+      if (designDocSnap.exists()) {
+        setActiveSwitch(designDocSnap.data().activeSwitch);
+      } else {
+        setActiveSwitch(1);
+      }
+    } else {
+    }
+  };
+
+  const saveDesignChoice = async (userId, designChoice) => {
+    const designDocRef = doc(db, 'users_designs', userId);
+    await setDoc(designDocRef, { addedBy: currentUser.uid, activeSwitch: designChoice });
   };
   
-  const loadActiveSwitchFromLocalStorage = () => {
-    const savedActiveSwitch = localStorage.getItem("activeSwitch");
-    if (savedActiveSwitch) {
-      setActiveSwitch(parseInt(savedActiveSwitch, 10));
-    } else {
-      setActiveSwitch(1);
-    }
-  };  
 
   const handleToggleHierarchyForm = () => {
     setShowHierarchyForm(!showHierarchyForm);
@@ -76,8 +95,6 @@ function Settings() {
     const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return re.test(password);
   }
-
-  const auth = getAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -133,8 +150,17 @@ function Settings() {
   };
 
   useEffect(() => {
-    loadActiveSwitchFromLocalStorage();
-  }, []);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        loadActiveSwitchFromFirestore();
+      } else {
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [auth, loadActiveSwitchFromFirestore]);  
+  
   
   return (
     <div className="settings">

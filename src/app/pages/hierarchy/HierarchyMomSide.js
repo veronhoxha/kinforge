@@ -7,7 +7,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestore";
 import HierarchyDialog from './HierarchyDialog';
-
+import { doc, getDoc } from 'firebase/firestore';
 const initialNodes = [
   {
     id: '0',
@@ -248,17 +248,31 @@ const HierarchyMomSide = () => {
       return Object.keys(errors).length === 0;
     };
 
-    const loadActiveSwitchFromLocalStorage = () => {
-      const savedActiveSwitch = localStorage.getItem('activeSwitch');
-      if (savedActiveSwitch) {
-        setActiveSwitch(parseInt(savedActiveSwitch, 10));
+    const loadActiveSwitchFromFirestore = useCallback(async () => {
+      if (auth.currentUser) {
+        const userId = auth.currentUser.uid;
+        const designDocRef = doc(db, 'users_designs', userId);
+        const designDocSnap = await getDoc(designDocRef);
+    
+        if (designDocSnap.exists()) {
+          setActiveSwitch(designDocSnap.data().activeSwitch);
+        } else {
+          setActiveSwitch(1);
+        }
       }
-    };
-
+    }, [auth, db]);
+    
     useEffect(() => {
-      loadActiveSwitchFromLocalStorage();
-    }, []);
-  
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          loadActiveSwitchFromFirestore();
+        }
+      });
+      return () => {
+        unsubscribe();
+      };
+    }, [auth, loadActiveSwitchFromFirestore]);       
+
     useEffect(() => {
       switch (activeSwitch) {
         case 1:
@@ -273,6 +287,7 @@ const HierarchyMomSide = () => {
         default:
           require('../../styles/hierarchy.css');
       }
+      console.log(activeSwitch)
     }, [activeSwitch]);
 
     const getThemeClassName = () => {
@@ -287,7 +302,6 @@ const HierarchyMomSide = () => {
           return 'hierarchy-theme';
       }
     };
-    
 
 return (
     <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
