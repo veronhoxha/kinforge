@@ -18,7 +18,6 @@ const initialNodes = [
   },
 ];
 
-
 let id = 1;
 const getId = () => uuidv4();
 
@@ -47,8 +46,6 @@ const HierarchyDadSide = () => {
   const [formErrors, setFormErrors] = useState({});
   const [activeSwitch, setActiveSwitch] = useState(1);
   const [familyMembers, setFamilyMembers] = useState([]);
-  const [newElements, setNewElements] = useState([]);
-
 
   const onConnect = useCallback((params) => {
     if (params.source === '0' && params.target === '0') {
@@ -106,24 +103,7 @@ const HierarchyDadSide = () => {
       }
     },
     [project, setEdges, setNodes, startingNodeEdited, currentUser, nodes, edges]
-  );
-
-  const prefillFormData = (nodeId) => {
-    const familyMember = familyMembers.find((member) => member.id === nodeId);
-    if (familyMember) {
-      setFormValues({
-        name: familyMember.name,
-        surname: familyMember.surname,
-        dob: familyMember.date_of_birth,
-        place_of_birth: familyMember.place_of_birth,
-        dod: familyMember.date_of_death,
-        gender: familyMember.gender,
-      });
-      setSelectedValue(familyMember.gender);
-    }
-  };
-  
-  
+  );  
 
   const onNodeClick = async (_, node) => {
     console.log('click node', node);
@@ -149,7 +129,6 @@ const HierarchyDadSide = () => {
               dod: data.date_of_death,
               gender: data.gender,
             });
-            setSelectedValue(data.gender);
           });
         }
       } catch (error) {
@@ -161,7 +140,6 @@ const HierarchyDadSide = () => {
     setDialogOpen(true);
   };
   
-
   const [formValues, setFormValues] = useState({
     name: "",
     surname: "",
@@ -182,7 +160,12 @@ const HierarchyDadSide = () => {
     setFormValues((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const deleteNodeById = (id) => {
+  const deleteNodeEdgeById = async (id) => {
+    if (!currentUser) {
+      console.error("No current user");
+      return;
+    }
+  
     const nodeToDelete = nodes.find((node) => node.id === id);
     if (nodeToDelete && nodeToDelete.isInitialNode) {
       setErrorMessage('The starting node cannot be deleted.');
@@ -190,23 +173,36 @@ const HierarchyDadSide = () => {
       return;
     }
     console.log("Deleting node with id:", id);
+  
     setNodes((nds) => nds.filter((node) => node.id !== id));
     setEdges((eds) => eds.filter((edge) => edge.source !== id && edge.target !== id));
   
-    setSelectedNode(null);
-    if (currentUser) {
-      const nodeEdgeData = {
-        userId: currentUser.uid,
-        nodes: nodes,
-        edges: edges,
-      };
-      saveNodeEdgeData(nodeEdgeData);
-    } else {
-      console.error("No current user");
+    const updatedNodes = nodes.filter((node) => node.id !== id);
+    const updatedEdges = edges.filter((edge) => edge.source !== id && edge.target !== id);
+  
+    try {
+      const existingDataSnapshot = await getDocs(
+        query(nodeEdgeCollection, where("userId", "==", currentUser.uid))
+      );
+  
+      if (!existingDataSnapshot.empty) {
+        existingDataSnapshot.forEach(async (doc) => {
+          await updateDoc(doc.ref, {
+            userId: currentUser.uid,
+            nodes: updatedNodes,
+            edges: updatedEdges,
+          });
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting node and edge data: ", error);
     }
+  
+    setSelectedNode(null);
   };
   
-
+  
+  
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -236,8 +232,7 @@ const HierarchyDadSide = () => {
     } catch (error) {
       console.error('Error updating member data: ', error);
     }
-  };
-  
+  }; 
 
  const handleSave = () => {
   if (validateForm()) {
@@ -288,7 +283,6 @@ const HierarchyDadSide = () => {
   }
 };
 
-
   const saveNodeEdgeData = async (nodeEdgeData) => {
     try {
       const existingDataSnapshot = await getDocs(
@@ -329,7 +323,6 @@ const HierarchyDadSide = () => {
           });
         }
     
-        // Fetch family members data
         const familyMembersSnapshot = await getDocs(
           query(
             usersCollection,
@@ -379,8 +372,6 @@ const HierarchyDadSide = () => {
   useEffect(() => {
     updateNodesWithFamilyMembers();
   }, [familyMembers, nodes]);
-  
-  
 
   const deleteMember = async (id, uid) => {
 
@@ -520,7 +511,7 @@ return (
             handleClose={handleClose}
             handleInputChange={handleInputChange}
             handleSave={handleSave}
-            deleteNodeById={deleteNodeById}
+            deleteNodeById={deleteNodeEdgeById}
             deleteMember={deleteMember}
             currentUser={currentUser}
             selectedNode={selectedNode}
