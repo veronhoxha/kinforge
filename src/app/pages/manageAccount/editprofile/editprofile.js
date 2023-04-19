@@ -269,6 +269,11 @@ const EditProfile = () => {
     );
   };
 
+  const handleDeleteAndModal = () => {
+    deleteProfilePicture();
+    handleModal();
+  }
+  
   return (
     <div className="edit-profile">
       <h2>Edit Profile</h2>
@@ -307,7 +312,7 @@ const EditProfile = () => {
                 <button type="button" onClick={() => document.getElementById("profile-picture").click()} style={{ marginRight: '8px' }}>
                   Edit Photo
                 </button>
-                <button type="button" onClick={deleteProfilePicture} style={{ marginRight: '8px' }}>
+                <button type="button" onClick={handleDeleteAndModal} style={{ marginRight: '8px' }}>
                   Delete Photo
                 </button>
                 <button type="button" onClick={handleModal}>
