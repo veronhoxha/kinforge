@@ -64,6 +64,12 @@ const HierarchyDadSideDialog = ({
         gender: '',
       });
       setSelectedValue('');
+
+      setFormValues({
+        ...formValues,
+        gender: formValues.gender,
+      });
+      setSelectedValue(formValues.gender);
     }
   }, [open, setFormValues, setSelectedValue]);
 
