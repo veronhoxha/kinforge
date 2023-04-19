@@ -12,7 +12,8 @@ function Help() {
       <h3>Adding Family Members</h3>
 
       <p>To add a new family member, drag from the rectangle shape in the node and drop it and then click in the specfic node and fill in the required details. You can include their name, surname, date of birth, place of birth or current location, date of death and gender.</p>
-
+      <br></br>
+      <p>Please note that when adding family members, you can only add lower order relatives, such as children. Once a child has been added to the tree, you cannot add their parent(s). This is because our system is designed to reflect the hierarchical structure of a family tree, where higher order members are connected to their lower order descendants.</p>
       <h3>Editing and Deleting Family Members</h3>
 
       <p>If you need to edit or delete a family member, click on their node in the tree view. You'll see the form coming up and it allows you to update their information, and the "Delete Member" button to remove them from the tree. Please note that deleting a person will also remove all their relationships in the tree.</p>
