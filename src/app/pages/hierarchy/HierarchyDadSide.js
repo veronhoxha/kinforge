@@ -96,7 +96,7 @@ const HierarchyDadSide = () => {
             nodes: [...nodes, newNode],
             edges: [...edges, { id, source: connectingNodeId.current, target: id }],
           };
-          await saveNodeEdgeData(nodeEdgeData);
+          await saveNodeEdgeData(nodeEdgeData);          
         } else {
           console.error("No current user");
         }
@@ -263,7 +263,7 @@ const HierarchyDadSide = () => {
           date_of_birth: formValues.dob,
           place_of_birth: formValues.place_of_birth,
           date_of_death: formValues.dod,
-          gender: selectedValue,
+          gender: formValues.gender,
           addedBy: currentUser.uid,
         };
         updateMember(selectedNode.id, memberData);
@@ -414,13 +414,14 @@ const HierarchyDadSide = () => {
       if (!formValues.place_of_birth) {
         errors.place_of_birth = 'Place of Birth is required';
       }
-      if (!selectedValue) {
-        errors.gender = 'Gender is required';
+      if (!formValues.gender) {
+        errors.gender = "Gender is required";
       }
     
       setFormErrors(errors);
       return Object.keys(errors).length === 0;
     };
+    
 
     const loadActiveSwitchFromFirestore = useCallback(async () => {
       if (auth.currentUser) {
@@ -479,7 +480,7 @@ const HierarchyDadSide = () => {
 
 return (
     <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
-      <div style={{ height: 817 }}>
+      <div style={{ height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -523,7 +524,7 @@ return (
 
 const HierarchyDadSideWrapper = () => (
   <ReactFlowProvider>
-    <HierarchyDadSide />
+    <HierarchyDadSide  />
   </ReactFlowProvider>
 );
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -34,12 +34,17 @@ const HierarchyDadSideDialog = ({
   deleteMember,
   currentUser,
   selectedNode,
+  dialogKey,
 }) => {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+    setFormValues({
+      ...formValues,
+      gender: event.target.value,
+    });
   };
-
+  
   const controlProps = (item) => ({
     checked: selectedValue === item,
     onChange: handleChange,
@@ -47,6 +52,20 @@ const HierarchyDadSideDialog = ({
     name: 'color-radio-button-demo',
     inputProps: { 'aria-label': item },
   });
+
+  useEffect(() => {
+    if (open) {
+      setFormValues({
+        name: '',
+        surname: '',
+        dob: '',
+        place_of_birth: '',
+        dod: '',
+        gender: '',
+      });
+      setSelectedValue('');
+    }
+  }, [open, setFormValues, setSelectedValue]);
 
   return (
     <>
@@ -59,10 +78,10 @@ const HierarchyDadSideDialog = ({
             <Input
               name="name"
               id="component-simple"
-              defaultValue=""
               fullWidth
               className='form-field'
               onChange={handleInputChange}
+              defaultValue={formValues.name || ''}
               required
             />
 
@@ -71,10 +90,10 @@ const HierarchyDadSideDialog = ({
             <Input
               name="surname"
               id="component-simple"
-              defaultValue=""
               fullWidth
               className='form-field'
               onChange={handleInputChange}
+              defaultValue={formValues.surname || ''}
               required
             />
 
@@ -84,10 +103,10 @@ const HierarchyDadSideDialog = ({
               name="dob"
               id="component-simple"
               type="date"
-              defaultValue=""
               fullWidth
               className='form-field'
               onChange={handleInputChange}
+              defaultValue={formValues.dob || ''}
               required
             />
 
@@ -98,23 +117,24 @@ const HierarchyDadSideDialog = ({
               id="component-simple"
               className='form-field'
               onChange={handleInputChange}
+              defaultValue={formValues.place_of_birth || ''}
             />
-
+            
             <InputLabel htmlFor="component-simple">Date of Death</InputLabel>
             <Input
               name="dod"
               id="component-simple"
               type="date"
-              defaultValue=""
               fullWidth
               className='form-field'
               onChange={handleInputChange}
+              defaultValue={formValues.dod || ''}
             />
 
             <FormHelperText error>{formErrors.gender}</FormHelperText>
             <FormControl required>
               <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-              <RadioGroup aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
+              <RadioGroup aria-labelledby="demo-radio-buttons-group-label" name="gender">
                 <FormControlLabel
                   value="male"
                   control={
