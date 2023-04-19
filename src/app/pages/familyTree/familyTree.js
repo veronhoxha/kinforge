@@ -12,12 +12,14 @@ import { Link, useLocation } from 'react-router-dom';
 import ManIcon from '@mui/icons-material/Man';
 import WomanIcon from '@mui/icons-material/Woman';
 import DownloadIcon from '@mui/icons-material/Download';
+import { useHistory } from 'react-router-dom';
 
 function FamilyTree() {
   const [currentUser, setCurrentUser] = useState();
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const history = useHistory();
   const menu = useRef();
 
   useEffect(() => {
@@ -46,6 +48,13 @@ function FamilyTree() {
   const handleModalClose = () => {
     setIsModalOpen(false);
     localStorage.setItem('familyModalShown', 'true');
+  };
+  
+  const handleLogout = () => {
+    auth.signOut();
+    localStorage.removeItem('familyModalShown');
+    console.log(`${currentUser.email} has been logged out`);
+    history.push('./');
   };
 
   return (
@@ -89,11 +98,7 @@ function FamilyTree() {
                   href="/"
                   text="Logout"
                   icon={<LogoutIcon />}
-                  onClick={() => {
-                    auth.signOut();
-                    localStorage.removeItem('familyModalShown');
-                    console.log(`${currentUser.email} has been logged out`);
-                  }}
+                  onClick={handleLogout}
                 />
               </ul>
               </div>
