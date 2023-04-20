@@ -6,7 +6,7 @@ import '../styles/mainsection.css';
 function mainsection() {
   return (
     <div className='main-section'>
-        <video src='family-video.mp4' autoPlay loop muted> </video>
+        <video src='family-video.mp4' autoPlay loop muted data-testid='main-section-video'> </video>
         <h1>KinForge</h1>
         <p>Connect with your family's past</p>
         <div className='create-tree-btn'>
