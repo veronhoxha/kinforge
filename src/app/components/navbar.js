@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -23,11 +23,11 @@ function Navbar() {
         <Link to="/signup" onClick={showTheNavBar}>
           <Button variant="contained" style={{ backgroundColor: '#7D4032', color: 'white' }}>Sign Up</Button>
         </Link>
-        <button className="nav-button nav-btn custom-close-btn" onClick={showTheNavBar}>
+        <button className="nav-button nav-btn custom-close-btn" onClick={showTheNavBar} aria-label="Close menu">
           <FaTimes/>
         </button>
       </nav>
-        <button className="nav-button custom-open-btn" onClick={showTheNavBar}>
+        <button className="nav-button custom-open-btn" onClick={showTheNavBar} aria-label="Open menu">
           <FaBars/>
         </button>
     </header>
