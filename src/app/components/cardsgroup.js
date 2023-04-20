@@ -10,7 +10,7 @@ function cardsgroup() {
             <div className='card_cover'>
               <h1 className='card_head'>Our awesome features</h1>
               <div className='card_holder'>
-                <div className='card-holder-item'>
+                <div className='card-holder-item' data-testid='card-holder-item'>
                   <div className='card_info'>
                     <div className='icon-cards'>
                       <SearchIcon/>
@@ -19,7 +19,7 @@ function cardsgroup() {
                     <p>Search for other users or family members by name, location, or other parameters.</p>
                   </div>
                 </div>
-                <div  className='card-holder-item'>
+                <div className='card-holder-item' data-testid='card-holder-item'>
                   <div className='card_info'>
                     <div className='icon-cards'>
                       <StarIcon/>
@@ -28,7 +28,7 @@ function cardsgroup() {
                     <p>User-friendly tools intended for optimal user satisfaction.</p>
                   </div>
                 </div>
-                <div className='card-holder-item'>
+                <div className='card-holder-item' data-testid='card-holder-item'>
                   <div className='card_info'>
                     <div className='icon-cards'>
                       <ThumbUpIcon/>
