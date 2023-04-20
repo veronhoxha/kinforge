@@ -49,9 +49,3 @@ test('"Go back home" button navigates to the homepage', () => {
     const goBackHomeButtonLink = screen.getByRole('link', { name: /go back home/i });
     expect(goBackHomeButtonLink.closest('a')).toHaveAttribute('href', '/');
 });
-  
-  
-
-
-  
-  
