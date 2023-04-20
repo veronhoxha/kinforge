@@ -201,8 +201,6 @@ const HierarchyDadSide = () => {
     setSelectedNode(null);
   };
   
-  
-  
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -234,54 +232,71 @@ const HierarchyDadSide = () => {
     }
   }; 
 
- const handleSave = () => {
-  if (validateForm()) {
-    if (selectedNode) {
-      const updatedNode = {
-        ...selectedNode,
-        data: {
-          label: (
-            <>
-              {formValues.name} {formValues.surname}
-              <br />
-                {formValues.dob}
-            </>
-          ),
-        },
-      };
-
-      setNodes((nds) =>
-        nds.map((node) => (node.id === selectedNode.id ? updatedNode : node))
-      );
-      setSelectedNode(updatedNode);
-
-      if (currentUser) {
-        const memberData = {
-          id: selectedNode.id,
-          name: formValues.name,
-          surname: formValues.surname,
-          date_of_birth: formValues.dob,
-          place_of_birth: formValues.place_of_birth,
-          date_of_death: formValues.dod,
-          gender: formValues.gender,
-          addedBy: currentUser.uid,
+  const handleSave = () => {
+    if (validateForm()) {
+      if (selectedNode) {
+        const updatedNode = {
+          ...selectedNode,
+          data: {
+            label: (
+              <>
+                {formValues.name} {formValues.surname}
+                <br />
+                  {formValues.dob}
+              </>
+            ),
+          },
         };
-        updateMember(selectedNode.id, memberData);
+  
+        setNodes((nds) =>
+          nds.map((node) => (node.id === selectedNode.id ? updatedNode : node))
+        );
+        setSelectedNode(updatedNode);  
+  
+        if (currentUser) {
+          const memberData = {
+            id: selectedNode.id,
+            name: formValues.name,
+            surname: formValues.surname,
+            date_of_birth: formValues.dob,
+            place_of_birth: formValues.place_of_birth,
+            date_of_death: formValues.dod,
+            gender: formValues.gender,
+            addedBy: currentUser.uid,
+          };
+          updateMember(selectedNode.id, memberData);
+  
+          // Update the familyMembers state
+          const memberIndex = familyMembers.findIndex((m) => m.id === selectedNode.id);
+          if (memberIndex > -1) {
+            setFamilyMembers((prevState) => {
+              const newFamilyMembers = [...prevState];
+              newFamilyMembers[memberIndex] = memberData;
+              return newFamilyMembers;
+            });
+          } else {
+            setFamilyMembers((prevState) => [...prevState, memberData]);
+          }
+        }
+        if (currentUser) {
+          const nodeEdgeData = {
+            userId: currentUser.uid,
+            nodes: nodes,
+            edges: edges,
+          };
+          saveNodeEdgeData(nodeEdgeData);
+        } else {
+          console.error('No current user');
+        }
       }
-      if (currentUser) {
-        const nodeEdgeData = {
-          userId: currentUser.uid,
-          nodes: nodes,
-          edges: edges,
-        };
-        saveNodeEdgeData(nodeEdgeData);
-      } else {
-        console.error('No current user');
-      }
+      setDialogOpen(false);
     }
-    setDialogOpen(false);
-  }
-};
+  };
+  
+
+useEffect(() => {
+  updateNodesWithFamilyMembers();
+}, [familyMembers]);
 
   const saveNodeEdgeData = async (nodeEdgeData) => {
     try {
@@ -416,6 +431,10 @@ const HierarchyDadSide = () => {
       }
       if (!formValues.gender) {
         errors.gender = "Gender is required";
+      }
+
+      if (formValues.dod && new Date(formValues.dod) < new Date(formValues.dob)) {
+        errors.dod = "Date of death cannot be before date of birth";
       }
     
       setFormErrors(errors);

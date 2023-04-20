@@ -144,6 +144,7 @@ const HierarchyDadSideDialog = ({
               defaultValue={formValues.place_of_birth || ''}
             />
             
+            <FormHelperText error>{formErrors.dod}</FormHelperText>
             <InputLabel htmlFor="component-simple">Date of Death</InputLabel>
             <Input
               name="dod"
