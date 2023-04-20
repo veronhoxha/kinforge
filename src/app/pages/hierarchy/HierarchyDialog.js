@@ -55,6 +55,29 @@ const HierarchyDadSideDialog = ({
 
   useEffect(() => {
     if (open) {
+      if (selectedNode && selectedNode.data) {
+        setFormValues({
+          ...formValues,
+          ...selectedNode.data,
+          gender: formValues.gender,
+        });
+        setSelectedValue(formValues.gender,);
+      } else {
+        setFormValues({
+          name: '',
+          surname: '',
+          dob: '',
+          place_of_birth: '',
+          dod: '',
+          gender: '',
+        });
+        setSelectedValue('');
+      }
+    }
+  }, [open, setFormValues, setSelectedValue, selectedNode]);
+  
+  useEffect(() => {
+    if (!open) {
       setFormValues({
         name: '',
         surname: '',
@@ -64,14 +87,9 @@ const HierarchyDadSideDialog = ({
         gender: '',
       });
       setSelectedValue('');
-
-      setFormValues({
-        ...formValues,
-        gender: formValues.gender,
-      });
-      setSelectedValue(formValues.gender);
     }
   }, [open, setFormValues, setSelectedValue]);
+  
 
   return (
     <>
