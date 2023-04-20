@@ -33,8 +33,8 @@ test('email input field accepts text input', () => {
       </Router>
     );
     const emailInput = screen.getByLabelText(/email/i);
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    expect(emailInput.value).toBe('test@example.com');
+    fireEvent.change(emailInput, { target: { value: 'veronhoxha@yahoo.com' } });
+    expect(emailInput.value).toBe('veronhoxha@yahoo.com');
 });
 
 test('password input field accepts text input', () => {
@@ -112,7 +112,7 @@ test('error is displayed if the password is empty when the login button is click
       </Router>
     );
     const emailInput = screen.getByLabelText(/email/i);
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(emailInput, { target: { value: 'veronhoxha@yahoo.com' } });
     const loginButton = screen.getByRole('button', { name: /login/i });
     fireEvent.click(loginButton);
     await waitFor(() => expect(screen.getByText(/enter your password/i)).toBeInTheDocument());
@@ -139,7 +139,7 @@ test('sends password reset email when "Forgot your password?" link is clicked', 
       </Router>
     );
     const emailInput = screen.getByLabelText(/email/i);
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(emailInput, { target: { value: 'veronhoxha@yahoo.com' } });
     const forgotPasswordLink = screen.getByText(/forgot your password/i);
     fireEvent.click(forgotPasswordLink);
   
