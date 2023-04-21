@@ -13,15 +13,15 @@ function Footer() {
             <Link to='/' className='page-name'> KinForge </Link>
             <small className='rights'> Copyright © 2023 All Rights Reserved </small>
           <div className='socialmedia-icons'>
-            <a href='https://www.facebook.com/' className='icons' target='_blank' rel='noreferrer' aria-label='Facebook'>
-              <FacebookIcon/>
-            </a>
-            <a href='https://www.instagram.com/' className='icons' target='_blank' rel='noreferrer' aria-label='Facebook'>
-              <InstagramIcon/>
-            </a>
-            <a href='https://twitter.com/' className='icons' target='_blank' rel='noreferrer' aria-label='Facebook'>
-              <TwitterIcon/>
-            </a>
+          <a href='https://www.facebook.com/' className='icons' target='_blank' rel='noreferrer' aria-label='Facebook'>
+            <FacebookIcon/>
+          </a>
+          <a href='https://www.instagram.com/' className='icons' target='_blank' rel='noreferrer' aria-label='Instagram'>
+            <InstagramIcon/>
+          </a>
+          <a href='https://twitter.com/' className='icons' target='_blank' rel='noreferrer' aria-label='Twitter'>
+            <TwitterIcon/>
+          </a>
           </div>
         </div>
       </section>
