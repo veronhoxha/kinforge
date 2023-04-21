@@ -3,17 +3,19 @@ import family_pic from '../media/family.png';
 import '../styles/familyModal.css';
 import { Link } from 'react-router-dom';
 
+
 const FamilyModal = ({ open, onClose }) => {
   if (!open) return null;
   return (
-    <div onClick={onClose} className='overlay'>
+    <div onClick={onClose} className='overlay' data-testid='overlay'>
       <div
         onClick={(e) => {
           e.stopPropagation();
         }}
+        data-testid='modalContainer'
         className='modalContainer'
       >
-        <img src={family_pic} alt='/' className='modalImg'/>
+        <img src={family_pic} alt='Family' className='modalImg'/>
         <div className='modalRight'>
           <div className='content'>
             <p className='modalText'>Do you want to continue with </p>
