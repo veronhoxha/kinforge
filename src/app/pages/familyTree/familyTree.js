@@ -95,7 +95,6 @@ function FamilyTree() {
                 <DropdownItem href="./help" text="Help" icon={<HelpIcon />} />
                 <DropdownItem text="Export as PDF" icon={<DownloadIcon />} />
                 <DropdownItem
-                  href="/"
                   text="Logout"
                   icon={<LogoutIcon />}
                   onClick={handleLogout}
