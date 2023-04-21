@@ -48,6 +48,7 @@ const HierarchyDadSide = () => {
   const [familyMembers, setFamilyMembers] = useState([]);
 
   const onConnect = useCallback((params) => {
+    console.log('onConnect called with params:', params);
     if (params.source === '0' && params.target === '0') {
       setErrorMessage("The initial node cannot be connected to itself.");
       return;
@@ -60,10 +61,12 @@ const HierarchyDadSide = () => {
   }, [setEdges, edges]);
   
   const onConnectStart = useCallback((_, { nodeId }) => {
+    console.log('onConnectStart called with nodeId:', nodeId);
     connectingNodeId.current = nodeId;
   }, []);
   const onConnectEnd = useCallback(
     async (event) => {
+      console.log('onConnectEnd called with event:', event);
       const targetIsPane = event.target && event.target.classList.contains('react-flow__pane');
   
       if (targetIsPane && !startingNodeEdited) {
@@ -106,6 +109,7 @@ const HierarchyDadSide = () => {
   );  
 
   const onNodeClick = async (_, node) => {
+    console.log('onNodeClick called with node:', node);
     console.log('click node', node);
   
     if (currentUser) {
@@ -233,6 +237,7 @@ const HierarchyDadSide = () => {
   }; 
 
   const handleSave = () => {
+    console.log('handleSave called');
     if (validateForm()) {
       if (selectedNode) {
         const updatedNode = {
@@ -266,7 +271,6 @@ const HierarchyDadSide = () => {
           };
           updateMember(selectedNode.id, memberData);
   
-          // Update the familyMembers state
           const memberIndex = familyMembers.findIndex((m) => m.id === selectedNode.id);
           if (memberIndex > -1) {
             setFamilyMembers((prevState) => {
@@ -293,33 +297,32 @@ const HierarchyDadSide = () => {
     }
   };
   
-
 useEffect(() => {
   updateNodesWithFamilyMembers();
 }, [familyMembers]);
 
-  const saveNodeEdgeData = async (nodeEdgeData) => {
-    try {
-      const existingDataSnapshot = await getDocs(
-        query(
-          nodeEdgeCollection,
-          where("userId", "==", nodeEdgeData.userId)
-        )
-      );
-  
-      if (!existingDataSnapshot.empty) {
-        existingDataSnapshot.forEach(async (doc) => {
-          await updateDoc(doc.ref, nodeEdgeData);
-        });
-      } else {
-        await addDoc(nodeEdgeCollection, nodeEdgeData);
-      }
-    } catch (error) {
-      console.error("Error saving node and edge data: ", error);
-    }
-  };
+const saveNodeEdgeData = async (nodeEdgeData) => {
+  try {
+    const existingDataSnapshot = await getDocs(
+      query(
+        nodeEdgeCollection,
+        where("userId", "==", nodeEdgeData.userId)
+      )
+    );
 
-  
+    if (!existingDataSnapshot.empty) {
+      existingDataSnapshot.forEach((doc) => {
+        updateDoc(doc.ref, nodeEdgeData);
+      });
+    } else {
+      addDoc(nodeEdgeCollection, nodeEdgeData);
+    }
+  } catch (error) {
+    console.error("Error saving node and edge data: ", error);
+  }
+};
+
+ 
   useEffect(() => {
     const fetchNodeEdgeData = async () => {
       if (currentUser) {
@@ -389,6 +392,7 @@ useEffect(() => {
   }, [familyMembers, nodes]);
 
   const deleteMember = async (id, uid) => {
+    console.log('deleteMember called with id and uid:', id, uid);
 
     if (id === '0') { 
       return;
@@ -415,6 +419,7 @@ useEffect(() => {
     };
 
     const validateForm = () => {
+      console.log('validateForm called');
       let errors = {};
     
       if (!formValues.name) {
@@ -441,7 +446,6 @@ useEffect(() => {
       return Object.keys(errors).length === 0;
     };
     
-
     const loadActiveSwitchFromFirestore = useCallback(async () => {
       if (auth.currentUser) {
         const userId = auth.currentUser.uid;
