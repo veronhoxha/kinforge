@@ -13,6 +13,7 @@ import ManIcon from '@mui/icons-material/Man';
 import WomanIcon from '@mui/icons-material/Woman';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useHistory } from 'react-router-dom';
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 
 function FamilyTree() {
   const [currentUser, setCurrentUser] = useState();
@@ -21,6 +22,45 @@ function FamilyTree() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const history = useHistory();
   const menu = useRef();
+  const [profilePicture, setProfilePicture] = useState(profile_pic);
+
+  useEffect(() => {
+    const getUserProfileData = async (uid) => {
+      const db = getFirestore();
+      const usersCollection = collection(db, 'users');
+      const q = query(usersCollection, where('uid', '==', uid));
+
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        console.error("No matching documents found!");
+        return;
+      }
+
+      let userData = null;
+      querySnapshot.forEach((doc) => {
+        userData = doc.data();
+      });
+
+      return userData;
+    };
+
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setCurrentUser(user);
+        const userData = await getUserProfileData(user.uid);
+        if (userData && userData.photoURL) {
+          setProfilePicture(userData.photoURL);
+        } else {
+          setProfilePicture(profile_pic);
+        }
+      } else {
+        setProfilePicture(profile_pic);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
 
   useEffect(() => {
     const handler = (e) => {
@@ -82,7 +122,7 @@ function FamilyTree() {
               </Link>
             </div>
             <div className="menu-main" onClick={() => isModalOpen ? null : setOpen(!open)}>
-              <img src={currentUser.photoURL || profile_pic} alt="profile pic"></img>
+            <img src={profilePicture} alt="profile pic"></img>
             </div>
             <div className={`dropdown ${open ? 'active' : 'inactive'}`}>
               <h3>

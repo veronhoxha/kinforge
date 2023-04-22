@@ -70,25 +70,29 @@ const EditProfile = () => {
       await updateEmail(auth.currentUser, emailaddress);
     } catch (error) {
       if (error.code === "auth/requires-recent-login") {
-        const currentPassword = prompt("Please enter your current password to confirm the email change:");
-  
-        if (!currentPassword) {
-          showSnackbar("Password is required to update your email.", "error");
-          return;
-        }
-  
-        try {
-          await reauthenticateUser(auth.currentUser, currentUser.email, currentPassword);
-          await updateEmail(auth.currentUser, emailaddress);
-        } catch (reauthError) {
-          showSnackbar("Error re-authenticating: ", "error");
-          return;
-        }
+        showSnackbar("Password is required to update your email.", "error");
+    
+        setTimeout(async () => {
+          const currentPassword = prompt("Please enter your current password to confirm the email change:");
+    
+          if (!currentPassword) {
+            showSnackbar("Password is required to update your email.", "error");
+            return;
+          }
+    
+          try {
+            await reauthenticateUser(auth.currentUser, currentUser.email, currentPassword);
+            await updateEmail(auth.currentUser, emailaddress);
+          } catch (reauthError) {
+            showSnackbar("Error re-authenticating: ", "error");
+            return;
+          }
+        }, 500);
       } else {
         showSnackbar("Error updating the email: ", "error");
         return;
-       }
-    }
+      }
+    }    
 
     const db = getFirestore();
     const usersCollection = collection(db, 'users');
@@ -152,9 +156,11 @@ const EditProfile = () => {
         setEmail(user.email);
         setCurrentUser(user);
         setUserId(user.uid);
-        
-        if (user.photoURL) {
-          setProfilePicture(user.photoURL);
+  
+        const userData = await getUserProfileData(user.uid);
+  
+        if (userData && userData.photoURL) {
+          setProfilePicture(userData.photoURL);
           setNoPhoto(false);
         } else {
           setProfilePicture(profile_pic);
@@ -165,8 +171,10 @@ const EditProfile = () => {
         setNoPhoto(true);
       }
     });
+  
     return () => unsubscribe();
   }, [auth]);
+  
   
   const handleProfilePictureChange = (e) => {
     if (e.target.files.length > 0) {
@@ -273,6 +281,26 @@ const EditProfile = () => {
     deleteProfilePicture();
     handleModal();
   }
+
+  const getUserProfileData = async (uid) => {
+    const db = getFirestore();
+    const usersCollection = collection(db, 'users');
+    const q = query(usersCollection, where('uid', '==', uid));
+  
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      console.error("No matching documents found!");
+      return;
+    }
+  
+    let userData = null;
+    querySnapshot.forEach((doc) => {
+      userData = doc.data();
+    });
+  
+    return userData;
+  };
+
   
   return (
     <div className="edit-profile">
