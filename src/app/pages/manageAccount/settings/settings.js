@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PasswordIcon from '@mui/icons-material/Password';
 import { getAuth, updatePassword, signInWithEmailAndPassword } from "firebase/auth";
-import '../../../styles/settings.css';
+import '../../../styles/settings.css'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
