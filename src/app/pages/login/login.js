@@ -66,26 +66,26 @@ const Login = () => {
     const handleForgotPassword = (e) => {
         e.preventDefault();
         if (!email) {
-            setErrors("Please enter your email address and click 'Forgot your password?' again to receive a password reset link. Make sure to check your spam folder.");
-
+          setErrors("Please enter your email address and click 'Forgot your password?' again to receive a password reset link. Make sure to check your spam folder.");
         } else {
-            sendPasswordResetEmail(auth, email)
-                .then(() => {
-                    setErrors(`Password reset email sent to ${email}.`);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    if (errorCode === 'auth/user-not-found') {
-                        setErrors('This user does not exist. Cannot send a reset password email.');
-                    } if (errorCode === 'auth/invalid-email') {
-                        setErrors('Enter a valid email address, please.');
-                    } else {
-                        setErrors(errorMessage);
-                    }
-                });
+          sendPasswordResetEmail(auth, email)
+            .then(() => {
+              setErrors(`Password reset email sent to ${email}.`);
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              if (errorCode === 'auth/user-not-found') {
+                setErrors('This user does not exist. Cannot send a reset password email.');
+              } else if (errorCode === 'auth/invalid-email') {
+                setErrors('Enter a valid email address, please.');
+              } else {
+                setErrors(errorMessage);
+              }
+            });
         }
-    };
+      };
+      
 
     return (
         <div className="login">
