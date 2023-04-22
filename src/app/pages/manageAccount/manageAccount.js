@@ -49,6 +49,7 @@ const ManageAccount = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('familyModalShown');
     auth.signOut();
     history.push('./');
   };
