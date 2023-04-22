@@ -3,22 +3,23 @@ import ReactFlow, { useNodesState, useEdgesState, addEdge, useReactFlow, ReactFl
 import 'reactflow/dist/style.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { collection, addDoc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { query, where, getDocs, getFirestore, deleteDoc} from "firebase/firestore";
+import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, updateDoc, doc, getDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import HierarchyDialog from './HierarchyDialog';
-import { doc, getDoc } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
+
 const initialNodes = [
   {
-    id: '0',
+    id: uuidv4(),
     type: 'input',
     data: { label: 'Node' },
     position: { x: 0, y: 50 },
+    isInitialNode: true,
   },
 ];
 
 let id = 1;
-const getId = () => `${id++}`;
+const getId = () => uuidv4();
 
 const fitViewOptions = {
   padding: 3,
@@ -40,16 +41,32 @@ const HierarchyMomSide = () => {
   const [currentUser, setCurrentUser] = useState();
   const db = getFirestore();
   const usersCollection = collection(db, "family-members-mom-side");
+  const nodeEdgeCollection = collection(db, "family-members-mom-side-node-edge");
   const auth = getAuth();
   const [formErrors, setFormErrors] = useState({});
   const [activeSwitch, setActiveSwitch] = useState(1);
+  const [familyMembers, setFamilyMembers] = useState([]);
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+  const onConnect = useCallback((params) => {
+    console.log('onConnect called with params:', params);
+    if (params.source === '0' && params.target === '0') {
+      setErrorMessage("The initial node cannot be connected to itself.");
+      return;
+    }
+    if (edges.find((edge) => edge.source === params.source && edge.target === params.target)) {
+      setErrorMessage("The connection already exists.");
+      return;
+    }
+    setEdges((eds) => addEdge(params, eds));
+  }, [setEdges, edges]);
+  
   const onConnectStart = useCallback((_, { nodeId }) => {
+    console.log('onConnectStart called with nodeId:', nodeId);
     connectingNodeId.current = nodeId;
   }, []);
   const onConnectEnd = useCallback(
-    (event) => {
+    async (event) => {
+      console.log('onConnectEnd called with event:', event);
       const targetIsPane = event.target && event.target.classList.contains('react-flow__pane');
   
       if (targetIsPane && !startingNodeEdited) {
@@ -58,7 +75,7 @@ const HierarchyMomSide = () => {
         const newNode = {
           id,
           position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
-          data: { label: `Node ${id}` },
+          data: { label: `Node` },
         };
   
         setNodes((nds) => nds.concat(newNode));
@@ -75,39 +92,58 @@ const HierarchyMomSide = () => {
         });
         setSelectedValue(null);
         setFormErrors({});
+
+        if (currentUser) {
+          const nodeEdgeData = {
+            userId: currentUser.uid,
+            nodes: [...nodes, newNode],
+            edges: [...edges, { id, source: connectingNodeId.current, target: id }],
+          };
+          await saveNodeEdgeData(nodeEdgeData);          
+        } else {
+          console.error("No current user");
+        }
       }
     },
-    [project, setEdges, setNodes, startingNodeEdited]
-  );
+    [project, setEdges, setNodes, startingNodeEdited, currentUser, nodes, edges]
+  );  
 
-  const onNodeClick = (_, node) => {
+  const onNodeClick = async (_, node) => {
+    console.log('onNodeClick called with node:', node);
     console.log('click node', node);
   
-    const nodeLabel = node.data.label;
-    const nodeData = nodeLabel.props ? {
-      name: nodeLabel.props.children[0],
-      surname: nodeLabel.props.children[2],
-      dob: nodeLabel.props.children[4]
-    } : {
-      name: "",
-      surname: "",
-      dob: ""
-    };
+    if (currentUser) {
+      try {
+        const memberSnapshot = await getDocs(
+          query(
+            usersCollection,
+            where("id", "==", node.id),
+            where("addedBy", "==", currentUser.uid)
+          )
+        );
   
-    setFormValues({
-      name: nodeData.name,
-      surname: nodeData.surname,
-      dob: nodeData.dob,
-      place_of_birth: nodeData.place_of_birth,
-      dod: "",
-      gender: "",
-    });
-    setSelectedValue(null);
+        if (!memberSnapshot.empty) {
+          memberSnapshot.forEach((doc) => {
+            const data = doc.data();
+            setFormValues({
+              name: data.name,
+              surname: data.surname,
+              dob: data.date_of_birth,
+              place_of_birth: data.place_of_birth,
+              dod: data.date_of_death,
+              gender: data.gender,
+            });
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching member data:", error);
+      }
+    }
   
     setSelectedNode(node);
     setDialogOpen(true);
   };
-
+  
   const [formValues, setFormValues] = useState({
     name: "",
     surname: "",
@@ -128,19 +164,47 @@ const HierarchyMomSide = () => {
     setFormValues((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const deleteNodeById = (id) => {
-    if (id === '0') {
+  const deleteNodeEdgeById = async (id) => {
+    if (!currentUser) {
+      console.error("No current user");
+      return;
+    }
+  
+    const nodeToDelete = nodes.find((node) => node.id === id);
+    if (nodeToDelete && nodeToDelete.isInitialNode) {
       setErrorMessage('The starting node cannot be deleted.');
       setFormErrors({});
       return;
     }
     console.log("Deleting node with id:", id);
+  
     setNodes((nds) => nds.filter((node) => node.id !== id));
     setEdges((eds) => eds.filter((edge) => edge.source !== id && edge.target !== id));
   
+    const updatedNodes = nodes.filter((node) => node.id !== id);
+    const updatedEdges = edges.filter((edge) => edge.source !== id && edge.target !== id);
+  
+    try {
+      const existingDataSnapshot = await getDocs(
+        query(nodeEdgeCollection, where("userId", "==", currentUser.uid))
+      );
+  
+      if (!existingDataSnapshot.empty) {
+        existingDataSnapshot.forEach(async (doc) => {
+          await updateDoc(doc.ref, {
+            userId: currentUser.uid,
+            nodes: updatedNodes,
+            edges: updatedEdges,
+          });
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting node and edge data: ", error);
+    }
+  
     setSelectedNode(null);
   };
-
+  
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -150,15 +214,30 @@ const HierarchyMomSide = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  const saveMember = async (memberData) => {
+  const updateMember = async (id, memberData) => {
     try {
-      await addDoc((usersCollection), memberData);
+      const memberSnapshot = await getDocs(
+        query(
+          usersCollection,
+          where("id", "==", id),
+          where("addedBy", "==", memberData.addedBy)
+        )
+      );
+  
+      if (!memberSnapshot.empty) {
+        memberSnapshot.forEach(async (doc) => {
+          await updateDoc(doc.ref, memberData);
+        });
+      } else {
+        await addDoc(usersCollection, memberData);
+      }
     } catch (error) {
-      console.error('Error adding member data: ', error);
+      console.error('Error updating member data: ', error);
     }
-  };
+  }; 
 
   const handleSave = () => {
+    console.log('handleSave called');
     if (validateForm()) {
       if (selectedNode) {
         const updatedNode = {
@@ -177,7 +256,7 @@ const HierarchyMomSide = () => {
         setNodes((nds) =>
           nds.map((node) => (node.id === selectedNode.id ? updatedNode : node))
         );
-        setSelectedNode(updatedNode);
+        setSelectedNode(updatedNode);  
   
         if (currentUser) {
           const memberData = {
@@ -187,19 +266,133 @@ const HierarchyMomSide = () => {
             date_of_birth: formValues.dob,
             place_of_birth: formValues.place_of_birth,
             date_of_death: formValues.dod,
-            gender: selectedValue,
+            gender: formValues.gender,
             addedBy: currentUser.uid,
           };
-          saveMember(memberData);
+          updateMember(selectedNode.id, memberData);
+  
+          const memberIndex = familyMembers.findIndex((m) => m.id === selectedNode.id);
+          if (memberIndex > -1) {
+            setFamilyMembers((prevState) => {
+              const newFamilyMembers = [...prevState];
+              newFamilyMembers[memberIndex] = memberData;
+              return newFamilyMembers;
+            });
+          } else {
+            setFamilyMembers((prevState) => [...prevState, memberData]);
+          }
+        }
+        if (currentUser) {
+          const nodeEdgeData = {
+            userId: currentUser.uid,
+            nodes: nodes,
+            edges: edges,
+          };
+          saveNodeEdgeData(nodeEdgeData);
         } else {
           console.error('No current user');
         }
       }
       setDialogOpen(false);
     }
-  };    
+  };
+  
+useEffect(() => {
+  updateNodesWithFamilyMembers();
+}, [familyMembers]);
+
+const saveNodeEdgeData = async (nodeEdgeData) => {
+  try {
+    const existingDataSnapshot = await getDocs(
+      query(
+        nodeEdgeCollection,
+        where("userId", "==", nodeEdgeData.userId)
+      )
+    );
+
+    if (!existingDataSnapshot.empty) {
+      existingDataSnapshot.forEach((doc) => {
+        updateDoc(doc.ref, nodeEdgeData);
+      });
+    } else {
+      addDoc(nodeEdgeCollection, nodeEdgeData);
+    }
+  } catch (error) {
+    console.error("Error saving node and edge data: ", error);
+  }
+};
+
+ 
+  useEffect(() => {
+    const fetchNodeEdgeData = async () => {
+      if (currentUser) {
+        const nodeEdgeSnapshot = await getDocs(
+          query(
+            nodeEdgeCollection,
+            where("userId", "==", currentUser.uid)
+          )
+        );
+    
+        if (!nodeEdgeSnapshot.empty) {
+          nodeEdgeSnapshot.forEach((doc) => {
+            const data = doc.data();
+            setNodes(data.nodes);
+            setEdges(data.edges);
+          });
+        }
+    
+        const familyMembersSnapshot = await getDocs(
+          query(
+            usersCollection,
+            where("addedBy", "==", currentUser.uid)
+          )
+        );
+    
+        if (!familyMembersSnapshot.empty) {
+          const members = [];
+          familyMembersSnapshot.forEach((doc) => {
+            const data = doc.data();
+            members.push(data);
+          });
+          setFamilyMembers(members);
+        }
+      }
+    };
+    
+    fetchNodeEdgeData();
+    
+  }, [currentUser]);
+
+  const updateNodesWithFamilyMembers = () => {
+    if (familyMembers.length > 0) {
+      const updatedNodes = nodes.map((node) => {
+        const member = familyMembers.find((m) => m.id === node.id);
+        if (member) {
+          return {
+            ...node,
+            data: {
+              label: (
+                <>
+                  {member.name} {member.surname}
+                  <br />
+                  {member.date_of_birth}
+                </>
+              ),
+            },
+          };
+        }
+        return node;
+      });
+      setNodes(updatedNodes);
+    }
+  };
+  
+  useEffect(() => {
+    updateNodesWithFamilyMembers();
+  }, [familyMembers, nodes]);
 
   const deleteMember = async (id, uid) => {
+    console.log('deleteMember called with id and uid:', id, uid);
 
     if (id === '0') { 
       return;
@@ -226,6 +419,7 @@ const HierarchyMomSide = () => {
     };
 
     const validateForm = () => {
+      console.log('validateForm called');
       let errors = {};
     
       if (!formValues.name) {
@@ -240,14 +434,18 @@ const HierarchyMomSide = () => {
       if (!formValues.place_of_birth) {
         errors.place_of_birth = 'Place of Birth is required';
       }
-      if (!selectedValue) {
-        errors.gender = 'Gender is required';
+      if (!formValues.gender) {
+        errors.gender = "Gender is required";
+      }
+
+      if (formValues.dod && new Date(formValues.dod) < new Date(formValues.dob)) {
+        errors.dod = "Date of death cannot be before date of birth";
       }
     
       setFormErrors(errors);
       return Object.keys(errors).length === 0;
     };
-
+    
     const loadActiveSwitchFromFirestore = useCallback(async () => {
       if (auth.currentUser) {
         const userId = auth.currentUser.uid;
@@ -305,7 +503,7 @@ const HierarchyMomSide = () => {
 
 return (
     <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
-      <div style={{ height: 817 }}>
+      <div style={{ height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -337,7 +535,7 @@ return (
             handleClose={handleClose}
             handleInputChange={handleInputChange}
             handleSave={handleSave}
-            deleteNodeById={deleteNodeById}
+            deleteNodeById={deleteNodeEdgeById}
             deleteMember={deleteMember}
             currentUser={currentUser}
             selectedNode={selectedNode}
@@ -349,7 +547,7 @@ return (
 
 const HierarchyMomSideWrapper = () => (
   <ReactFlowProvider>
-    <HierarchyMomSide />
+    <HierarchyMomSide  />
   </ReactFlowProvider>
 );
 
