@@ -60,7 +60,7 @@ const Signup = () => {
         } else if (!isValidEmail(email)) {
             setErrors('Enter a valid email address, please.');
         } else if (!isValidPassword(password)) {
-            setErrors('Enter a valid password, please.');
+            setErrors('Password must be at least 8 characters with 1 lower case letter, 1 upper case letter, 1 number, and 1 special character.');
         } else if (password !== confirmPassword) {
             setErrors('Passwords do not match.');
         } else {
@@ -126,7 +126,6 @@ const Signup = () => {
                 <Link to="/login" className="already-have-an-account">You already have an account?</Link>
                 <Link to="/" className="go-back-to-the-homepage">Go back to the homepage</Link>
             </form>
-            {/* <p className="password-requirements">Password must be at least 8 characters with 1 lower case letter, 1 upper case letter, 1 number, and 1 special character.</p> */}
         </div>
     );
 };
