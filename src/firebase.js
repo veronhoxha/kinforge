@@ -11,8 +11,17 @@ const firebaseConfig = {
     messagingSenderId: "363298141556",
     appId: "1:363298141556:web:8a51382d17a52676a02821",
     measurementId: "G-MN8E0CH770"
-  };
+};
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+let auth;
+let db;
+
+try {
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+} catch (error) {
+  console.log('Error:', error)
+}
+
+export { auth, db };
