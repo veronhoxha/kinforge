@@ -5,7 +5,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { auth } from '../../../firebase';
 import { useHistory } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 import EditProfile from './editprofile/editprofile';
 import Settings from './settings/settings';
 import Help from './help/help';
@@ -65,9 +64,6 @@ const ManageAccount = () => {
           <SettingsIcon className="icons" /> Settings </div>
         <div className="menu-item go-back" onClick={() => window.location.href = './familyTree'}>
           <ArrowBackIosIcon className="icons"/> Go back </div>
-        {/* <Link to="/familyTree" className="menu-item">
-          <ArrowBackIosIcon className="icons"/> Go back
-        </Link> */}
         <div className="menu-item" onClick={handleLogout} data-menu-item="Log Out">
           <LogoutIcon className="icons"/> Log Out </div>
         <div className={`menu-item${activeItem === 'Help' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Help" >
