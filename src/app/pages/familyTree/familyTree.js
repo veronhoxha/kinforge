@@ -14,6 +14,7 @@ import WomanIcon from '@mui/icons-material/Woman';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useHistory } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import Search from './search.js'
 
 function FamilyTree() {
   const [currentUser, setCurrentUser] = useState();
@@ -103,6 +104,9 @@ function FamilyTree() {
       {currentUser ? (
         <>
           <div className="menu-wrapper" ref={menu}>
+          <div className="search-container">
+            <Search />
+          </div>
             <div className='icon'>
               <Link to="/familyTree" className="go-to-man">
                 <ManIcon
@@ -120,6 +124,7 @@ function FamilyTree() {
                 />
                 <div className="tooltip">Mom's Family Side</div>
               </Link>
+
             </div>
             <div className="menu-main" onClick={() => isModalOpen ? null : setOpen(!open)}>
             <img src={profilePicture} alt="profile pic"></img>
