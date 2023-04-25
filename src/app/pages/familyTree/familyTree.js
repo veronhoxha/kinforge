@@ -14,7 +14,7 @@ import WomanIcon from '@mui/icons-material/Woman';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useHistory } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
-import Search from './search.js'
+import Search from '../../components/search'
 
 function FamilyTree() {
   const [currentUser, setCurrentUser] = useState();
@@ -61,7 +61,6 @@ function FamilyTree() {
 
     return () => unsubscribe();
   }, []);
-
 
   useEffect(() => {
     const handler = (e) => {
