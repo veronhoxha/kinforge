@@ -1,3 +1,10 @@
+.search-container {
+    position: absolute;
+    top: 8px;
+    left: 50px;
+}
+
+
 @media (max-width: 400px) {
     body {
         overflow-x: scroll;
@@ -8,12 +15,12 @@
     }
 }
 
-@media (max-width: 300px) {
+    @media (max-width: 300px) {
     body {
         overflow-x: scroll;
     }
 
     .smaller-search {
-        width: 100px !important;
+        width: 95px !important;
     }
 }
