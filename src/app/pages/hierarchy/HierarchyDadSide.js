@@ -7,6 +7,7 @@ import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, upd
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import HierarchyDialog from './HierarchyDialog';
 import { v4 as uuidv4 } from 'uuid';
+import Authentication from '../../../Authentication';
 
 const initialNodes = [
   {
@@ -551,4 +552,4 @@ const HierarchyDadSideWrapper = () => (
   </ReactFlowProvider>
 );
 
-export default HierarchyDadSideWrapper;
+export default Authentication(HierarchyDadSideWrapper);

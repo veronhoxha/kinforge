@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Authentication from '../../../../Authentication';
 
 const EditProfile = () => {
   const [name, setFirstName] = useState('');
@@ -387,4 +388,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default Authentication(EditProfile);

@@ -12,7 +12,7 @@ import { alpha, styled } from '@mui/material/styles';
 import "../../../styles/hierarchy.css";
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { getFirestore } from "firebase/firestore";
-
+import Authentication from '../../../../Authentication';
 
 function Settings() {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -231,4 +231,4 @@ function Settings() {
   );
   }
   
-  export default Settings;
+  export default Authentication(Settings);

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../../styles/help.css';
+import Authentication from '../../../../Authentication';
 
 function Help() {
   return (
@@ -28,4 +29,4 @@ function Help() {
   );
 };
 
-export default Help;
+export default Authentication(Help);
