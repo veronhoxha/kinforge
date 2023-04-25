@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import "../styles/search.css";
-import { collection, getDocs } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useLocation } from "react-router-dom";
 import { getAuth } from "firebase/auth";
@@ -20,49 +20,53 @@ export default function SearchBar() {
   const { currentUser } = getAuth();
   const inputRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [highlightedUser, setHighlightedUser] = useState(null);
+  const [setHighlightedUser] = useState(null);
 
   const dropdownRef = useRef();
 
   useEffect(() => {
-    const fetchUsers = () => {
+    const fetchUsers = async () => {
       const unsubscribeDadSide = onSnapshot(usersCollectionfamilyTree, (snapshot) => {
-        const usersList = snapshot.docs
+        const usersListDadSide = snapshot.docs
           .map((doc) => doc.data())
           .filter((user) => user.addedBy === currentUser.uid);
-        setUsers(usersList);
-      });
   
-      const unsubscribeMomSide = onSnapshot(usersCollectionfamilyTreeMom, (snapshot) => {
-        const usersList = snapshot.docs
-          .map((doc) => doc.data())
-          .filter((user) => user.addedBy === currentUser.uid);
-        setUsers(usersList);
+        const unsubscribeMomSide = onSnapshot(usersCollectionfamilyTreeMom, (snapshot) => {
+          const usersListMomSide = snapshot.docs
+            .map((doc) => doc.data())
+            .filter((user) => user.addedBy === currentUser.uid);
+  
+          const usersToFilter =
+            location.pathname === "/familyTreeMom" ? usersListMomSide : usersListDadSide;
+          setUsers(usersToFilter);
+  
+          if (searchTerm) {
+            const results = usersToFilter.filter((user) =>
+              (user.name + " " + user.surname).toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredUsers(results);
+          }
+        });
+  
+        return () => {
+          unsubscribeMomSide();
+        };
       });
   
       return () => {
         unsubscribeDadSide();
-        unsubscribeMomSide();
       };
     };
   
     const unsubscribe = fetchUsers();
   
     return () => {
-      unsubscribe();
+      if (typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
     };
-  }, [location.pathname, currentUser.uid]);
-
-  useEffect(() => {
-    if (searchTerm) {
-      const results = users.filter((user) =>
-        (user.name + " " + user.surname).toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredUsers(results);
-    } else {
-      setFilteredUsers([]);
-    }
-  }, [searchTerm, users]);
+  }, [location.pathname, currentUser.uid, searchTerm]);  
+  
 
   const handleClear = () => {
     setSearchTerm("");
@@ -75,16 +79,10 @@ export default function SearchBar() {
     setFilteredUsers([]);
     const selectedUser = { name, surname };
     setMenuOpen(false);
-    setHighlightedUser(selectedUser);
-    console.log(selectedUser);
+    // setHighlightedUser(selectedUser);
+    // console.log(selectedUser);
   };
   
-  
-  const [anchorEl, setAnchorEl] = useState();
-  const openMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   return (
     <>
       <Container maxWidth="md" sx={{ mt: 20 }}>
