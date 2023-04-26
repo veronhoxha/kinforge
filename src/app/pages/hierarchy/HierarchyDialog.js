@@ -20,7 +20,7 @@ const StyledButton = styled(Button)({
   marginLeft: '8px',
 });
 
-const HierarchyDadSideDialog = ({
+const HierarchyDialog = ({
   open,
   formValues,
   formErrors,
@@ -161,10 +161,10 @@ const HierarchyDadSideDialog = ({
               <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
               <RadioGroup aria-labelledby="demo-radio-buttons-group-label" name="gender">
                 <FormControlLabel
-                  value="male"
+                  value="Male"
                   control={
                     <Radio
-                      {...controlProps('male')}
+                      {...controlProps('Male')}
                       sx={{ color: brown[  800],
                         '&.Mui-checked': { color: brown[600] },
                       }}
@@ -173,20 +173,20 @@ const HierarchyDadSideDialog = ({
                   label="Male"
                 />
                 <FormControlLabel
-                  value="female"
+                  value="Female"
                   control={
                     <Radio
-                      {...controlProps('female')}
+                      {...controlProps('Female')}
                       sx={{ color: brown[800], '&.Mui-checked': { color: brown[600] } }}
                     />
                   }
                   label="Female"
                 />
                 <FormControlLabel
-                  value="other"
+                  value="Other"
                   control={
                     <Radio
-                      {...controlProps('other')}
+                      {...controlProps('Other')}
                       sx={{ color: brown[800], '&.Mui-checked': { color: brown[600] } }}
                     />
                   }
@@ -219,4 +219,4 @@ const HierarchyDadSideDialog = ({
   );
 };
   
-export default HierarchyDadSideDialog;
+export default HierarchyDialog;

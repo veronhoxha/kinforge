@@ -8,23 +8,26 @@ import { db } from "../../firebase";
 import { useLocation } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { onSnapshot } from "firebase/firestore";
+import MemberDataDialog from "./MemberDataDialog";
 
-export default function SearchBar() {
+export default function SearchBar({onUserSelect}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const isSmallScreen = useMediaQuery("(max-width: 400px)");
-  const usersCollectionfamilyTree = collection(db, "family-members-dad-side");
-  const usersCollectionfamilyTreeMom = collection(db, "family-members-mom-side");
   const location = useLocation();
   const { currentUser } = getAuth();
   const inputRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [setHighlightedUser] = useState(null);
+  const [highlightedUser, setHighlightedUser] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+
 
   const dropdownRef = useRef();
 
   useEffect(() => {
+    const usersCollectionfamilyTree = collection(db, "family-members-dad-side");
+    const usersCollectionfamilyTreeMom = collection(db, "family-members-mom-side");
     const fetchUsers = async () => {
       const unsubscribeDadSide = onSnapshot(usersCollectionfamilyTree, (snapshot) => {
         const usersListDadSide = snapshot.docs
@@ -73,14 +76,18 @@ export default function SearchBar() {
     setMenuOpen(false);
   };
 
-  const handleMenuItemClick = (name, surname) => {
+  const handleMenuItemClick = (user) => {
     console.log("handleMenuItemClick");
-    setSearchTerm(`${name} ${surname}`);
+    setSearchTerm(`${user.name} ${user.surname}`);
     setFilteredUsers([]);
-    const selectedUser = { name, surname };
     setMenuOpen(false);
-    // setHighlightedUser(selectedUser);
-    // console.log(selectedUser);
+    setHighlightedUser(user);
+    setOpenDialog(true);
+    if (typeof onUserSelect === 'function') {
+      onUserSelect(user);
+    }
+    console.log(user);
+    console.log("Dialog open status:", true);
   };
   
   return (
@@ -151,8 +158,9 @@ export default function SearchBar() {
                     {filteredUsers.map((user, index) => (
                      <ListItem
                         key={`user-${index}`}
-                        onClick={() => handleMenuItemClick(user.name, user.surname)}
+                        onClick={() => handleMenuItemClick(user)}
                       >
+                   
                         <ListItemText primary={`${user.name} ${user.surname}`} />
                     </ListItem>
                     ))}
@@ -163,6 +171,7 @@ export default function SearchBar() {
           </Grid>
         </Box>
       </Container>
+      <MemberDataDialog open={openDialog} onClose={() => setOpenDialog(false)} user={highlightedUser} />
     </>
   );
 }
