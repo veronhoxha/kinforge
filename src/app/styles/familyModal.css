@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    z-index: 1000;
 }
 
 .modalContainer {
@@ -19,6 +20,7 @@
     border-radius: 8px;
     display: flex;
     pointer-events: all;
+    z-index: 1001;
 }
 
 .modalImg {
