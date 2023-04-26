@@ -15,6 +15,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { useHistory } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import Search from '../../components/search'
+import { toPng } from 'html-to-image';
 
 function FamilyTree() {
   const [currentUser, setCurrentUser] = useState();
@@ -97,6 +98,33 @@ function FamilyTree() {
     history.push('./');
   };
 
+  function downloadImage(dataUrl) {
+    const a = document.createElement('a');
+    const name = currentUser.displayName.split(' ');
+    const fileName = `${name[0]}_${name[1]}_FamilyTree.png`;
+  
+    a.setAttribute('download', fileName);
+    a.setAttribute('href', dataUrl);
+    a.click();
+  }
+
+    const onClick = () => {
+      toPng(document.querySelector('.react-flow'), {
+        backgroundColor: 'white',
+        filter: (node) => {
+          if (
+            node?.classList?.contains('react-flow__minimap') ||
+            node?.classList?.contains('react-flow__controls') || 
+            node?.classList?.contains('.hierarchy-theme .react-flow .react-flow__pane ')
+          ) {
+            return false;
+          }
+  
+          return true;
+        },
+      }).then(downloadImage);
+    };
+
   return (
     <div className={`menu ${isModalOpen ? 'no-click' : ''}`}>
       <FamilyModal open={isModalOpen} onClose={handleModalClose} isModalOpen={isModalOpen} />
@@ -137,7 +165,7 @@ function FamilyTree() {
                 <DropdownItem href="./editprofile" text="Edit Profile" icon={<EditIcon />} />
                 <DropdownItem href="./settings" text="Settings" icon={<SettingsIcon />} />
                 <DropdownItem href="./help" text="Help" icon={<HelpIcon />} />
-                <DropdownItem text="Export as PDF" icon={<DownloadIcon />} />
+                <DropdownItem text="Export as PNG" icon={<DownloadIcon />}onClick={onClick} />
                 <DropdownItem
                   text="Logout"
                   icon={<LogoutIcon />}
@@ -158,12 +186,22 @@ function DropdownItem(props) {
   return (
     <li className="dropdown-items">
       {props.icon}
-      <a href={props.href} className="items" onClick={props.onClick}>
+      <a
+        href={props.href}
+        className="items"
+        onClick={(e) => {
+          if (props.onClick) {
+            e.preventDefault();
+            props.onClick();
+          }
+        }}
+      >
         {' '}
         {props.text}
       </a>
     </li>
   );
 }
+
 
 export default Authentication(FamilyTree);
