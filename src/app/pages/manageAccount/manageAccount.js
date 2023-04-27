@@ -56,7 +56,7 @@ const ManageAccount = () => {
 
   return (
     <div className="settings-menu">
-      <h1 className="title">Account</h1>
+      <h1 className="title" aria-label="Account">Account</h1>
       <hr></hr>
       <div className="menu-items">
         <div className={`menu-item${activeItem === 'Edit Profile' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Edit Profile">

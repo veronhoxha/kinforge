@@ -5,7 +5,7 @@ import Authentication from '../../../../Authentication';
 function Help() {
   return (
     <div className="help">
-       <div className="help-wrapper">
+       <div className="help-wrapper" data-testid="help-wrapper">
 
       <h2>Help</h2>
       <p>Welcome to the KinForge! Here, you'll find information and guidance on how to use our web application to create and explore your family tree.</p>
