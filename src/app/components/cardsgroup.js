@@ -16,7 +16,7 @@ function cardsgroup() {
                       <SearchIcon/>
                     </div>
                     <h3 className="h3-title">Searching</h3>
-                    <p>Search for other users or family members by name, location, or other parameters.</p>
+                    <p>Search for other users or family members by name and surname.</p>
                   </div>
                 </div>
                 <div className='card-holder-item' data-testid='card-holder-item'>
