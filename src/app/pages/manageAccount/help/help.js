@@ -21,6 +21,9 @@ function Help() {
       <h3>Viewing and Navigating the Tree</h3>
       <p>You can navigate the tree by dragging the tree or using the zoom in and out buttons.</p>
 
+      <h3>Exporting family tree as PNG</h3>
+      <p>To export your family tree as a PNG file, click on your image on the main page to see the drop-down menu, where you can find this option. However, it's important to adjust your family tree using the control buttons located at the bottom-left corner of the screen, especially if you have a large tree, so that the entire tree can be exported properly.</p>
+
       <h3>Contact Us</h3>
       <p>If you have any questions or need assistance, don't hesitate to contact our support team at support@kinforge.com. We're always here to help you get the most out of your family tree experience!</p>
     
