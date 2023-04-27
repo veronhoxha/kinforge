@@ -153,7 +153,7 @@ export default function SearchBar({onUserSelect}) {
          </Grid>
             <Grid item>
               {menuOpen && filteredUsers.length > 0 && (
-                <Paper elevation={3} ref={dropdownRef}>
+                <Paper elevation={3} ref={dropdownRef} className="search-results-panel">
                   <List>
                     {filteredUsers.map((user, index) => (
                      <ListItem

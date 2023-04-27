@@ -2,25 +2,37 @@
     position: absolute;
     top: 8px;
     left: 50px;
-}
-
-
-@media (max-width: 400px) {
+  }
+  
+  .search-results-panel {
+    min-width: 190px;
+  }
+  
+  @media (max-width: 400px) {
     body {
-        overflow-x: scroll;
+      overflow-x: scroll;
     }
-
+  
     .smaller-search {
-        width: 120px !important;
+      width: 120px !important;
     }
-}
-
-    @media (max-width: 300px) {
+  
+    .search-results-panel {
+      min-width: 120px;
+    }
+  }
+  
+  @media (max-width: 300px) {
     body {
-        overflow-x: scroll;
+      overflow-x: scroll;
     }
-
+  
     .smaller-search {
-        width: 95px !important;
+      width: 95px !important;
     }
-}
+  
+    .search-results-panel {
+      min-width: 95px;
+    }
+  }
+  
