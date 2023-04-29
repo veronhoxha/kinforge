@@ -4,16 +4,21 @@ import Help from './help';
 import '@testing-library/jest-dom';
 jest.mock('../../../../Authentication');
 
-
 describe('Help', () => {
+
   test('renders Help component', () => {
-    render(<Help />);
+    render(
+      <Help />
+    );
     const helpHeading = screen.getByRole('heading', { level: 2, name: /Help/i });
     expect(helpHeading).toBeInTheDocument();
   });
 
   test('renders all expected headings', () => {
-    render(<Help />);
+    render(
+      <Help />
+    );
+    
     const headings = [
       'Help',
       'Adding Family Members',
@@ -29,14 +34,19 @@ describe('Help', () => {
   });
 
   test('renders support email', () => {
-    render(<Help />);
+    render(
+      <Help />
+    );
     const supportEmail = screen.getByText(/support@kinforge.com/i);
     expect(supportEmail).toBeInTheDocument();
   });
 
   test('renders help-wrapper class', () => {
-    render(<Help />);
+    render(
+      <Help />
+    );
     const helpWrapper = screen.getByTestId('help-wrapper');
     expect(helpWrapper).toBeInTheDocument();
   });
+
 });

@@ -10,7 +10,7 @@ jest.mock('firebase/auth');
 test('renders Login component without crashing', () => {
     render(
         <Router>
-        <Login />
+          <Login />
         </Router>
     );
 });
@@ -18,7 +18,7 @@ test('renders Login component without crashing', () => {
 test('initial state is set correctly', () => {
     render(
         <Router>
-        <Login />
+          <Login />
         </Router>
     );
     expect(screen.getByLabelText(/email/i).value).toBe('');

@@ -1,9 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Home from './home';
-import Mainsection from '../../components/mainsection';
-import Cards from '../../components/cardsgroup';
-import Footer from '../../components/footer';
 import '@testing-library/jest-dom';
 
 jest.mock('../../components/mainsection', () => {

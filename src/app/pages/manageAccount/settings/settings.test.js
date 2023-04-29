@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import Settings from './settings';
@@ -36,6 +36,7 @@ jest.mock('firebase/firestore', () => {
 });
 
 describe('Settings', () => {
+
   test('renders change password button', () => {
     render(<Settings />);
     const changePasswordButton = screen.getByText('Change Password');
@@ -86,4 +87,5 @@ describe('Settings', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
 });

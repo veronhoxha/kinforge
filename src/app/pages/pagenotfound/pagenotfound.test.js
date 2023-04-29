@@ -15,7 +15,7 @@ test('renders PageNotFound component without crashing', () => {
 test('displays "Oops! Page was not found." message', () => {
     render(
         <Router>
-        <PageNotFound />
+          <PageNotFound />
         </Router>
     );
     expect(screen.getByText(/Oops! Page was not found./i)).toBeInTheDocument();
