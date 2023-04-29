@@ -44,8 +44,8 @@ test('password input field accepts text input', () => {
       </Router>
     );
     const passwordInput = screen.getByLabelText(/password/i);
-    fireEvent.change(passwordInput, { target: { value: 'Password?02' } });
-    expect(passwordInput.value).toBe('Password?02');
+    fireEvent.change(passwordInput, { target: { value: 'Veron?02' } });
+    expect(passwordInput.value).toBe('Veron?02');
 });
 
 test('login button is present and clickable', () => {
@@ -99,7 +99,7 @@ test('error is displayed if the email is empty when the login button is clicked'
       </Router>
     );
     const passwordInput = screen.getByLabelText(/password/i);
-    fireEvent.change(passwordInput, { target: { value: 'Password?02' } });
+    fireEvent.change(passwordInput, { target: { value: 'Veron?02' } });
     const loginButton = screen.getByRole('button', { name: /login/i });
     fireEvent.click(loginButton);
     await waitFor(() => expect(screen.getByText(/enter your email address/i)).toBeInTheDocument());

@@ -1,8 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import FamilyTreeWithHierarchyDad from './FamilyTreeWithHierarchyDad';
-import FamilyTree from '../pages/familyTree/familyTree';
-import HierarchyDadSide from '../pages/hierarchy/HierarchyDadSide';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 

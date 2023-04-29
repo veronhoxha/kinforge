@@ -3,20 +3,17 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import Settings from './settings';
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { BrownSwitch } from './settings';
 
 jest.mock('firebase/auth', () => {
     return {
       getAuth: jest.fn(() => {
         return {
           currentUser: {
-            uid: '123',
-            email: 'test@example.com',
+            uid: '22222222',
+            email: 'veronhoxha@yahoo.com',
           },
           onAuthStateChanged: jest.fn((callback) => {
-            callback({ uid: '123' });
+            callback({ uid: '22222222' });
             return () => {}; 
           }),
         };
