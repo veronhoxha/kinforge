@@ -48,7 +48,7 @@ const HierarchyDadSide = () => {
   const [activeSwitch, setActiveSwitch] = useState(1);
   const [familyMembers, setFamilyMembers] = useState([]);
 
-  const onConnect = useCallback((params) => {
+  const onConnect = useCallback(async (params) => {
     console.log('onConnect called with params:', params);
     if (params.source === '0' && params.target === '0') {
       setErrorMessage("The initial node cannot be connected to itself.");
@@ -59,7 +59,19 @@ const HierarchyDadSide = () => {
       return;
     }
     setEdges((eds) => addEdge(params, eds));
-  }, [setEdges, edges]);
+  
+    if (currentUser) {
+      const nodeEdgeData = {
+        userId: currentUser.uid,
+        nodes: nodes,
+        edges: [...edges, { id: getId(), source: params.source, target: params.target }],
+      };
+      await saveNodeEdgeData(nodeEdgeData);
+    } else {
+      console.error("No current user");
+    }
+  }, [setEdges, edges, currentUser, nodes]);
+  
   
   const onConnectStart = useCallback((_, { nodeId }) => {
     console.log('onConnectStart called with nodeId:', nodeId);
@@ -502,6 +514,35 @@ const saveNodeEdgeData = async (nodeEdgeData) => {
       }
     };
 
+    const onNodeDragStop = async (_, node) => {
+      console.log("onNodeDragStop called with node:", node);
+
+      setNodes((nds) =>
+        nds.map((n) => (n.id === node.id ? { ...n, position: node.position } : n))
+      );
+    
+      if (currentUser) {
+        try {
+          const nodeEdgeSnapshot = await getDocs(
+            query(nodeEdgeCollection, where("userId", "==", currentUser.uid))
+          );
+    
+          if (!nodeEdgeSnapshot.empty) {
+            nodeEdgeSnapshot.forEach(async (doc) => {
+              const data = doc.data();
+              const updatedNodes = data.nodes.map((n) =>
+                n.id === node.id ? { ...n, position: node.position } : n
+              );
+              await updateDoc(doc.ref, { ...data, nodes: updatedNodes });
+            });
+          }
+        } catch (error) {
+          console.error("Error updating node position in Firestore:", error);
+        }
+      }
+    };
+    
+
 return (
     <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
       <div style={{ height: '100vh' }}>
@@ -515,6 +556,7 @@ return (
         elementsSelectable={isSelectable}
         onNodeClick={captureElementClick ? onNodeClick : undefined}
         onConnectEnd={onConnectEnd}
+        onNodeDragStop={onNodeDragStop}
         fitView
         fitViewOptions={fitViewOptions}
         proOptions={{ hideAttribution: true }}>
