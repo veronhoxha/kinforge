@@ -375,6 +375,7 @@ const EditProfile = () => {
         <></>
       )}
           <Snackbar
+            className="my-snackbar"
             open={!!snackbarMessage}
             autoHideDuration={6000}
             onClose={() => setSnackbarMessage(null)}

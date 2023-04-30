@@ -130,9 +130,17 @@ button {
     font-size: 14px;
 }
   
-  button:hover {
+button:hover {
     background-color: #A0695C;
 }
+
+.my-snackbar {
+    position: absolute;
+    top: 20px !important;
+    left: 57% !important;
+    transform: translateX(-50%);
+  }
+  
 
 @media (max-width: 1024px) {
 
@@ -144,9 +152,30 @@ button {
         background-color: #f2f2f2;
         color: black;
     }
+
+    
+    .my-snackbar {
+        position: absolute;
+        width: auto !important;
+        top: 120px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
+  
 }
 
 @media (max-width: 768px) {
+
+    .my-snackbar {
+        position: absolute;
+        width: auto !important;
+        top: 120px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+        text-align: center !important;
+        justify-content: center;
+        align-items: center;
+    }
 
     .edit-profile {
         left: auto !important;
@@ -159,6 +188,17 @@ button {
 }
 
 @media (max-width: 480px) {
+
+    .my-snackbar {
+        position: absolute;
+        width: 80% !important;
+        top: 120px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+        text-align: center !important;
+        justify-content: center;
+        align-items: center;
+    }
 
     .edit-profile {
         left: auto !important;
@@ -179,8 +219,3 @@ button {
         max-width: 90%;
     }
 }
-
-
-
-
-
