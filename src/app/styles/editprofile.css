@@ -139,7 +139,23 @@ button:hover {
     top: 20px !important;
     left: 57% !important;
     transform: translateX(-50%);
+}
+
+/* .my-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
   }
+   */
   
 
 @media (max-width: 1024px) {
@@ -217,5 +233,9 @@ button:hover {
     
     .profile-form {
         max-width: 90%;
+    }
+
+    .my-modal {
+        width: 100% !important;
     }
 }

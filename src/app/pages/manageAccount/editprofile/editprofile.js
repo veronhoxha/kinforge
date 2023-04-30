@@ -319,8 +319,9 @@ const EditProfile = () => {
             <EditIcon size={24} />
             <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}/>
           </div>
-          <Modal open={openModal} onClose={handleModal}>
+          <Modal open={openModal} onClose={handleModal} className="my-modal" >
             <Box
+              className="my-modal"
               sx={{
                 position: 'absolute',
                 top: '50%',
