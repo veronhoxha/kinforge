@@ -10,7 +10,7 @@ import Settings from './settings/Settings';
 import Help from './help/Help';
 import '../../styles/manageAccount.css';
 import Authentication from '../../../Authentication';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ManageAccount = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -53,6 +53,20 @@ const ManageAccount = () => {
     auth.signOut();
     history.push('./');
   };
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+
+    if (currentPath === '/editprofile') {
+      setActiveItem('Edit Profile');
+    } else if (currentPath === '/settings') {
+      setActiveItem('Settings');
+    } else if (currentPath === '/help') {
+      setActiveItem('Help');
+    } else {
+      setActiveItem(null);
+    }
+  }, []);
 
   return (
     <div className="settings-menu">
