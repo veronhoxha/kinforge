@@ -9,7 +9,7 @@ import { createUserWithEmailAndPassword} from 'firebase/auth';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { query, where, getDocs } from "firebase/firestore";
 
-const Signup = () => {
+const SignUp = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -130,4 +130,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default SignUp;
