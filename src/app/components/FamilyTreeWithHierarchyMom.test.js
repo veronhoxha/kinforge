@@ -4,7 +4,7 @@ import FamilyTreeWithHierarchyMom from './FamilyTreeWithHierarchyMom';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
-jest.mock('../pages/familyTree/familyTree', () => {
+jest.mock('../pages/familyTree/FamilyTree', () => {
   return function RandomFamilyTree() {
     return <div data-testid="family-tree"></div>;
   };

@@ -3,19 +3,19 @@ import { render, screen } from '@testing-library/react';
 import Home from './Home';
 import '@testing-library/jest-dom';
 
-jest.mock('../../components/mainsection', () => {
+jest.mock('../../components/MainSection', () => {
   return function RandomMainsection() {
     return <div data-testid="mainsection"></div>;
   };
 });
 
-jest.mock('../../components/cardsgroup', () => {
+jest.mock('../../components/CardsGroup', () => {
   return function RandomCards() {
     return <div data-testid="cards"></div>;
   };
 });
 
-jest.mock('../../components/footer', () => {
+jest.mock('../../components/Footer', () => {
   return function RandomFooter() {
     return <div data-testid="footer"></div>;
   };
