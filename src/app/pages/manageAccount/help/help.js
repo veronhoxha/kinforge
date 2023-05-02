@@ -8,7 +8,7 @@ function Help() {
        <div className="help-wrapper" data-testid="help-wrapper">
 
       <h2>Help</h2>
-      <p>Welcome to the KinForge! Here, you'll find information and guidance on how to use our web application to create and explore your family tree.</p>
+      <p>Welcome to the KinForge! Here, you'll find information and guidance on how to use our web application to create and explore your family tree. In KinForge you can create two family trees: one for dad's side and one for mom's side. In the dad's tree, only blood-related relatives, and so to in the mom's tree.</p>
   
       <h3>Adding Family Members</h3>
       <p>To add a new family member, drag from the rectangle shape in the node and drop it and then click in the specfic node and fill in the required details. You can include their name, surname, date of birth, place of birth or current location, date of death and gender.</p>
