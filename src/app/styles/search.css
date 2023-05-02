@@ -2,13 +2,16 @@
     position: absolute;
     top: 8px;
     left: 50px;
-  }
+}
   
   .search-results-panel {
     min-width: 190px;
-  }
+    max-height: 300px;
+    overflow-y: auto; 
+}
   
-  @media (max-width: 400px) {
+  
+@media (max-width: 400px) {
     body {
       overflow-x: scroll;
     }
@@ -20,9 +23,9 @@
     .search-results-panel {
       min-width: 120px;
     }
-  }
+}
   
-  @media (max-width: 300px) {
+@media (max-width: 300px) {
     body {
       overflow-x: scroll;
     }
@@ -34,5 +37,5 @@
     .search-results-panel {
       min-width: 95px;
     }
-  }
+}
   
