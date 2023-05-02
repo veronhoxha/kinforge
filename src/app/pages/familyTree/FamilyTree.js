@@ -108,22 +108,42 @@ function FamilyTree() {
     a.click();
   }
 
-    const onClick = () => {
-      toPng(document.querySelector('.react-flow'), {
-        backgroundColor: 'white',
-        filter: (node) => {
-          if (
-            node?.classList?.contains('react-flow__minimap') ||
-            node?.classList?.contains('react-flow__controls') || 
-            node?.classList?.contains('.hierarchy-theme .react-flow .react-flow__pane ')
-          ) {
-            return false;
-          }
-  
-          return true;
-        },
-      }).then(downloadImage);
+  function crop(element) {
+    const rect = element.getBoundingClientRect();
+    const offset = 10; 
+    return {
+      top: rect.top + offset,
+      left: rect.left + offset,
+      width: rect.width - 2 * offset,
+      height: rect.height - 2 * offset,
+      bottom: rect.bottom - offset,
+      right: rect.right - offset,
     };
+  }
+  
+  const onClick = () => {
+    const familyTreeElement = document.querySelector('.react-flow');
+    const adjustedRect = crop(familyTreeElement);
+  
+    toPng(familyTreeElement, {
+      backgroundColor: 'white',
+      x: adjustedRect.left,
+      y: adjustedRect.top,
+      width: adjustedRect.width,
+      height: adjustedRect.height,
+      filter: (node) => {
+        if (
+          node?.classList?.contains('react-flow__minimap') ||
+          node?.classList?.contains('react-flow__controls') || 
+          node?.classList?.contains('.hierarchy-theme .react-flow .react-flow__pane ')
+        ) {
+          return false;
+        }
+  
+        return true;
+      },
+    }).then(downloadImage);
+  };  
 
   return (
     <div className={`menu ${isModalOpen ? 'no-click' : ''}`}>
