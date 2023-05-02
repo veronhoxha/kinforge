@@ -7,7 +7,7 @@ import "../../styles/places.css"
 
 const libraries = ["places"];
 
-export default function Places({ onChange, name, defaultValue }) {
+function Places({ onChange, name, defaultValue }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -140,3 +140,5 @@ const PlacesAutocomplete = ({ setSelected, setMapCenter, onChange, name, initial
   </Combobox>
   );
 };
+
+export default Places;

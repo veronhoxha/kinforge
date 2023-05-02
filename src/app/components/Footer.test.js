@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Footer from './footer';
+import Footer from './Footer';
 import '@testing-library/jest-dom';
 
 describe('Footer', () => {

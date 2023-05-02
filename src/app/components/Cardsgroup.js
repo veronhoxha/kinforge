@@ -4,7 +4,7 @@ import StarIcon from '@mui/icons-material/Star';
 import SearchIcon from '@mui/icons-material/Search';
 import '../styles/cardsgroup.css';
 
-function cardsgroup() {
+function CardsGroup() {
     return (
           <div className='card_main'>
             <div className='card_cover'>
@@ -43,4 +43,4 @@ function cardsgroup() {
       );
     }
 
-export default cardsgroup
+export default CardsGroup;

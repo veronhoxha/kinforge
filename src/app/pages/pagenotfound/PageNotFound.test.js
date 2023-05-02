@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import PageNotFound from './pagenotfound';
+import PageNotFound from './PageNotFound';
 
 test('renders PageNotFound component without crashing', () => {
     render(

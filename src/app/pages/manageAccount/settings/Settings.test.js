@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import Settings from './settings';
+import Settings from './Settings';
 
 jest.mock('firebase/auth', () => {
     return {

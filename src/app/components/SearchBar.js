@@ -10,7 +10,7 @@ import { getAuth } from "firebase/auth";
 import { onSnapshot } from "firebase/firestore";
 import MemberDataDialog from "./MemberDataDialog";
 
-export default function SearchBar({onUserSelect}) {
+function SearchBar({onUserSelect}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -21,7 +21,6 @@ export default function SearchBar({onUserSelect}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [highlightedUser, setHighlightedUser] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
-
 
   const dropdownRef = useRef();
 
@@ -175,3 +174,5 @@ export default function SearchBar({onUserSelect}) {
     </>
   );
 }
+
+export default SearchBar;

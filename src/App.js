@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from './app/components/navbar';
-import Home from './app/pages/home/home';
-import Login from './app/pages/login/login';
-import Signup from './app/pages/signup/signup';
-import PageNotFound from './app/pages/pagenotfound/pagenotfound';
-import ManageAccount from './app/pages/manageAccount/manageAccount';
-import EditProfile from './app/pages/manageAccount/editprofile/editprofile';
-import Settings from './app/pages/manageAccount/settings/settings';
-import Help from './app/pages/manageAccount/help/help';
+import Navbar from './app/components/Navbar';
+import Home from './app/pages/home/Home';
+import Login from './app/pages/login/Login';
+import Signup from './app/pages/signup/SignUp';
+import PageNotFound from './app/pages/pagenotfound/PageNotFound';
+import ManageAccount from './app/pages/manageAccount/ManageAccount';
+import EditProfile from './app/pages/manageAccount/editprofile/EditProfile';
+import Settings from './app/pages/manageAccount/settings/Settings';
+import Help from './app/pages/manageAccount/help/Help';
 import FamilyTreeWithHierarchyDad from './app/components/FamilyTreeWithHierarchyDad'
 import FamilyTreeWithHierarchyMom from './app/components/FamilyTreeWithHierarchyMom'
 

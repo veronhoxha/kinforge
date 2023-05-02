@@ -87,7 +87,7 @@ const HierarchyDadSide = () => {
         const id = getId();
         const newNode = {
           id,
-          position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
+          position: project({ x: event.clientX - left - 25, y: event.clientY - top }),
           data: { label: `Node` },
         };
   

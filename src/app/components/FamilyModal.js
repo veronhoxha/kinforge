@@ -3,7 +3,6 @@ import family_pic from '../media/family.png';
 import '../styles/familyModal.css';
 import { Link } from 'react-router-dom';
 
-
 const FamilyModal = ({ open, onClose }) => {
   if (!open) return null;
   return (

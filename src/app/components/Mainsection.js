@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import React from 'react'
 import '../styles/mainsection.css';
 
-function mainsection() {
+function MainSection() {
   return (
     <div className='main-section'>
         <video src='family-video.mp4' autoPlay loop muted data-testid='main-section-video'> </video>
@@ -18,4 +18,4 @@ function mainsection() {
   )
 }
 
-export default mainsection
+export default MainSection;

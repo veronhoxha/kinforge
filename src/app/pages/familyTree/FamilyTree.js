@@ -14,7 +14,7 @@ import WomanIcon from '@mui/icons-material/Woman';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useHistory } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
-import Search from '../../components/search'
+import Search from '../../components/SearchBar'
 import { toPng } from 'html-to-image';
 
 function FamilyTree() {

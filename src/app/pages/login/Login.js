@@ -66,7 +66,7 @@ const Login = () => {
     const handleForgotPassword = (e) => {
         e.preventDefault();
         if (!email) {
-          setErrors("Please enter your email address and click 'Forgot your password?' again to receive a password reset link. Make sure to check your spam folder.");
+          setErrors("Please enter your email address and click 'Forgot your password?' again to receive a password reset link.");
         } else {
           sendPasswordResetEmail(auth, email)
             .then(() => {

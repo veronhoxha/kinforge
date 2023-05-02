@@ -1,5 +1,5 @@
 import React from 'react';
-import FamilyTree from '../pages/familyTree/familyTree'
+import FamilyTree from '../pages/familyTree/FamilyTree'
 import HierarchyDadSide from '../pages/hierarchy/HierarchyDadSide'
 
 const FamilyTreeWithHierarchyDad = () => {

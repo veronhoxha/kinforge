@@ -8,6 +8,7 @@
     padding: 40px;
     overflow-x: auto;
     min-width: 50px;
+    max-width: 300px;
 }
 
 .login {
@@ -28,6 +29,7 @@
     text-align: center;
     color: red;
     font-size: 14px;
+    white-space: wrap;
 }
 
 label {
@@ -99,7 +101,7 @@ input[type="email"] {
     .login-form {
         padding: 50px;
         margin-top: 70px;
-        max-width: 700px;
+        max-width: 600px;
     }
 
     button[type="login-button"] {

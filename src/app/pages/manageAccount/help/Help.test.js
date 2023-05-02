@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Help from './help';
+import Help from './Help';
 import '@testing-library/jest-dom';
 jest.mock('../../../../Authentication');
 

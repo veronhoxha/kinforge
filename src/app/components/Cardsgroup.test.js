@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Cardsgroup from './cardsgroup';
+import Cardsgroup from './CardsGroup';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Cardsgroup component', () => {
