@@ -102,7 +102,7 @@ const EditProfile = () => {
 
     const db = getFirestore();
     const usersCollection = collection(db, 'users');
-    const q = query(usersCollection, where('uid', '==', currentUser.auth.lastNotifiedUid));
+    const q = query(usersCollection, where('uid', '==', currentUser.uid));
   
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) {
@@ -197,7 +197,7 @@ const EditProfile = () => {
   
   const deleteProfilePicture = async (e) => {
     const storage = getStorage();
-    const imageRef = ref(storage, `profile_pictures/${currentUser.auth.lastNotifiedUid}`);
+    const imageRef = ref(storage, `profile_pictures/${currentUser.uid}`);
     try {
       await deleteObject(imageRef);
       setProfilePicture(profile_pic);
@@ -209,7 +209,7 @@ const EditProfile = () => {
 
       const db = getFirestore();
       const usersCollection = collection(db, 'users');
-      const q = query(usersCollection, where('uid', '==', currentUser.auth.lastNotifiedUid));
+      const q = query(usersCollection, where('uid', '==', currentUser.uid));
   
       const querySnapshot = await getDocs(q);
       if (querySnapshot.empty) {
@@ -234,7 +234,7 @@ const EditProfile = () => {
   
   const uploadProfilePicture = (file) => {
     const storage = getStorage();
-    const imageRef = ref(storage, `profile_pictures/${currentUser.auth.lastNotifiedUid}`);
+    const imageRef = ref(storage, `profile_pictures/${currentUser.uid}`);
   
     const uploadTask = uploadBytesResumable(imageRef, file);
   
@@ -265,7 +265,7 @@ const EditProfile = () => {
   
           const db = getFirestore();
           const usersCollection = collection(db, 'users');
-          const q = query(usersCollection, where('uid', '==', currentUser.auth.lastNotifiedUid));
+          const q = query(usersCollection, where('uid', '==', currentUser.uid));
   
           const querySnapshot = await getDocs(q);
           if (querySnapshot.empty) {
