@@ -6,7 +6,7 @@
     background-color: #fff;
     display: flex;
     padding: 40px;
-    overflow-x: auto;
+    /* overflow-x: auto; */
     min-width: 50px;
     max-width: 300px;
 }
@@ -100,8 +100,9 @@ input[type="email"] {
 @media screen and (max-width: 1024px) {
     .login-form {
         padding: 50px;
-        margin-top: 70px;
-        max-width: 600px;
+        margin-top: 75px;
+        max-width: 400px;
+        max-height: 500px;
     }
 
     button[type="login-button"] {
@@ -174,6 +175,7 @@ input[type="email"] {
     .login-form {
       max-width: 250px;
       padding: 20px;
+      overflow-x: auto;
     }
 
     button[type="login-button"] {
