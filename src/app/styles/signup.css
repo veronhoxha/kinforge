@@ -30,6 +30,7 @@
     margin-bottom: 12px;
     color: red;
     font-size: 14px;
+    white-space: wrap;
 }
 
 label {
@@ -91,15 +92,16 @@ input[type="text"] {
 
 @media (max-width: 1300px) {
     .signup-form {
-    max-width: 1000px;
+    max-width: 500px;
     padding: 40px;
     margin-top: 90px;
+    margin-bottom: 20px;
     }
 }
 
 @media (max-width: 1024px) {
     .signup-form {
-    max-width: 800px;
+    max-width: 500px;
     max-height: 700px;
     padding: 20px;
     margin-top: 90px;
@@ -108,7 +110,7 @@ input[type="text"] {
 
 @media (max-width: 912px) {
     .signup-form {
-    max-width: 350px;
+    max-width: 500px;
     padding: 40px;
     }
 }
@@ -117,7 +119,8 @@ input[type="text"] {
     .signup-form {
     max-width: 300px;
     padding: 15px;
-    margin-top: 60px;
+    margin-top: 80px;
+    
     }
 }
 
