@@ -197,6 +197,7 @@ function Settings() {
       </div>
       )}
       <Snackbar
+        className="my-snackbar"
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
