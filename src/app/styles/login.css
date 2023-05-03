@@ -6,7 +6,6 @@
     background-color: #fff;
     display: flex;
     padding: 40px;
-    /* overflow-x: auto; */
     min-width: 50px;
     max-width: 300px;
 }
@@ -17,6 +16,7 @@
     display: flex;
     justify-content: center;
     background-color: #f2f2f2;
+    overflow-x: auto;
 }
 
 .title {
@@ -186,6 +186,241 @@ input[type="email"] {
   
     input[type="password"],
     input[type="email"] {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (orientation: landscape) and (min-height: 300px) and (max-width: 652px) {
+    .login {
+        padding: 16px;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .login-form {
+        max-width: 300px;
+        padding: 10px; 
+        margin-top: 270px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (orientation: landscape) and (min-height: 300px) and (min-width: 654px) and (max-width: 719px) {
+    .login {
+        padding: 16px;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .login-form {
+        max-width: 300px;
+        padding: 10px; 
+        margin-top: 270px;
+        margin-bottom: 20px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (orientation: landscape) and (min-height: 280px) and (min-width: 721px) and (max-width: 739px) {
+    .login {
+        padding: 16px;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .login-form {
+        max-width: 300px;
+        padding: 10px; 
+        margin-top: 270px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (orientation: landscape) and (min-height: 280px) and (min-width: 741px) and (max-width: 1000px) {
+    .login {
+        padding: 16px;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .login-form {
+        max-width: 300px;
+        padding: 10px; 
+        margin-top: 270px;
+        margin-bottom: 30px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (orientation: landscape) and (width: 740px) and (height: 360px) {
+    .login {
+        padding: 16px;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .login-form {
+        max-width: 300px;
+        padding: 10px; 
+        margin-top: 280px;
+        margin-bottom: 20px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (orientation: landscape) and (width: 720px) and (height: 540px) {
+    .login {
+        padding: 16px;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .login-form {
+        max-width: 300px;
+        padding: 10px; 
+        margin-top: 100px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (orientation: landscape) and (min-device-width: 280px) and (max-device-width: 653px) and (-webkit-min-device-pixel-ratio: 3) {
+    .login {
+        padding: 16px;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    .login-form {
+        max-width: 300px;
+        padding: 10px; 
+        margin-top: 380px;
+        margin-bottom: 20px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    input[type="password"],
+    input[type="email"] {
+        margin-bottom: 10px;
+    }
+
+    button[type="login-button"] {
+        font-size: 14px;
+        padding: 8px;
         margin-bottom: 10px;
     }
 }
