@@ -202,13 +202,13 @@ h3 span {
 .scrollable-dropdown {
     max-height: calc(100vh - 120px);
     overflow-y: auto;
-  }
+}
   
-  @media (min-height: 401px) {
+@media (min-height: 401px) {
     .scrollable-dropdown {
-      max-height: none;
-      overflow-y: visible;
+        max-height: none;
+        overflow-y: visible;
     }
-  }
-  
+}
+
 
