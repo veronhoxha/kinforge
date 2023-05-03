@@ -33,7 +33,7 @@ function FamilyTree() {
       const q = query(usersCollection, where('uid', '==', uid));
 
       const querySnapshot = await getDocs(q);
-      if (querySnapshot.empty) {
+      if (!querySnapshot || querySnapshot.empty) {
         console.error("No matching documents found!");
         return;
       }
@@ -176,7 +176,7 @@ function FamilyTree() {
             <div className="menu-main" onClick={() => isModalOpen ? null : setOpen(!open)}>
             <img src={profilePicture} alt="profile pic"></img>
             </div>
-            <div className={`dropdown ${open ? 'active' : 'inactive'}`}>
+            <div className={`dropdown ${open ? 'active' : 'inactive'} scrollable-dropdown`}>
               <h3>
                 {currentUser ? `${currentUser.displayName}` : ''} <br />
                 <span>{currentUser ? currentUser.email : ''}</span>
