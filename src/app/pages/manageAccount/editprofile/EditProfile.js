@@ -31,6 +31,10 @@ const EditProfile = () => {
     setSnackbarSeverity(severity);
   };
 
+  const editIconStyle = {
+    cursor: 'pointer',
+  };
+
   const hiddenFileInputStyle = {
     display: 'none',
   };
@@ -42,6 +46,7 @@ const EditProfile = () => {
 
   const handleModal = () => {
     setOpenModal(!openModal);
+    setErrors('');
   };
         
   const reauthenticateUser = async (currentUser, originalEmail, password) => {
@@ -187,6 +192,7 @@ const EditProfile = () => {
       reader.readAsDataURL(file);
       uploadProfilePicture(file);
     }
+    handleModal();
   };
   
   const deleteProfilePicture = async (e) => {
@@ -306,7 +312,6 @@ const EditProfile = () => {
   return (
     <div className="edit-profile">
       <h2>Edit Profile</h2>
-
       {currentUser ? (
         <>
          <div className="profile-picture-container">
@@ -315,9 +320,9 @@ const EditProfile = () => {
         ) : (
           <img src={profilePicture} alt="User's Profile" style={{ borderRadius: '50%', objectFit: 'cover', width: '150px', height: '150px', border: '3px solid #ccc' }} />
         )}
-          <div className="edit-icon" onClick={handleModal}>
-            <EditIcon size={24} />
-            <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}/>
+          <div className="edit-icon">
+            <EditIcon size={24} style={editIconStyle} onClick={handleModal} />
+            <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}  onClick={(e) => e.stopPropagation()}/>
           </div>
           <Modal open={openModal} onClose={handleModal} className="my-modal" >
             <Box
