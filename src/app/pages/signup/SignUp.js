@@ -60,7 +60,7 @@ const SignUp = () => {
         } else if (!isValidEmail(email)) {
             setErrors('Enter a valid email address, please.');
         } else if (!isValidPassword(password)) {
-            setErrors('Password must be at least 8 characters with 1 lower case letter, 1 upper case letter, 1 number, and 1 special character.');
+            setErrors('Password must be at least eight characters long with one lower case letter, one upper case letter, one number, and one special character.');
         } else if (password !== confirmPassword) {
             setErrors('Passwords do not match.');
         } else {

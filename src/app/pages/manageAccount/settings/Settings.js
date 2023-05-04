@@ -110,7 +110,7 @@ function Settings() {
     }
     
     if (newPassword && !isValidPassword(newPassword)) {
-      errors.newPassword = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+      errors.newPassword = "Password must be at least eight characters long with one lower case letter, one upper case letter, one number, and one special character.";
     }
     if (newPassword !== confirmPassword) {
       errors.confirmPassword = "New password and confirm password must match.";
