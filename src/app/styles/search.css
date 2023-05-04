@@ -6,7 +6,7 @@
   
   .search-results-panel {
     min-width: 190px;
-    max-height: 300px;
+    max-height: 220px;
     overflow-y: auto; 
 }
   
@@ -37,5 +37,13 @@
     .search-results-panel {
       min-width: 95px;
     }
+}
+
+@media screen and (orientation: landscape) and (width: 653px) and (height: 280px) {
+
+  .search-results-panel {
+    max-height: 190px;
+  }
+
 }
   
