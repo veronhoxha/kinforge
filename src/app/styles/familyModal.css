@@ -124,4 +124,105 @@
         margin: 1rem;
     }
 }
+
+
+@media screen and (orientation: landscape) and (min-device-width: 667px) and (max-device-height: 540px) {
+
+    .modalContainer {
+        max-width: 40%;
+        flex-direction: column;
+    }
   
+    .modalImg {
+        max-width: 100%;
+        max-height: 120px;
+        object-fit: cover;
+    }
+      
+    .modalTitle {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+      
+    .modalText {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+      
+    .heading {
+        margin: 1rem;
+    }
+
+    .btnContainer {
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: -60px;
+    }
+    
+    .linkbtnPrimary,
+    .linkbtnOutline {
+        display: flex;
+        width: 100px;
+        text-decoration: none;
+        pointer-events: all;
+    }
+    
+    .btnPrimary,
+    .btnOutline {
+        width: 100%;
+        margin: .5rem;
+        padding: 0px 0;
+    }
+    
+}
+
+@media screen and (orientation: landscape) and (device-width: 653px) and (device-height: 280px) {
+
+    .modalContainer {
+        max-width: 60%;
+        flex-direction: column;
+    }
+  
+    .modalImg {
+        max-width: 100%;
+        max-height: 80px;
+        object-fit: cover;
+    }
+      
+    .modalTitle {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+      
+    .modalText {
+        font-size: 14px;
+        margin-bottom: 1rem;
+    }
+      
+    .heading {
+        margin: 1rem;
+    }
+
+    .btnContainer {
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: -60px;
+    }
+    
+    .linkbtnPrimary,
+    .linkbtnOutline {
+        display: flex;
+        width: 100px;
+        text-decoration: none;
+        pointer-events: all;
+    }
+    
+    .btnPrimary,
+    .btnOutline {
+        width: 100%;
+        margin: .5rem;
+        padding: 0px 0;
+    }
+}
