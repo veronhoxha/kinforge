@@ -81,4 +81,13 @@
         font-size: 0.8rem;
     }
 }
+
+@media screen and (orientation: landscape) and (min-device-width: 844px) and (max-device-height: 393px) {
+
+    .go-back-home-btn button {
+        top: -10px;
+    }
+    
+}
+
   
