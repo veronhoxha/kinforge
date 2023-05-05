@@ -30,7 +30,7 @@ const HierarchyDialog = ({
   handleClose,
   handleInputChange,
   handleSave,
-  deleteNodeById,
+  deleteNodeEdgeById,
   deleteMember,
   currentUser,
   selectedNode,
@@ -203,10 +203,10 @@ const HierarchyDialog = ({
           <StyledButton
             sx={{ color: brown[600] }}
             onClick={() => {
-              deleteNodeById(selectedNode.id);
+              deleteNodeEdgeById(selectedNode.id);
               deleteMember(selectedNode.id, currentUser.uid);
               handleClose();
-            }}
+            }}            
           >
             Delete Member
           </StyledButton>

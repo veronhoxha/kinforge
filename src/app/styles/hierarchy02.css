@@ -56,3 +56,21 @@
 .form-button {
     margin-left: 8px;
 }
+
+@media screen and (orientation: landscape) and (device-width: 653px) and (device-height: 280px) {
+
+    .snackbar {
+        overflow-x: auto !important;
+        width: 70% !important;
+    }
+
+}
+
+@media screen and (orientation: landscape) and (device-width: 667px) and (device-height: 375px) {
+
+    .snackbar {
+        overflow-x: auto !important;
+        width: 70% !important;
+    }
+
+}

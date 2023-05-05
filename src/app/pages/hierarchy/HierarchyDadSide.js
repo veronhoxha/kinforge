@@ -3,7 +3,7 @@ import ReactFlow, { useNodesState, useEdgesState, addEdge, useReactFlow, ReactFl
 import 'reactflow/dist/style.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, updateDoc, doc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, updateDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import HierarchyDialog from './HierarchyDialog';
 import { v4 as uuidv4 } from 'uuid';
@@ -90,7 +90,22 @@ const HierarchyDadSide = () => {
           position: project({ x: event.clientX - left - 25, y: event.clientY - top }),
           data: { label: `Node` },
         };
-  
+
+        const hasNodeWithData = nodes.some((node) => {
+          const member = familyMembers.find((m) => m.id === node.id);
+          return (
+            member &&
+            (member.name ||
+              member.surname ||
+              member.date_of_birth ||
+              member.place_of_birth)
+          );
+        });
+        
+        if (hasNodeWithData) {
+          setErrorMessage("Adding new nodes with saved positions will soon be available exclusively for premium users. As a free user, you can add as many new nodes as you want when none of the nodes has data, and their positions will be saved in the database, remaining available whenever you return to the page. However, when at least one of them has data, the positions of newly added nodes won't be saved and they will disappear after refreshing the page, but any data you add to the nodes will still be saved. Stay tuned for the premium upgrade to enjoy the full functionality and an improved user experience.")
+        } 
+
         setNodes((nds) => nds.concat(newNode));
         setEdges((eds) => eds.concat({ id, source: connectingNodeId.current, target: id }));
         setSelectedNode(newNode);
@@ -122,9 +137,6 @@ const HierarchyDadSide = () => {
   );  
 
   const onNodeClick = async (_, node) => {
-    console.log('onNodeClick called with node:', node);
-    console.log('click node', node);
-  
     if (currentUser) {
       try {
         const memberSnapshot = await getDocs(
@@ -149,10 +161,9 @@ const HierarchyDadSide = () => {
           });
         }
       } catch (error) {
-        console.error("Error fetching member data:", error);
+
       }
     }
-  
     setSelectedNode(node);
     setDialogOpen(true);
   };
@@ -178,6 +189,7 @@ const HierarchyDadSide = () => {
   };
 
   const deleteNodeEdgeById = async (id) => {
+    console.log("deleteNodeEdgeById called with nodeId:", id);
     if (!currentUser) {
       console.error("No current user");
       return;
@@ -185,37 +197,70 @@ const HierarchyDadSide = () => {
   
     const nodeToDelete = nodes.find((node) => node.id === id);
     if (nodeToDelete && nodeToDelete.isInitialNode) {
-      setErrorMessage('The starting node cannot be deleted.');
+      setErrorMessage('The starting node cannot be deleted. However, if there was already data for the node, you deleted the data of the member.');
       setFormErrors({});
       return;
     }
-    console.log("Deleting node with id:", id);
   
-    setNodes((nds) => nds.filter((node) => node.id !== id));
-    setEdges((eds) => eds.filter((edge) => edge.source !== id && edge.target !== id));
-  
-    const updatedNodes = nodes.filter((node) => node.id !== id);
-    const updatedEdges = edges.filter((edge) => edge.source !== id && edge.target !== id);
-  
-    try {
-      const existingDataSnapshot = await getDocs(
-        query(nodeEdgeCollection, where("userId", "==", currentUser.uid))
+    const hasNodeWithData = nodes.some((node) => {
+      const member = familyMembers.find((m) => m.id === node.id);
+      return (
+        member &&
+        (member.name ||
+          member.surname ||
+          member.date_of_birth ||
+          member.place_of_birth)
       );
+    });
   
-      if (!existingDataSnapshot.empty) {
-        existingDataSnapshot.forEach(async (doc) => {
-          await updateDoc(doc.ref, {
-            userId: currentUser.uid,
-            nodes: updatedNodes,
-            edges: updatedEdges,
-          });
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting node and edge data: ", error);
+    const selectedMember = familyMembers.find((member) => member.id === id);
+    if (hasNodeWithData && !selectedMember) {
+      setErrorMessage("Cannot delete nodes when at least one node has data. This feature will be will soon be available exclusively for premium users.");
+      return;
     }
   
-    setSelectedNode(null);
+    if (selectedMember) {
+      await deleteMember(id, currentUser.uid);
+      const updatedNodes = nodes.map((node) => {
+        if (node.id === id) {
+          return {
+            ...node,
+            data: {
+              label: "Node",
+            },
+          };
+        }
+        return node;
+      });
+      setNodes(updatedNodes);
+    } else {
+      const updatedNodes = nodes.filter((node) => node.id !== id);
+      const updatedEdges = edges.filter((edge) => edge.source !== id && edge.target !== id);
+  
+      setNodes(updatedNodes);
+      setEdges(updatedEdges);
+  
+      try {
+        const existingDataSnapshot = await getDocs(
+          query(nodeEdgeCollection, where("userId", "==", currentUser.uid))
+        );
+  
+        if (!existingDataSnapshot.empty) {
+          existingDataSnapshot.forEach(async (doc) => {
+            await updateDoc(doc.ref, {
+              userId: currentUser.uid,
+              nodes: updatedNodes,
+              edges: updatedEdges,
+            });
+          });
+        }
+      } catch (error) {
+        console.error("Error deleting node and edge data: ", error);
+      }
+  
+      setSelectedNode(null);
+      setFamilyMembers((prevMembers) => prevMembers.filter((member) => member.id !== id));
+    }
   };
   
   React.useEffect(() => {
@@ -334,7 +379,6 @@ const saveNodeEdgeData = async (nodeEdgeData) => {
     console.error("Error saving node and edge data: ", error);
   }
 };
-
  
   useEffect(() => {
     const fetchNodeEdgeData = async () => {
@@ -563,7 +607,7 @@ return (
         </ReactFlow>
             <Controls showInteractive={false}>
           </Controls>
-            <Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={() => setErrorMessage(null)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <Snackbar className="snackbar" open={!!errorMessage} autoHideDuration={14000} onClose={() => setErrorMessage(null)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
             <Alert onClose={() => setErrorMessage(null)} severity="error" sx={{ width: '100%' }}>
               {errorMessage}
             </Alert>
@@ -578,7 +622,7 @@ return (
             handleClose={handleClose}
             handleInputChange={handleInputChange}
             handleSave={handleSave}
-            deleteNodeById={deleteNodeEdgeById}
+            deleteNodeEdgeById={deleteNodeEdgeById}
             deleteMember={deleteMember}
             currentUser={currentUser}
             selectedNode={selectedNode}
@@ -590,7 +634,7 @@ return (
 
 const HierarchyDadSideWrapper = () => (
   <ReactFlowProvider>
-    <HierarchyDadSide  />
+    <HierarchyDadSide />
   </ReactFlowProvider>
 );
 
