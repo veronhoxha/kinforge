@@ -16,17 +16,17 @@ jest.mock('../pages/hierarchy/HierarchyDadSide', () => {
   };
 });
 
-describe('FamilyTreeWithHierarchyDad', () => {
+describe('FamilyTreeWithHierarchyDad component', () => {
 
-  test('renders FamilyTreeWithHierarchyDad component', () => {
-    render(
-      <MemoryRouter>
-        <FamilyTreeWithHierarchyDad />
-      </MemoryRouter>
-    );
+    test('shows FamilyTreeWithHierarchyDad component', () => {
+        render(
+          <MemoryRouter>
+            <FamilyTreeWithHierarchyDad />
+          </MemoryRouter>
+        );
 
-    expect(screen.getByTestId('family-tree')).toBeInTheDocument();
-    expect(screen.getByTestId('hierarchy-dad-side')).toBeInTheDocument();
-  });
+        expect(screen.getByTestId('family-tree')).toBeInTheDocument();
+        expect(screen.getByTestId('hierarchy-dad-side')).toBeInTheDocument();
+    });
 
 });

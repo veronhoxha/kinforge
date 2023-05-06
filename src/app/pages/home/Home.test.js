@@ -21,14 +21,16 @@ jest.mock('../../components/Footer', () => {
   };
 });
 
-describe('Home', () => {
+describe('Home component', () => {
 
-  test('renders Home component with the child components', () => {
-    render(<Home />);
+    test('shows Home component with the child components', () => {
+        render(
+          <Home />
+        );
 
-    expect(screen.getByTestId('mainsection')).toBeInTheDocument();
-    expect(screen.getByTestId('cards')).toBeInTheDocument();
-    expect(screen.getByTestId('footer')).toBeInTheDocument();
-  });
+        expect(screen.getByTestId('mainsection')).toBeInTheDocument();
+        expect(screen.getByTestId('cards')).toBeInTheDocument();
+        expect(screen.getByTestId('footer')).toBeInTheDocument();
+      });
 
 });

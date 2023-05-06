@@ -4,13 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter as Router } from 'react-router-dom';
 import SignUp from './SignUp';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
-}));
-
 describe('SignUp component', () => {
     
     test('shows SignUp component', () => {
@@ -135,5 +128,5 @@ describe('SignUp component', () => {
             expect(screen.getByTestId('errors')).toHaveTextContent(/Passwords do not match./i);
         });
     });
-    
+
 });
