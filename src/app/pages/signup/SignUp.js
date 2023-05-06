@@ -111,18 +111,18 @@ const SignUp = () => {
         <div className="signup">
             <form onSubmit={signup} className='signup-form'>
                 <h1 className="title">Sign Up</h1>
-                {errors && <p className="errors">{errors}</p>}
+                {errors && <p className="errors" data-testid="errors">{errors}</p>}
                 <label htmlFor="firstName">First Name:</label>
-                <input type="text" name="firstName" value={firstName} onChange={n} />
+                <input type="text" id="firstName" name="firstName" value={firstName} onChange={n} />
                 <label htmlFor="lastName">Last Name:</label>
-                <input type="text" name="lastName" value={lastName} onChange={n} />
+                <input type="text" id="lastName" name="lastName" value={lastName} onChange={n} />
                 <label htmlFor="email">Email:</label>
-                <input type="email" name="email" value={email} onChange={n} />
+                <input type="email" id="email" name="email" value={email} onChange={n} />
                 <label htmlFor="password">Password:</label>
-                <input type="password" name="password" value={password} onChange={n} />
+                <input type="password" id="password" name="password" value={password} onChange={n} aria-label="Enter Password" />
                 <label htmlFor="confirmPassword">Confirm Password:</label>
-                <input type="password" name="confirmPassword" value={confirmPassword} onChange={n} />
-                <button type="signup-button" onClick={signup}>Sign Up</button>
+                <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={n} aria-label="Enter Confirm Password" />
+                <button type="signup-button" onClick={signup} data-testid="signup-button">Sign Up</button>
                 <Link to="/login" className="already-have-an-account">You already have an account?</Link>
                 <Link to="/" className="go-back-to-the-homepage">Go back to the homepage</Link>
             </form>
