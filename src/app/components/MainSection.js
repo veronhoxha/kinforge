@@ -2,11 +2,12 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import React from 'react'
 import '../styles/mainsection.css';
+import video from '../media/family-video.mp4'
 
 function MainSection() {
   return (
     <div className='main-section'>
-        <video src='family-video.mp4' autoPlay loop muted data-testid='main-section-video'> </video>
+        <video src={video} autoPlay loop muted data-testid='main-section-video'> </video>
         <h1>KinForge</h1>
         <p>Connect with your family's past</p>
         <div className='create-tree-btn'>
