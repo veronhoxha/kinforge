@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Mainsection from './MainSection';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
+import video from '../media/family-video.mp4'; 
 
 describe('Mainsection component', () => {
 
@@ -23,7 +24,7 @@ describe('Mainsection component', () => {
           </BrowserRouter>
         );
         const videoElement = screen.getByTestId('main-section-video');
-        expect(videoElement).toHaveAttribute('src', 'family-video.mp4');
+        expect(videoElement).toHaveAttribute('src', video);
     });
 
     test('contains the correct paragraph text', () => {
