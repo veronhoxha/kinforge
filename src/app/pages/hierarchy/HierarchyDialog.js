@@ -49,7 +49,7 @@ const HierarchyDialog = ({
     checked: selectedValue === item,
     onChange: handleChange,
     value: item,
-    name: 'color-radio-button-demo',
+    name: `gender-radio-${item}-unique`,
     inputProps: { 'aria-label': item },
   });
 
@@ -89,7 +89,14 @@ const HierarchyDialog = ({
       setSelectedValue('');
     }
   }, [open, setFormValues, setSelectedValue]);
-  
+
+  const handleDeleteMember = () => {
+    if (selectedNode) {
+      deleteNodeEdgeById(selectedNode.id);
+      deleteMember(selectedNode.id, currentUser.uid);
+    }    
+    handleClose();
+  };
 
   return (
     <>
@@ -159,11 +166,13 @@ const HierarchyDialog = ({
             <FormHelperText error>{formErrors.gender}</FormHelperText>
             <FormControl required>
               <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-              <RadioGroup aria-labelledby="demo-radio-buttons-group-label" name="gender">
+              <RadioGroup name="gender">
                 <FormControlLabel
                   value="Male"
                   control={
                     <Radio
+                      data-testid="M"
+                      name="gender-radio-Male-unique"
                       {...controlProps('Male')}
                       sx={{ color: brown[  800],
                         '&.Mui-checked': { color: brown[600] },
@@ -176,6 +185,8 @@ const HierarchyDialog = ({
                   value="Female"
                   control={
                     <Radio
+                      data-testid="F"
+                      name="gender-radio-Female-unique"
                       {...controlProps('Female')}
                       sx={{ color: brown[800], '&.Mui-checked': { color: brown[600] } }}
                     />
@@ -186,6 +197,8 @@ const HierarchyDialog = ({
                   value="Other"
                   control={
                     <Radio
+                      data-testid="O"
+                      name="gender-radio-Other-unique"
                       {...controlProps('Other')}
                       sx={{ color: brown[800], '&.Mui-checked': { color: brown[600] } }}
                     />
@@ -202,11 +215,7 @@ const HierarchyDialog = ({
           </StyledButton>
           <StyledButton
             sx={{ color: brown[600] }}
-            onClick={() => {
-              deleteNodeEdgeById(selectedNode.id);
-              deleteMember(selectedNode.id, currentUser.uid);
-              handleClose();
-            }}            
+            onClick={handleDeleteMember}            
           >
             Delete Member
           </StyledButton>
