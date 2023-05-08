@@ -4,7 +4,7 @@ import Authentication from '../../../../Authentication';
 
 function Help() {
   return (
-    <div className="help">
+    <div className="help" data-testid="help-component">
        <div className="help-wrapper" data-testid="help-wrapper">
 
       <h2>Help</h2>

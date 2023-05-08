@@ -73,15 +73,15 @@ const ManageAccount = () => {
       <h1 className="title" aria-label="Account">Account</h1>
       <hr></hr>
       <div className="menu-items">
-        <div className={`menu-item${activeItem === 'Edit Profile' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Edit Profile">
+        <div className={`menu-item${activeItem === 'Edit Profile' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Edit Profile" data-testid="edit-profile">
           <EditIcon className="icons"/> Edit Profile </div>
-        <div className={`menu-item${activeItem === 'Settings' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Settings">
+        <div className={`menu-item${activeItem === 'Settings' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Settings" data-testid="settings">
           <SettingsIcon className="icons" /> Settings </div>
         <div className="menu-item go-back" onClick={() => window.location.href = './familyTree'}>
           <ArrowBackIosIcon className="icons"/> Go back </div>
-        <div className="menu-item" onClick={handleLogout} data-menu-item="Log Out">
+        <div className="menu-item" onClick={handleLogout} data-menu-item="Log Out" data-testid="log-out">
           <LogoutIcon className="icons"/> Log Out </div>
-        <div className={`menu-item${activeItem === 'Help' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Help" >
+        <div className={`menu-item${activeItem === 'Help' ? ' active' : ''}`} onClick={handleClick} data-menu-item="Help" data-testid="help" >
           <HelpIcon className="icons"/> Help </div>
       </div>
       {showEditProfile && <EditProfile />}

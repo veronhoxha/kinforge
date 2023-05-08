@@ -12,6 +12,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Authentication from '../../../../Authentication';
 import Tooltip from '@mui/material/Tooltip';
+import { act } from 'react-dom/test-utils';
 
 const EditProfile = () => {
   const [name, setFirstName] = useState('');
@@ -143,9 +144,7 @@ const EditProfile = () => {
         });
     }
   };
-
-  console.log(currentUser);
-
+  
   const handleCancel = () => {
     if (currentUser) {
       setFirstName(currentUser.displayName.split(' ')[0]);
@@ -170,12 +169,16 @@ const EditProfile = () => {
           setProfilePicture(userData.photoURL);
           setNoPhoto(false);
         } else {
-          setProfilePicture(profile_pic);
-          setNoPhoto(true);
+            act(() => {
+              setProfilePicture(profile_pic);
+              setNoPhoto(true);
+            });
         }
       } else {
-        setProfilePicture(profile_pic);
-        setNoPhoto(true);
+          act(() => {
+            setProfilePicture(profile_pic);
+            setNoPhoto(true);
+          });
       }
     });
   
@@ -307,10 +310,10 @@ const EditProfile = () => {
     });
   
     return userData;
-  };
+  };  
   
   return (
-    <div className="edit-profile">
+    <div className="edit-profile" data-testid="editprofile-component">
       <h2>Edit Profile</h2>
       {currentUser ? (
         <>

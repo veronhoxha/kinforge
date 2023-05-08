@@ -168,7 +168,7 @@ function Settings() {
   
   
   return (
-    <div className="settings">
+    <div className="settings" data-testid="settings-component">
       <div className="settings-content">
       <h2>Settings</h2>
       <div onClick={handleTogglePasswordForm} className="change-password">
