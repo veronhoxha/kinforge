@@ -47,7 +47,7 @@ const defaultProps = {
 
 describe('HierarchyDialog component', () => {
 
-    test('renders HierarchyDialog component', () => {
+    test('shows HierarchyDialog component', () => {
         render(
             <ThemeProvider theme={theme}>
                 <HierarchyDialog {...defaultProps} />
@@ -58,7 +58,7 @@ describe('HierarchyDialog component', () => {
         expect(dialogTitle).toBeInTheDocument();    
     });
 
-    test('renders form elements correctly', () => {
+    test('shows form elements correctly', () => {
         render(
             <ThemeProvider theme={theme}>
                 <HierarchyDialog {...defaultProps} />
