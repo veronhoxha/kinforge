@@ -113,9 +113,9 @@ const SignUp = () => {
                 <h1 className="title">Sign Up</h1>
                 {errors && <p className="errors" data-testid="errors">{errors}</p>}
                 <label htmlFor="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" value={firstName} onChange={n} />
+                <input type="text" id="firstName" name="firstName" maxLength='20' placeholder="Max 20 characters" value={firstName} onChange={n} />
                 <label htmlFor="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" value={lastName} onChange={n} />
+                <input type="text" id="lastName" name="lastName" maxLength='20' placeholder="Max 20 characters" value={lastName} onChange={n} />
                 <label htmlFor="email">Email:</label>
                 <input type="email" id="email" name="email" value={email} onChange={n} />
                 <label htmlFor="password">Password:</label>
