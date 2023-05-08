@@ -113,6 +113,8 @@ const HierarchyDialog = ({
               className='form-field'
               onChange={handleInputChange}
               defaultValue={formValues.name || ''}
+              inputProps={{ maxLength: 15 }}
+              placeholder="Max 15 characters"
               required
             />
 
@@ -125,6 +127,8 @@ const HierarchyDialog = ({
               className='form-field'
               onChange={handleInputChange}
               defaultValue={formValues.surname || ''}
+              inputProps={{ maxLength: 15 }}
+              placeholder="Max 15 characters"
               required
             />
 
