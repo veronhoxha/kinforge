@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Authentication from '../../../../Authentication';
+import Tooltip from '@mui/material/Tooltip';
 
 const EditProfile = () => {
   const [name, setFirstName] = useState('');
@@ -307,7 +308,6 @@ const EditProfile = () => {
   
     return userData;
   };
-
   
   return (
     <div className="edit-profile">
@@ -320,7 +320,7 @@ const EditProfile = () => {
         ) : (
           <img src={profilePicture} alt="User's Profile" style={{ borderRadius: '50%', objectFit: 'cover', width: '150px', height: '150px', border: '3px solid #ccc' }} />
         )}
-          <div className="edit-icon">
+          <div className="edit-icon" data-testid="edit-icon">
             <EditIcon size={24} style={editIconStyle} onClick={handleModal} />
             <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}  onClick={(e) => e.stopPropagation()}/>
           </div>
@@ -359,16 +359,20 @@ const EditProfile = () => {
           </div>
           <div className="edit-profile-wrapper">
           <form onSubmit={validEmail} className="profile-form">
-            <label htmlFor="first-name">First Name:</label>
-            <input type="text" id="first-name" value={name || ''} required onChange={(e) => setFirstName(e.target.value)} />
-  
-            <label htmlFor="last-name">Last Name:</label>
-            <input type="text" id="last-name" value={surname || ''} required onChange={(e) => setLastName(e.target.value)} />
-  
+            <label htmlFor="firstName">First Name:</label>
+            <Tooltip title="Max 20 characters" placement="top-end"> 
+            <input type="text" id="firstName" name='firstName' maxLength='20' value={name || ''} required onChange={(e) => setFirstName(e.target.value)} />
+            </Tooltip>
+
+            <label htmlFor="lastName">Last Name:</label>
+            <Tooltip title="Max 20 characters" placement="top-end"> 
+            <input type="text" id="lastName" name='lastName' maxLength='20' placeholder="Max 20 characters" value={surname || ''} required onChange={(e) => setLastName(e.target.value)} />
+            </Tooltip>
+            
             <div className="input-wrapper">
               <label htmlFor="email">Email Address:</label>
               {errors && <p className="error-message">{errors}</p>}
-              <input type="email" id="email" value={emailaddress || ''} required onChange={(e) => setEmail(e.target.value)} />
+              <input type="email" id="email" name='email' value={emailaddress || ''} required onChange={(e) => setEmail(e.target.value)} />
             </div>
   
             <button type="submit">Save Changes</button>
