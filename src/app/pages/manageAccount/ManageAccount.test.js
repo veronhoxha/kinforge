@@ -6,6 +6,21 @@ import { auth } from '../../../firebase';
 import '@testing-library/jest-dom/extend-expect';
 jest.mock('../../../Authentication');
 
+const originalPushState = window.history.pushState;
+const originalGo = window.history.go;
+
+beforeEach(() => {
+    delete window.history.pushState;
+    delete window.history.go;
+    window.history.pushState = jest.fn();
+    window.history.go = jest.fn();
+});
+
+afterEach(() => {
+    window.history.pushState = originalPushState;
+    window.history.go = originalGo;
+});
+
 describe('ManageAccount component', () => {
 
     const originalPushState = window.history.pushState;

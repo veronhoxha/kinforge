@@ -21,32 +21,36 @@ const ManageAccount = () => {
 
   const handleClick = (e) => {
     const menuItem = e.currentTarget.dataset.menuItem;
-
+  
     if (menuItem !== null) {
       setActiveItem(menuItem);
   
       if (menuItem === 'Edit Profile') {
-          window.history.pushState(null, null, '/editprofile');
-          setShowEditProfile(true);
-          setShowSettings(false);
-          setShowHelp(false);
-      } else if (menuItem === 'Settings') {
-        window.history.pushState(null, null, '/settings');
+        window.history.pushState(null, null, '/editprofile');
+        setShowEditProfile(true);
+        setShowSettings(false);
+        setShowHelp(false);
+        history.go(0)
+      } else {
+        if (menuItem === 'Settings') {
+          window.history.pushState(null, null, '/settings');
           setShowEditProfile(false);
           setShowSettings(true);
           setShowHelp(false);
-      } else if (menuItem === 'Help') {
-        window.history.pushState(null, null, '/help');
+        } else if (menuItem === 'Help') {
+          window.history.pushState(null, null, '/help');
           setShowEditProfile(false);
           setShowSettings(false);
           setShowHelp(true);
-      } else {
+        } else {
           setShowEditProfile(false);
           setShowSettings(false);
           setShowHelp(false);
+        }
       }
     }
   };
+  
 
   const handleLogout = () => {
     localStorage.removeItem('familyModalShown');
@@ -67,6 +71,7 @@ const ManageAccount = () => {
       setActiveItem(null);
     }
   }, []);
+
 
   return (
     <div className="settings-menu">

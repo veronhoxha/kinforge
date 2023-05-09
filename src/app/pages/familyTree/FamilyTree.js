@@ -160,6 +160,7 @@ function FamilyTree() {
                   sx={{
                     color: isModalOpen ?  'white' : location.pathname === '/familyTree' ? 'black' : 'inherit',
                   }}
+                  data-testid="man-icon"
                 />
                 <div className="tooltip">Dad's Family Side</div>
               </Link>
@@ -168,15 +169,16 @@ function FamilyTree() {
                   sx={{
                     color: isModalOpen ?  'white' : location.pathname === '/familyTreeMom' ? 'black' : 'inherit',
                   }}
+                  data-testid="woman-icon"
                 />
                 <div className="tooltip">Mom's Family Side</div>
               </Link>
 
             </div>
-            <div className="menu-main" onClick={() => isModalOpen ? null : setOpen(!open)}>
+            <div className="menu-main" data-testid="menu-main" onClick={() => isModalOpen ? null : setOpen(!open)}>
             <img src={profilePicture} alt="profile pic"></img>
             </div>
-            <div className={`dropdown ${open ? 'active' : 'inactive'} scrollable-dropdown`}>
+            <div data-testid="dropdown" className={`dropdown ${open ? 'active' : 'inactive'} scrollable-dropdown`}>
               <h3>
                 {currentUser ? `${currentUser.displayName}` : ''} <br />
                 <span>{currentUser ? currentUser.email : ''}</span>

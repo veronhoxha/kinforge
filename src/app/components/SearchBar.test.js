@@ -6,7 +6,7 @@ import SearchBar from './SearchBar';
 
 describe('SearchBar component', () => {
 
-    test('shows SearchBar', () => {
+    test('shows SearchBar component', () => {
         render(
             <Router> 
                 <SearchBar />

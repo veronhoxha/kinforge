@@ -2,15 +2,15 @@ import React from 'react';
 import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter as Router } from 'react-router-dom';
-import EditProfile from './EditProfile';
+import FamilyTree from './FamilyTree';
 
-describe('EditProfile component', () => {
+describe('FamilyTree component', () => {
 
-    test('shows EditProfile component', async () => {
+    test('shows FamilyTree component', async () => {
         await act(async () => { 
             render(
-                <Router>
-                    <EditProfile />
+                <Router> 
+                    <FamilyTree />
                 </Router>
             );
         });
