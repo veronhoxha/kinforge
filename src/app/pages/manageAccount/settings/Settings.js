@@ -108,7 +108,7 @@ function Settings() {
     } else {
       setAllFields('');
         if (currentPassword == newPassword) {
-          errors.newPassword = "New password should be different from the current password!";
+          errors.newPassword = "New password should be different from the current password.";
         }
     }
     if (newPassword && !isValidPassword(newPassword)) {
