@@ -107,8 +107,10 @@ function Settings() {
       setAllFields(errors.allFields);
     } else {
       setAllFields('');
+        if (currentPassword == newPassword) {
+          errors.newPassword = "New password should be different from the current password!";
+        }
     }
-    
     if (newPassword && !isValidPassword(newPassword)) {
       errors.newPassword = "Password must be at least eight characters long with one lower case letter, one upper case letter, one number, and one special character.";
     }
