@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, act} from '@testing-library/react';
 import ManageAccount from './ManageAccount';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { auth } from '../../../firebase';
@@ -27,14 +27,15 @@ describe('ManageAccount component', () => {
         );
     });
 
-    test('clicking "Edit Profile" shows EditProfile component', () => {
+    test('clicking "Edit Profile" shows EditProfile component', async () => {
         render(
             <Router>
                 <ManageAccount />
             </Router>
         );
-
-        fireEvent.click(screen.getByTestId('edit-profile'));
+        await act(async () => {
+            fireEvent.click(screen.getByTestId('edit-profile'));
+        });
         expect(screen.getByTestId('editprofile-component')).toBeInTheDocument();
     });
 
