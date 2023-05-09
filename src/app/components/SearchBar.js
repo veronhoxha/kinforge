@@ -1,3 +1,4 @@
+import React from 'react';
 import { Container, InputAdornment, TextField, IconButton, useMediaQuery, Paper, List, ListItem, ListItemText, Box, Grid} from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -67,7 +68,7 @@ function SearchBar({onUserSelect}) {
         unsubscribe();
       }
     };
-  }, [location.pathname, currentUser.uid, searchTerm]);  
+  }, [location.pathname, currentUser?.uid, searchTerm]);  
   
 
   const handleClear = () => {
@@ -82,12 +83,16 @@ function SearchBar({onUserSelect}) {
     setMenuOpen(false);
     setHighlightedUser(user);
     setOpenDialog(true);
+    
+    console.log("Before onUserSelect");
     if (typeof onUserSelect === 'function') {
       onUserSelect(user);
     }
+    console.log("After onUserSelect");
+    
     console.log(user);
     console.log("Dialog open status:", true);
-  };
+  };  
   
   return (
     <>
@@ -97,7 +102,9 @@ function SearchBar({onUserSelect}) {
           <Grid item>
             <TextField
               ref={inputRef}
+              data-testid="search-bar"
               id="search"
+              htmlFor="searchInput"
               type="search"
               label="Search"
               autoComplete="off"
@@ -138,13 +145,13 @@ function SearchBar({onUserSelect}) {
                       onClick={handleClear}
                       sx={{ color: "white" }}
                     >
-                      <ClearIcon fontSize="8px" />
+                      <ClearIcon fontSize="8px" data-testid="clear-icon"/>
                     </IconButton>
                   </InputAdornment>
                 ) : null,
                 endAdornment: (
                   <InputAdornment position="end">
-                    <SearchIcon fontSize="14px" sx={{ color: "white"  }} />
+                    <SearchIcon fontSize="14px" sx={{ color: "white"  }}  data-testid="search-icon"/>
                   </InputAdornment>
                 ),
               }}
@@ -152,7 +159,7 @@ function SearchBar({onUserSelect}) {
          </Grid>
             <Grid item>
               {menuOpen && filteredUsers.length > 0 && (
-                <Paper elevation={3} ref={dropdownRef} className="search-results-panel">
+                <Paper elevation={3} ref={dropdownRef} className="search-results-panel" data-testid="search-results-panel">
                   <List>
                     {filteredUsers.map((user, index) => (
                      <ListItem
