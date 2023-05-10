@@ -27,7 +27,7 @@ const fitViewOptions = {
   padding: 3,
 };
 
-  const HierarchyDadSide = () => {
+  export const HierarchyDadSide = () => {
     const reactFlowWrapper = useRef(null);
     const connectingNodeId = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
