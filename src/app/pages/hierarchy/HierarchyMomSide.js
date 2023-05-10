@@ -89,6 +89,17 @@ const fitViewOptions = {
       });
       setNodes(updatedNodes);
       checkIfAnyNodeHasData(updatedNodes, familyMembers);
+    
+      if (currentUser) {
+        const nodeEdgeData = {
+          userId: currentUser.uid,
+          nodes: updatedNodes,
+          edges: edges,
+        };
+        await saveNodeEdgeData(nodeEdgeData);
+      } else {
+        console.error("No current user");
+      }
     };
 
     const onConnectStart = useCallback((_, { nodeId }) => {
