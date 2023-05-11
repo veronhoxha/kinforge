@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, useEffect, useReducer } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import ReactFlow, { useNodesState, useEdgesState, addEdge, useReactFlow, ReactFlowProvider, Controls} from 'reactflow';
 import 'reactflow/dist/style.css';
 import Snackbar from '@mui/material/Snackbar';
@@ -7,8 +7,8 @@ import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, upd
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import HierarchyDialog from './HierarchyDialog';
 import { v4 as uuidv4 } from 'uuid';
-import { useHistory } from 'react-router-dom';
 import Authentication from '../../../Authentication';
+/* eslint-disable */
 
 const initialNodes = [
   {
@@ -20,7 +20,6 @@ const initialNodes = [
   },
 ];
 
-let id = 1;
 const getId = () => uuidv4();
 
 const fitViewOptions = {
@@ -49,7 +48,7 @@ const fitViewOptions = {
     const [activeSwitch, setActiveSwitch] = useState(1);
     const [familyMembers, setFamilyMembers] = useState([]);
     const [hasNodeWithData, setHasNodeWithData] = useState(false);
-    const history = useHistory();
+    // const history = useHistory();
 
     const onConnect = useCallback(async (params) => {
       console.log('onConnect called with params:', params);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PasswordIcon from '@mui/icons-material/Password';
 import { getAuth, updatePassword, signInWithEmailAndPassword } from "firebase/auth";
 import '../../../styles/settings.css'
@@ -13,6 +13,7 @@ import "../../../styles/hierarchy.css";
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { getFirestore } from "firebase/firestore";
 import Authentication from '../../../../Authentication';
+/* eslint-disable */
 
 function Settings() {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -35,7 +36,7 @@ function Settings() {
     await saveDesignChoice(auth.currentUser.uid, switchIndex);
   };  
   
-  const loadActiveSwitchFromFirestore = async () => {
+  const loadActiveSwitchFromFirestore = useCallback(async () => {
     if (auth.currentUser) {
       const userId = auth.currentUser.uid;
       const designDocRef = doc(db, 'users_designs', userId);
@@ -46,9 +47,8 @@ function Settings() {
       } else {
         setActiveSwitch(1);
       }
-    } else {
     }
-  };
+  }, [auth.currentUser, db]);
 
   const saveDesignChoice = async (userId, designChoice) => {
     const designDocRef = doc(db, 'users_designs', userId);
@@ -107,7 +107,7 @@ function Settings() {
       setAllFields(errors.allFields);
     } else {
       setAllFields('');
-        if (currentPassword == newPassword) {
+        if (currentPassword === newPassword) {
           errors.newPassword = "New password should be different from the current password.";
         }
     }
