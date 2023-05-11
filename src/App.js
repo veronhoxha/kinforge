@@ -11,6 +11,8 @@ import Settings from './app/pages/manageAccount/settings/Settings';
 import Help from './app/pages/manageAccount/help/Help';
 import FamilyTreeWithHierarchyDad from './app/components/FamilyTreeWithHierarchyDad';
 import FamilyTreeWithHierarchyMom from './app/components/FamilyTreeWithHierarchyMom';
+import { useCookies } from 'react-cookie';
+/* eslint-disable */
 
 function App() {
 
@@ -20,6 +22,10 @@ function App() {
       loader.remove();
     }
   }, []);
+
+  const [cookies, setCookie] = useCookies(['name']);
+  
+  setCookie('name', 'value', { path: '/', sameSite: 'strict' });
 
   return (
     <Router>

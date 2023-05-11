@@ -118,7 +118,7 @@ import Places from './Places';
                 placeholder="Max 15 characters"
                 required
               />
-
+              
               <FormHelperText error>{formErrors.surname}</FormHelperText>
               <InputLabel required htmlFor="component-simple">Surname</InputLabel>
               <Input
