@@ -117,7 +117,7 @@
 .input-wrapper {
     width: 100%;
     align-items: center;
-  }
+}
 
 button {
     background-color: #7D4032;
@@ -142,7 +142,6 @@ button:hover {
 }
 
 @media (max-width: 1024px) {
-
     .edit-profile {
         left: auto !important;
         top: 105px;
@@ -159,11 +158,9 @@ button:hover {
         left: 50% !important;
         transform: translateX(-50%);
     }
-  
 }
 
 @media (max-width: 768px) {
-
     .edit-profile {
         left: auto !important;
         top: 105px;
@@ -186,7 +183,6 @@ button:hover {
 }
 
 @media (max-width: 480px) {
-
     .edit-profile {
         left: auto !important;
         top: 105px;
@@ -223,23 +219,19 @@ button:hover {
 }
 
 @media screen and (orientation: landscape) and (min-height: 300px) and (max-width: 1000px) {
-
     .my-modal {
         position: absolute;
         margin-top: 30px;
         justify-content: center !important;
         align-items: center !important;
     }
-
 }
 
 @media screen and (orientation: landscape) and (height: 280px) and (max-width: 1000px) {
-
     .my-modal {
         position: absolute;
         margin-top: 37px;
         justify-content: center !important;
         align-items: center !important;
     }
-
 }

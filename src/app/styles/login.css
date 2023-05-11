@@ -87,7 +87,6 @@ button[type="login-button"] {
     min-width: 40px;
 }
 
-
 input[type="password"],
 input[type="email"] {
     width: 100%;
@@ -173,9 +172,9 @@ input[type="email"] {
 
 @media (max-width: 280px) {
     .login-form {
-      max-width: 250px;
-      padding: 20px;
-      overflow-x: auto;
+        max-width: 250px;
+        padding: 20px;
+        overflow-x: auto;
     }
 
     button[type="login-button"] {

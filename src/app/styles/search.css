@@ -4,46 +4,43 @@
     left: 50px;
 }
   
-  .search-results-panel {
+.search-results-panel {
     min-width: 190px;
     max-height: 220px;
     overflow-y: auto; 
 }
   
-  
 @media (max-width: 400px) {
     body {
-      overflow-x: scroll;
+        overflow-x: scroll;
     }
   
     .smaller-search {
-      width: 120px !important;
+        width: 120px !important;
     }
   
     .search-results-panel {
-      min-width: 120px;
+        min-width: 120px;
     }
 }
   
 @media (max-width: 300px) {
     body {
-      overflow-x: scroll;
+        overflow-x: scroll;
     }
   
     .smaller-search {
-      width: 95px !important;
+        width: 95px !important;
     }
   
     .search-results-panel {
-      min-width: 95px;
+        min-width: 95px;
     }
 }
 
 @media screen and (orientation: landscape) and (width: 653px) and (height: 280px) {
-
-  .search-results-panel {
-    max-height: 190px;
-  }
-
+    .search-results-panel {
+        max-height: 190px;
+    }
 }
   

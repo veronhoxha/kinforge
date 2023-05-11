@@ -49,7 +49,6 @@
 }
 
 @media (max-width: 1024px) {
-
     .help {
         left: auto !important;
         top: 105px;
@@ -59,8 +58,8 @@
         color: black;
     }
 }
+
 @media (max-width: 768px) {
-    
     .help {
         left: auto !important;
         top: 105px;

@@ -1,29 +1,29 @@
 .places-container {
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 2;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
 }
 
 .combobox-input {
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
-  font-size: 1rem;
-  padding: 10px;
-  margin: 8px 0;
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    font-size: 1rem;
+    padding: 10px;
+    margin: 8px 0;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
 }
 
 .combobox-input:focus {
-  border-bottom: 2px solid #1976d2;
+    border-bottom: 2px solid #1976d2;
 }
 
 .map-container {
-  z-index: 1;
-  margin-bottom: 15px;
+    z-index: 1;
+    margin-bottom: 15px;
 }
 
 .react-google-maps-combobox-popover {
-  z-index: 3000 !important;
+    z-index: 3000 !important;
 }

@@ -1,148 +1,141 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,700;1,400&display=swap');
 
 .settings-menu {
-  position: fixed;
-  width: 15%;
-  height: 100%;
-  background-color: #7D4032;
-  color: #f2f2f2;
-  z-index: 9999;
+    position: fixed;
+    width: 15%;
+    height: 100%;
+    background-color: #7D4032;
+    color: #f2f2f2;
+    z-index: 9999;
 }
 
 hr {
-  height: 3px;
-  background-color: #f2f2f2;
+    height: 3px;
+    background-color: #f2f2f2;
 }
 
 .title {
-  font-size: 35px;
-  margin-left: 20px;
+    font-size: 35px;
+    margin-left: 20px;
 }
 
 .menu-item {
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 15px;
-  color: #f2f2f2;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  font-family: 'Titillium Web', sans-serif;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 15px;
+    color: #f2f2f2;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    font-family: 'Titillium Web', sans-serif;
 }
 
 .menu-item:hover,
 .menu-item.active {
-  font-size: 16px;
-  transform: scale(1.1);
+    font-size: 16px;
+    transform: scale(1.1);
 }
 
-/* .menu-item a {
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  align-items: center;
-} */
-
 .menu-item svg {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 @media (max-width: 1024px) {
 
-  .settings-menu {
-    width: 100%;
-    height: auto;
-    flex-direction: column; 
-  }
+    .settings-menu {
+        width: 100%;
+        height: auto;
+        flex-direction: column; 
+    }
 
-  .title {
-    order: 0; 
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-  }
+    .title {
+        order: 0; 
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
 
-  .menu-item {
-    width: 100%; 
-    padding: 10px;
-    position: block;
-    justify-content: center; 
-    align-items: center; 
-    text-align: center;
-    flex-wrap: wrap;
-    order: 2; 
-    white-space: nowrap;
-  }
+    .menu-item {
+        width: 100%; 
+        padding: 10px;
+        position: block;
+        justify-content: center; 
+        align-items: center; 
+        text-align: center;
+        flex-wrap: wrap;
+        order: 2; 
+        white-space: nowrap;
+    }
 
-  .menu-item .icons {
-    display: none;
-  }
+    .menu-item .icons {
+        display: none;
+    }
 
-  hr {
-    display: none;
-  }
+    hr {
+        display: none;
+    }
 
-  .menu-items {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center; 
-    margin-top: 20px; 
-    text-align: center;
-    flex-direction: row;
-    overflow-x: auto;
-  }
+    .menu-items {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center; 
+        margin-top: 20px; 
+        text-align: center;
+        flex-direction: row;
+        overflow-x: auto;
+    }
 }
 
 @media (max-width: 786px) {
 
-  .settings-menu {
-    width: 100%;
-    height: auto;
-    flex-direction: column; 
-  }
+    .settings-menu {
+        width: 100%;
+        height: auto;
+        flex-direction: column; 
+    }
 
-  .title {
-    font-size: 30px;
-    order: 0; 
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-  }
+    .title {
+        font-size: 30px;
+        order: 0; 
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
 
-  .menu-item {
-    width: 100%; 
-    padding: 10px;
-    position: block;
-    justify-content: center; 
-    align-items: center; 
-    text-align: center;
-    flex-wrap: wrap;
-    order: 2; 
-    white-space: nowrap;
-    font-size: 14px;
-  }
+    .menu-item {
+        width: 100%; 
+        padding: 10px;
+        position: block;
+        justify-content: center; 
+        align-items: center; 
+        text-align: center;
+        flex-wrap: wrap;
+        order: 2; 
+        white-space: nowrap;
+        font-size: 14px;
+    }
 
-  .menu-item .icons {
-    display: none;
-  }
+    .menu-item .icons {
+        display: none;
+    }
 
-  hr {
-    display: none;
-  }
+    hr {
+        display: none;
+    }
 
-  .menu-items {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center; 
-    margin-top: 20px; 
-    text-align: center;
-    flex-direction: row;
-    overflow-x: auto;
-  }
+    .menu-items {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center; 
+        margin-top: 20px; 
+        text-align: center;
+        flex-direction: row;
+        overflow-x: auto;
+    }
 }
 
 

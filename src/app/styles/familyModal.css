@@ -110,7 +110,6 @@
 }
   
 @media screen and (max-width: 768px) {
-
     .modalContainer {
         max-width: 60%;
         top: 20%;
@@ -137,9 +136,7 @@
     }
 }
 
-
 @media screen and (orientation: landscape) and (min-device-width: 667px) and (max-device-height: 540px) {
-
     .modalContainer {
         max-width: 40%;
         flex-direction: column;
@@ -186,11 +183,9 @@
         margin: .5rem;
         padding: 0px 0;
     }
-    
 }
 
 @media screen and (orientation: landscape) and (device-width: 653px) and (device-height: 280px) {
-
     .modalContainer {
         max-width: 60%;
         flex-direction: column;
