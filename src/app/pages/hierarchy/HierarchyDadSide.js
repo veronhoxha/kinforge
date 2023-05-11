@@ -26,7 +26,8 @@ const fitViewOptions = {
   padding: 3,
 };
 
-  export const HierarchyDadSide = () => {
+export const HierarchyDadSide = () => {
+
     const reactFlowWrapper = useRef(null);
     const connectingNodeId = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -48,7 +49,6 @@ const fitViewOptions = {
     const [activeSwitch, setActiveSwitch] = useState(1);
     const [familyMembers, setFamilyMembers] = useState([]);
     const [hasNodeWithData, setHasNodeWithData] = useState(false);
-    // const history = useHistory();
 
     const onConnect = useCallback(async (params) => {
       if (params.source === '0' && params.target === '0') {
@@ -383,30 +383,30 @@ const fitViewOptions = {
       }
     };
     
-  useEffect(() => {
-    updateNodesWithFamilyMembers();
-  }, [familyMembers]);
+    useEffect(() => {
+      updateNodesWithFamilyMembers();
+    }, [familyMembers]);
 
-  const saveNodeEdgeData = async (nodeEdgeData) => {
-    try {
-      const existingDataSnapshot = await getDocs(
-        query(
-          nodeEdgeCollection,
-          where("userId", "==", nodeEdgeData.userId)
-        )
-      );
+    const saveNodeEdgeData = async (nodeEdgeData) => {
+      try {
+        const existingDataSnapshot = await getDocs(
+          query(
+            nodeEdgeCollection,
+            where("userId", "==", nodeEdgeData.userId)
+          )
+        );
 
-      if (!existingDataSnapshot.empty) {
-        existingDataSnapshot.forEach((doc) => {
-          updateDoc(doc.ref, nodeEdgeData);
-        });
-      } else {
-        addDoc(nodeEdgeCollection, nodeEdgeData);
+        if (!existingDataSnapshot.empty) {
+          existingDataSnapshot.forEach((doc) => {
+            updateDoc(doc.ref, nodeEdgeData);
+          });
+        } else {
+          addDoc(nodeEdgeCollection, nodeEdgeData);
+        }
+      } catch (error) {
+        console.error("Error saving node and edge data: ", error);
       }
-    } catch (error) {
-      console.error("Error saving node and edge data: ", error);
-    }
-  };
+    };
   
     useEffect(() => {
       const fetchNodeEdgeData = async () => {
@@ -640,49 +640,49 @@ const fitViewOptions = {
     };
     
 
-return (
-    <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
-      <div style={{ height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onConnectStart={onConnectStart}
-        elementsSelectable={isSelectable}
-        onNodeClick={captureElementClick ? onNodeClick : undefined}
-        onConnectEnd={onConnectEnd}
-        onNodeDragStop={onNodeDragStop}
-        fitView
-        fitViewOptions={fitViewOptions}
-        proOptions={{ hideAttribution: true }}>
-        </ReactFlow>
-            <Controls showInteractive={false} className='controls'>
-          </Controls>
-            <Snackbar className="snackbar" open={!!errorMessage} autoHideDuration={14000} onClose={() => setErrorMessage(null)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-            <Alert onClose={() => setErrorMessage(null)} severity="error" sx={{ width: '100%' }}>
-              {errorMessage}
-            </Alert>
-          </Snackbar>
-          <HierarchyDialog
-            open={dialogOpen}
-            formValues={formValues}
-            formErrors={formErrors}
-            setFormValues={setFormValues}
-            selectedValue={selectedValue}
-            setSelectedValue={setSelectedValue}
-            handleClose={handleClose}
-            handleInputChange={handleInputChange}
-            handleSave={handleSave}
-            deleteNodeEdgeById={deleteNodeEdgeById}
-            deleteMember={deleteMember}
-            currentUser={currentUser}
-            selectedNode={selectedNode}
-          />
-    </div>
-  </div>
-  );
+    return (
+        <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
+          <div style={{ height: '100vh' }}>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onConnectStart={onConnectStart}
+            elementsSelectable={isSelectable}
+            onNodeClick={captureElementClick ? onNodeClick : undefined}
+            onConnectEnd={onConnectEnd}
+            onNodeDragStop={onNodeDragStop}
+            fitView
+            fitViewOptions={fitViewOptions}
+            proOptions={{ hideAttribution: true }}>
+            </ReactFlow>
+                <Controls showInteractive={false} className='controls'>
+              </Controls>
+                <Snackbar className="snackbar" open={!!errorMessage} autoHideDuration={14000} onClose={() => setErrorMessage(null)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                <Alert onClose={() => setErrorMessage(null)} severity="error" sx={{ width: '100%' }}>
+                  {errorMessage}
+                </Alert>
+              </Snackbar>
+              <HierarchyDialog
+                open={dialogOpen}
+                formValues={formValues}
+                formErrors={formErrors}
+                setFormValues={setFormValues}
+                selectedValue={selectedValue}
+                setSelectedValue={setSelectedValue}
+                handleClose={handleClose}
+                handleInputChange={handleInputChange}
+                handleSave={handleSave}
+                deleteNodeEdgeById={deleteNodeEdgeById}
+                deleteMember={deleteMember}
+                currentUser={currentUser}
+                selectedNode={selectedNode}
+              />
+        </div>
+      </div>
+    );
 };
 
 const HierarchyDadSideWrapper = () => (

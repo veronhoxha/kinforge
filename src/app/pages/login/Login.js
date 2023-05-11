@@ -10,7 +10,6 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/aut
 const Login = () => {
 
     document.cookie = 'cookieName=cookieValue; SameSite=Lax;';
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState(null);
@@ -104,7 +103,7 @@ const Login = () => {
             <Link to="/" className="go-back-to-the-homepage"> Go back to the homepage </Link>
         </form>
         </div>
-  );
+    );
 };
 
 export default Login;
