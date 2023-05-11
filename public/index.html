@@ -10,10 +10,29 @@
       content="Web site created using create-react-app"
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <style>
+      #initial-loader {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+      }
+    </style>
+
     <title>KinForge</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div id="initial-loader">
+        <img src="%PUBLIC_URL%/loader.gif" alt="Loading..." />
+      </div>
+    </div>
   </body>
 </html>

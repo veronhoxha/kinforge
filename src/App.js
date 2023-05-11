@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './app/components/Navbar';
 import Home from './app/pages/home/Home';
@@ -9,10 +9,18 @@ import ManageAccount from './app/pages/manageAccount/ManageAccount';
 import EditProfile from './app/pages/manageAccount/editprofile/EditProfile';
 import Settings from './app/pages/manageAccount/settings/Settings';
 import Help from './app/pages/manageAccount/help/Help';
-import FamilyTreeWithHierarchyDad from './app/components/FamilyTreeWithHierarchyDad'
-import FamilyTreeWithHierarchyMom from './app/components/FamilyTreeWithHierarchyMom'
+import FamilyTreeWithHierarchyDad from './app/components/FamilyTreeWithHierarchyDad';
+import FamilyTreeWithHierarchyMom from './app/components/FamilyTreeWithHierarchyMom';
 
 function App() {
+
+  useEffect(() => {
+    const loader = document.getElementById('initial-loader');
+    if (loader) {
+      loader.remove();
+    }
+  }, []);
+
   return (
     <Router>
       <React.Fragment>
