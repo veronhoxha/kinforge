@@ -166,16 +166,11 @@ const HierarchyDialog = ({
               className='form-field'
               onChange={handleInputChange}
               defaultValue={formValues.dod || ''}
-              sx={{
-              "&:hover .MuiOutlinedInput-input": {
-                color: brown[800]
-              }
-            }}
             />
 
             <FormHelperText error>{formErrors.gender}</FormHelperText>
             <FormControl required>
-              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+              <FormLabel id="demo-radio-buttons-group-label" sx={{ '&.Mui-focused': {color: 'grey'}}}>Gender</FormLabel>
               <RadioGroup name="gender">
                 <FormControlLabel
                   value="Male"

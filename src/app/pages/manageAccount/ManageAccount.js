@@ -30,7 +30,9 @@ const ManageAccount = () => {
         setShowEditProfile(true);
         setShowSettings(false);
         setShowHelp(false);
-        history.go(0)
+        setTimeout(() => {
+          history.go(0);
+        }, 500);
       } else {
         if (menuItem === 'Settings') {
           window.history.pushState(null, null, '/settings');
@@ -50,7 +52,6 @@ const ManageAccount = () => {
       }
     }
   };
-  
 
   const handleLogout = () => {
     localStorage.removeItem('familyModalShown');
