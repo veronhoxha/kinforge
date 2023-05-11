@@ -51,7 +51,6 @@ const fitViewOptions = {
     // const history = useHistory();
 
     const onConnect = useCallback(async (params) => {
-      console.log('onConnect called with params:', params);
       if (params.source === '0' && params.target === '0') {
         setErrorMessage("The initial node cannot be connected to itself.");
         return;
@@ -103,7 +102,6 @@ const fitViewOptions = {
     
 
     const onConnectStart = useCallback((_, { nodeId }) => {
-      console.log('onConnectStart called with nodeId:', nodeId);
       connectingNodeId.current = nodeId;
     }, []);
 
@@ -127,7 +125,6 @@ const fitViewOptions = {
     
     const onConnectEnd = useCallback(
       async (event) => {
-        console.log('onConnectEnd called with event:', event);
         const targetIsPane = event.target && event.target.classList.contains('react-flow__pane');
     
         if (targetIsPane && !startingNodeEdited) {
@@ -228,7 +225,6 @@ const fitViewOptions = {
     };
 
     const deleteNodeEdgeById = async (id) => {
-      console.log("deleteNodeEdgeById called with nodeId:", id);
       if (!currentUser) {
         console.error("No current user");
         return;
@@ -326,7 +322,6 @@ const fitViewOptions = {
     }; 
 
     const handleSave = () => {
-      console.log('handleSave called');
       if (validateForm()) {
         if (selectedNode) {
           const updatedNode = {
@@ -492,7 +487,6 @@ const fitViewOptions = {
     };
 
     const deleteMember = async (id, uid) => {
-      console.log('deleteMember called with id and uid:', id, uid);
     
       if (id === '0') { 
         return;
@@ -538,7 +532,6 @@ const fitViewOptions = {
     
   
     const validateForm = () => {
-      console.log('validateForm called');
       let errors = {};
     
       if (!formValues.name) {
@@ -604,7 +597,6 @@ const fitViewOptions = {
         default:
           require('../../styles/hierarchy.css');
       }
-      console.log(activeSwitch)
     }, [activeSwitch]);
 
     const getThemeClassName = () => {
@@ -621,7 +613,6 @@ const fitViewOptions = {
     };
 
     const onNodeDragStop = async (_, node) => {
-      console.log("onNodeDragStop called with node:", node);
 
       setNodes((nds) =>
         nds.map((n) => (n.id === node.id ? { ...n, position: node.position } : n))

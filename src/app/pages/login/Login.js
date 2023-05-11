@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../../styles/login.css'; 
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+/* eslint-disable */
 
 const Login = () => {
 
@@ -45,7 +46,6 @@ const Login = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 setErrors(null);
-                console.log('User logged in successfully:', user);
                 history.push('../../familyTree');
             })
             .catch((error) => {

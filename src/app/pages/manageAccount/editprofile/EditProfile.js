@@ -12,7 +12,6 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Authentication from '../../../../Authentication';
 import Tooltip from '@mui/material/Tooltip';
-import { act } from 'react-dom/test-utils';
 
 const EditProfile = () => {
   const [name, setFirstName] = useState('');
@@ -27,6 +26,7 @@ const EditProfile = () => {
   const auth = getAuth();
   const [snackbarMessage, setSnackbarMessage] = useState(null);
   const [snackbarSeverity, setSnackbarSeverity] = useState('error');
+  const [editIconDisabled, setEditIconDisabled] = useState(false);
 
   const showSnackbar = (message, severity) => {
     setSnackbarMessage(message);
@@ -155,6 +155,7 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
+    setEditIconDisabled(false);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setFirstName(user.displayName.split(' ')[0]);
@@ -169,20 +170,22 @@ const EditProfile = () => {
           setProfilePicture(userData.photoURL);
           setNoPhoto(false);
         } else {
-            act(() => {
               setProfilePicture(profile_pic);
               setNoPhoto(true);
-            });
         }
       } else {
-          act(() => {
             setProfilePicture(profile_pic);
             setNoPhoto(true);
-          });
       }
     });
   
-    return () => unsubscribe();
+    return () => {
+      const inputElement = document.getElementById("profile-picture");
+      if (inputElement) {
+        inputElement.value = null;
+      }
+      unsubscribe();
+    };
   }, [auth]);
   
   
@@ -311,6 +314,7 @@ const EditProfile = () => {
   
     return userData;
   };  
+
   
   return (
     <div className="edit-profile" data-testid="editprofile-component">
@@ -324,7 +328,7 @@ const EditProfile = () => {
           <img src={profilePicture} alt="User's Profile" style={{ borderRadius: '50%', objectFit: 'cover', width: '150px', height: '150px', border: '3px solid #ccc' }} />
         )}
           <div className="edit-icon" data-testid="edit-icon">
-            <EditIcon size={24} style={editIconStyle} onClick={handleModal} />
+          <EditIcon size={24} style={editIconStyle} onClick={handleModal} disabled={editIconDisabled} />
             <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}  onClick={(e) => e.stopPropagation()}/>
           </div>
           <Modal open={openModal} onClose={handleModal} className="my-modal" >

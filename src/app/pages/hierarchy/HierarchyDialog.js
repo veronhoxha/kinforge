@@ -166,6 +166,11 @@ const HierarchyDialog = ({
               className='form-field'
               onChange={handleInputChange}
               defaultValue={formValues.dod || ''}
+              sx={{
+              "&:hover .MuiOutlinedInput-input": {
+                color: brown[800]
+              }
+            }}
             />
 
             <FormHelperText error>{formErrors.gender}</FormHelperText>

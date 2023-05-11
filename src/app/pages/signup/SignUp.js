@@ -91,7 +91,6 @@ const SignUp = () => {
                     history.push('../../login');
                     })
                 .catch((error) => {
-                    console.log(error);
                     if (error.code === 'auth/email-already-in-use') {
                         setErrors('This email address is already in use.');
                     } else {
@@ -101,7 +100,6 @@ const SignUp = () => {
                 }
             })
             .catch((error) => {
-                console.log(error);
                 setErrors('An error occurred. Please try again later.');
             });
         }

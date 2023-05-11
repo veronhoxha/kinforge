@@ -94,7 +94,6 @@ function FamilyTree() {
   const handleLogout = () => {
     auth.signOut();
     localStorage.removeItem('familyModalShown');
-    console.log(`${currentUser.email} has been logged out`);
     history.push('./');
   };
 

@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { onSnapshot } from "firebase/firestore";
 import MemberDataDialog from "./MemberDataDialog";
+/* eslint-disable */
 
 function SearchBar({onUserSelect}) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -77,21 +78,14 @@ function SearchBar({onUserSelect}) {
   };
 
   const handleMenuItemClick = (user) => {
-    console.log("handleMenuItemClick");
     setSearchTerm(`${user.name} ${user.surname}`);
     setFilteredUsers([]);
     setMenuOpen(false);
     setHighlightedUser(user);
     setOpenDialog(true);
-    
-    console.log("Before onUserSelect");
     if (typeof onUserSelect === 'function') {
       onUserSelect(user);
     }
-    console.log("After onUserSelect");
-    
-    console.log(user);
-    console.log("Dialog open status:", true);
   };  
   
   return (
