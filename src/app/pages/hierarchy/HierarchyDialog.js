@@ -103,7 +103,7 @@ import Places from './Places';
       <>
         <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
           <DialogTitle>Edit / Add data</DialogTitle>
-          <DialogContent>
+          <DialogContent sx={{overflow: 'visible'}}>
             <form>
               <FormHelperText error>{formErrors.name}</FormHelperText>
               <InputLabel required htmlFor="component-simple">Name</InputLabel>
@@ -118,7 +118,7 @@ import Places from './Places';
                 placeholder="Max 15 characters"
                 required
               />
-              
+            
               <FormHelperText error>{formErrors.surname}</FormHelperText>
               <InputLabel required htmlFor="component-simple">Surname</InputLabel>
               <Input
@@ -144,10 +144,11 @@ import Places from './Places';
                 onChange={handleInputChange}
                 defaultValue={formValues.dob || ''}
                 required
+                
               />
 
               <FormHelperText error>{formErrors.place_of_birth}</FormHelperText>
-              <InputLabel required htmlFor="component-simple">Place of Birth OR Current Location</InputLabel>
+              <InputLabel required htmlFor="component-simple">Place of Birth OR Current Location</InputLabel> 
               <Places
                 name="place_of_birth"
                 id="component-simple"
@@ -155,7 +156,7 @@ import Places from './Places';
                 onChange={handleInputChange}
                 defaultValue={formValues.place_of_birth || ''}
               />
-              
+
               <FormHelperText error>{formErrors.dod}</FormHelperText>
               <InputLabel htmlFor="component-simple">Date of Death</InputLabel>
               <Input
