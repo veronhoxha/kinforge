@@ -328,7 +328,7 @@ const EditProfile = () => {
           ) : (
             <img src={profilePicture} alt="User's Profile" style={{ borderRadius: '50%', objectFit: 'cover', width: '150px', height: '150px', border: '3px solid #ccc' }} />
           )}
-            <div className="edit-icon" data-testid="edit-icon">
+            <div className="edit-icon">
             <EditIcon size={24} style={editIconStyle} onClick={handleModal} disabled={editIconDisabled} />
               <input type="file" id="profile-picture" accept="image/*" style={hiddenFileInputStyle} onChange={handleProfilePictureChange}  onClick={(e) => e.stopPropagation()}/>
             </div>
