@@ -529,7 +529,6 @@ export const HierarchyMomSide = () => {
       setFormErrors({});
     };
     
-  
     const validateForm = () => {
       let errors = {};
     
@@ -638,7 +637,6 @@ export const HierarchyMomSide = () => {
       }
     };
     
-
     return (
         <div className={`wrapper ${getThemeClassName()}`} ref={reactFlowWrapper}>
           <div style={{ height: '100vh' }}>
